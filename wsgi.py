@@ -4,12 +4,13 @@
 
 # 3. レスポンスボディとしてバイト文字列をyieldするiterableなオブジェクトを返す。
 
-import os
-from static_middleware import StaticMiddleware
-from response import Response, TemplateResponse
-from app import App
+from src.core.response import Response, TemplateResponse
+from src.core.app import App
 
 
+# wigiアプリケーションの基本形
+# 第二引数(start_response)のオブジェクトへHTTPステータスとヘッダ情報を渡す。
+# レスポンスボディとしてバイト文字列をyieldするiterableなオブジェクトを渡す。
 def app(env, start_response):
     start_response('200 OK', [('Content-type', 'text/plain; charset=utf-8')])
     print('Hello, World!!!')
@@ -19,8 +20,8 @@ def app(env, start_response):
 def create_app():
     app = App()
 
-    BASE_DIR = os.path.dirname(__name__)
-    STATIC_DIRS = [os.path.join(BASE_DIR, 'static')]
+    # BASE_DIR = os.path.dirname(__name__)
+    # STATIC_DIRS = [os.path.join(BASE_DIR, 'static')]
 
     @app.route('^/$', 'GET')
     def hello(request):
@@ -39,6 +40,6 @@ def create_app():
     def user_detail(request, name):
         return Response('Hello {name}'.format(name=name))
 
-    app = StaticMiddleware(app, static_root='static', static_dirs=STATIC_DIRS)
+    # app = StaticMiddleware(app, static_root='static', static_dirs=STATIC_DIRS)
 
     return app

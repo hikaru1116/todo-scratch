@@ -6,7 +6,7 @@ wsgi_app = 'wsgi:create_app()'
 # Server Mechanics
 # ========================================
 # current directory
-chdir = '/Users/user/repository/todo-scratch'
+chdir = '/Users/user/repository/todo-scratch/src/'
 
 # daemon mode
 daemon = False

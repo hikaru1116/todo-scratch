@@ -1,4 +1,5 @@
 from http.client import responses as http_responses
+from typing import cast
 from wsgiref.headers import Headers
 import json
 
@@ -20,7 +21,7 @@ class Response:
 
     @property
     def status_code(self):
-        return "%d %s" % (self.status, http_responses[self.status])
+        return "%d %s" % (cast(int, self.status), http_responses[cast(int, self.status)])
 
     @property
     def header_list(self):
