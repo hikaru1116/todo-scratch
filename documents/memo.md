@@ -1,29 +1,20 @@
-# todo-scratch
+## ソフトインストール
 
-python で作るフルスクラッチな TODO アプリケーション
+1. Aanaconda をインストール
+   [ダウンロードサイト](https://www.anaconda.com/products/individual)からインストーラをダウンロード
 
-## 構成
+2. mysql をインストール
+   [ここ](https://qiita.com/houtarou/items/a44ce783d09201fc28f5)を参考に Ubuntu へ MySql をインストール
 
-### バックエンド
+## gunicorn
 
-- python
-- gunicorn
+- gunicorn での python アプリケーション実行について  
+  [ここ](https://docs.gunicorn.org/en/latest/run.html)にアプリケーション実行の方法が記載されている。  
+  多分 Flask と同じ方法になると思う。
 
-### フロントエンド
+### Web サーバーの使用方法(Gunicorn)
 
-- javascript
-- React
-
-## 機能
-
-- TODO 機能
-- ユーザ認証
-- データキャッシュ
-- エラーハンドリング
-- DB マイグレーション
-- セキュリティ
-
-## 動作手順
+Web サーバーに Gunicorn を採用し開発を行う。
 
 #### ローカル環境で動作させる手順
 
