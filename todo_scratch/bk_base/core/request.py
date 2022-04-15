@@ -4,6 +4,7 @@ import json
 
 class Request:
     def __init__(self, environ, charset='utf-8'):
+        print("request")
         self.environ = environ
         self._body = None
         self.charset = charset
