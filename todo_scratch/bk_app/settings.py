@@ -1,2 +1,2 @@
 
-app_name = 'app'
+app_name = 'bk_app'

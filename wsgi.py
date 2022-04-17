@@ -12,4 +12,4 @@ class WsgiApplication:
         self.app = App()
 
     def __call__(self, env: dict, start_response: t.Callable) -> t.Any:
-        return self.app.response(env, start_response)
+        return self.app.dispatch(env, start_response)

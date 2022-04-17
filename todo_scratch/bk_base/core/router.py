@@ -1,7 +1,8 @@
 
 import re
 import typing as t
-from todo_scratch.bk_base.core.response import Response
+from todo_scratch.bk_base.core.url_pattern import UrlPattern
+from todo_scratch.bk_app.urls import urlpatterns
 
 
 def http404(env: dict, start_response: t.Callable) -> t.List[bytes]:
@@ -20,29 +21,33 @@ def http405(env: dict, start_response: t.Callable) -> t.List[bytes]:
 
 class Router:
     def __init__(self) -> None:
-        self.urls: t.List[UrlPattern] = []
+        self.urlpatterns: t.List[UrlPattern] = []
         self.load_routes()
 
     def load_routes(self,) -> None:
-        # ここでurl.pyのルーティング情報を読み込む
-        urlpattern1 = UrlPattern(
-            path='^/$',
-            calback=lambda _: Response('Hello World')
-        )
-        self.urls.append(urlpattern1)
+        self.urlpatterns = urlpatterns
 
-    # uripathの照合
     def match(self, method: str, path: str) -> t.Tuple[t.Callable, dict]:
-        for url in self.urls:
-            matchd = url.path_compiled.match(path)
+        """Urlの照合
+
+        Args:
+            method (str): メソッド
+            path (str): Urlパス
+
+        Returns:
+            t.Tuple[t.Callable, dict]: wsgiレスポンスコールバック
+        """
+        for urlpattern in self.urlpatterns:
+            matchd = urlpattern.get_path_compiled().match(path)
             if not matchd:
                 continue
-            return url.calback, matchd.groupdict()
+            print("match callback")
+            return urlpattern.get_controller().get_callback()
 
         return http404, {}
 
 
-class UrlPattern:
+class UrlPattern1:
     def __init__(self, path=None, method="GET", calback=None) -> None:
         self.path = path
         self.method = method
