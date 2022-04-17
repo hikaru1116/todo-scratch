@@ -7,11 +7,9 @@ from todo_scratch.bk_base.http.response import Response
 
 class BaseController(Controller):
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.http_method = ["GET", "POST"]
+    http_method = ["GET", "POST"]
 
-    def dispatch(self, path=None, method="GET") -> Tuple[Callable, Dict]:
+    def dispatch(self, method="GET") -> Tuple[Callable, Dict]:
 
         if method not in self.http_method:
             return Http405()

@@ -32,7 +32,7 @@ class Router:
             matchd = urlpattern.get_path_compiled().match(path)
             if not matchd:
                 continue
-            return urlpattern.get_controller().dispatch()
+            return urlpattern.get_controller().dispatch(method=method)
 
         return Http404(error_detail="detail error"), {}
 

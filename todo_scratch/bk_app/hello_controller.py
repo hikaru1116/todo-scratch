@@ -12,4 +12,7 @@ class HelloController(BaseController):
     """
 
     def get(self, request: Request) -> Response:
-        return Response('Hello World \n')
+        return Response('Hello World GET\n')
+
+    def post(self, request: Request) -> Response:
+        return Response('Hello, World POST\n')
