@@ -9,7 +9,7 @@ class App:
         self.middleware: t.List = []
         self.router = Router()
 
-    def dispatch(self, env: dict, start_response: t.Callable) -> t.Any:
+    def __call__(self, env: dict, start_response: t.Callable) -> t.Any:
         # メソッド取得
         method = env['REQUEST_METHOD'].upper()
         # Urlパスを取得
@@ -17,7 +17,6 @@ class App:
         # メソッド、URLパスからコールバックを取得
         # ここで認証やらの情報の取得とかもしていきたい(kwrgs)、そして返すCallBackのみ返したい
         callback, kwargs = self.router.match(method, path)
-        print(callback)
         # コールバックからレスポンスを取得
         response = callback(Request(env), **kwargs)
         # レスポンスからステータス、ヘッダーを設定

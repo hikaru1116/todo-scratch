@@ -10,7 +10,7 @@ class Controller(ABC):
     """
 
     @abstractclassmethod
-    def get_callback(self, path=None, method="GET") -> Tuple[Callable, Dict]:
+    def dispatch(self, path=None, method="GET") -> Tuple[Callable, Dict]:
         """コールバック取得
 
         Returns:

@@ -1,7 +1,7 @@
 from todo_scratch.bk_base.controller.controller import Controller
 from typing import Dict, Tuple, Callable
+from todo_scratch.bk_base.http.error.http_405 import Http405
 from todo_scratch.bk_base.http.request import Request
-
 from todo_scratch.bk_base.http.response import Response
 
 
@@ -11,10 +11,10 @@ class BaseController(Controller):
         super().__init__()
         self.http_method = ["GET", "POST"]
 
-    def get_callback(self, path=None, method="GET") -> Tuple[Callable, Dict]:
+    def dispatch(self, path=None, method="GET") -> Tuple[Callable, Dict]:
 
         if method not in self.http_method:
-            pass
+            return Http405()
 
         if "GET" == method:
             return self.get, {}

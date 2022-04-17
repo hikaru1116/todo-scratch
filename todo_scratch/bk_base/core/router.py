@@ -1,22 +1,8 @@
-
-import re
 import typing as t
 from todo_scratch.bk_base.core.url_pattern import UrlPattern
-from todo_scratch.bk_app.urls import urlpatterns
-
-
-def http404(env: dict, start_response: t.Callable) -> t.List[bytes]:
-    start_response(
-        '404 Not Found', [
-            ('Content-type', 'text/plain; charset=utf-8')])
-    return [b'404 Not Found']
-
-
-def http405(env: dict, start_response: t.Callable) -> t.List[bytes]:
-    start_response(
-        '405 Method Not Allowed', [
-            ('Content-type', 'text/plain; charset=utf-8')])
-    return [b'405 Method Not Allowed']
+from todo_scratch.bk_base.http.error.http_404 import Http404
+from todo_scratch.bk_base.util.settings_util import get_settings
+from todo_scratch.bk_base.util.class_loader_util import import_module_member_from_file_route
 
 
 class Router:
@@ -25,7 +11,8 @@ class Router:
         self.load_routes()
 
     def load_routes(self,) -> None:
-        self.urlpatterns = urlpatterns
+        settings = get_settings()
+        self.urlpatterns = import_module_member_from_file_route('urlpatterns', settings.app_path + "." + settings.urls_path)
 
     def match(self, method: str, path: str) -> t.Tuple[t.Callable, dict]:
         """Urlの照合
@@ -41,18 +28,9 @@ class Router:
             matchd = urlpattern.get_path_compiled().match(path)
             if not matchd:
                 continue
-            print("match callback")
-            return urlpattern.get_controller().get_callback()
+            return urlpattern.get_controller().dispatch()
 
-        return http404, {}
-
-
-class UrlPattern1:
-    def __init__(self, path=None, method="GET", calback=None) -> None:
-        self.path = path
-        self.method = method
-        self.calback = calback
-        self.path_compiled = re.compile(path)
+        return Http404(error_detail="detail error"), {}
 
 
 # class Router:
