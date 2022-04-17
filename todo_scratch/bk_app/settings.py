@@ -1,4 +1,4 @@
 
-app_path = 'todo_scratch.bk_app'
+APP_PATH = 'todo_scratch.bk_app'
 
-urls_path = 'urls'
+URLS_PATH = 'urls'

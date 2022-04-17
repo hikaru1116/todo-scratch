@@ -1,18 +1,22 @@
 import typing as t
 from todo_scratch.bk_base.core.url_pattern import UrlPattern
 from todo_scratch.bk_base.http.error.http_404 import Http404
-from todo_scratch.bk_base.util.settings_util import get_settings
+from todo_scratch.bk_base.util.settings_util import get_module_path_by_settings
 from todo_scratch.bk_base.util.class_loader_util import import_module_member_from_file_route
 
 
 class Router:
+
+    URL_PATTERN = "urlpatterns"
+
     def __init__(self) -> None:
         self.urlpatterns: t.List[UrlPattern] = []
         self.load_routes()
 
     def load_routes(self,) -> None:
-        settings = get_settings()
-        self.urlpatterns = import_module_member_from_file_route('urlpatterns', settings.app_path + "." + settings.urls_path)
+        self.urlpatterns = import_module_member_from_file_route(
+            self.URL_PATTERN,
+            get_module_path_by_settings("URLS_PATH"))
 
     def match(self, method: str, path: str) -> t.Tuple[t.Callable, dict]:
         """Urlの照合

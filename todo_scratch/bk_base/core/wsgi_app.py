@@ -3,7 +3,7 @@ import typing as t
 from todo_scratch.bk_base.core.app import App
 
 
-class WsgiApplication:
+class WsgiApp:
     def __init__(self) -> None:
         self.app = App()
 
