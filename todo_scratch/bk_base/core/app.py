@@ -10,15 +10,12 @@ class App:
         self.router = Router()
 
     def __call__(self, env: dict, start_response: t.Callable) -> t.Any:
-        # メソッド取得
-        method = env['REQUEST_METHOD'].upper()
-        # Urlパスを取得
-        path = env['PATH_INFO'] or '/'
+        # レスポンスの取得
+        request = Request(env)
         # メソッド、URLパスからコールバックを取得
-        # ここで認証やらの情報の取得とかもしていきたい(kwrgs)、そして返すCallBackのみ返したい
-        callback, kwargs = self.router.match(method, path)
+        callback, kwargs = self.router.match(request)
         # コールバックからレスポンスを取得
-        response = callback(Request(env), **kwargs)
+        response = callback(request, **kwargs)
         # レスポンスからステータス、ヘッダーを設定
         start_response(response.status, response.header_list)
         # レスポンスボディを返す

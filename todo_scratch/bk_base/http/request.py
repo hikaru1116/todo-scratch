@@ -3,7 +3,16 @@ import json
 
 
 class Request:
+    """HTTPリクエストクラス
+    """
+
     def __init__(self, environ, charset='utf-8'):
+        """コンストラクタ
+
+        Args:
+            environ (_type_): wsgi environ
+            charset (str, optional): エンコード. Defaults to 'utf-8'.
+        """
         self.environ = environ
         self._body = None
         self.charset = charset
