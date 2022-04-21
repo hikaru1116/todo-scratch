@@ -1,4 +1,3 @@
-import cgi
 import json
 
 
@@ -24,16 +23,6 @@ class Request:
     @property
     def method(self):
         return self.environ['REQUEST_METHOD'].upper()
-
-    @property
-    def forms(self):
-        form = cgi.FieldStorage(
-            fp=self.environ['wsgi.input'],
-            environ=self.environ,
-            keep_blank_values=True,
-        )
-        params = {k: form[k].value for k in form}
-        return params
 
     @property
     def body(self):

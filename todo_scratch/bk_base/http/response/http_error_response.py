@@ -3,11 +3,15 @@ from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.response import Response
 
 
-class Response404(Response):
+class HttpErrorResponse(Response):
+    pass
+
+
+class Response404(HttpErrorResponse):
     default_status = "404"
 
 
-class Response405(Response):
+class Response405(HttpErrorResponse):
     default_status = "405"
 
 

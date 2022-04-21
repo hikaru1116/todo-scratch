@@ -11,11 +11,14 @@ class UrlPattern:
         self.__path_compiled = re.compile(path)
         self.__controller = controller
 
-    def get_path(self,) -> str:
+    @property
+    def path(self,) -> str:
         return self.__path
 
-    def get_path_compiled(self,) -> Pattern[AnyStr]:
+    @property
+    def path_compiled(self,) -> Pattern[AnyStr]:
         return self.__path_compiled
 
-    def get_controller(self,) -> Controller:
+    @property
+    def controller(self,) -> Controller:
         return self.__controller

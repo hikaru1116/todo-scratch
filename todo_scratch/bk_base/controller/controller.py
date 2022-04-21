@@ -1,22 +1,40 @@
-from abc import ABC, abstractclassmethod
 from typing import Dict, Tuple, Callable
+from todo_scratch.bk_base.http.request import Request
+from todo_scratch.bk_base.http.response.http_error_response import get_405_callback
+from todo_scratch.bk_base.http.response.response import Response
 
 
-class Controller(ABC):
-    """コントローラー基底クラス
+class Controller:
+    """アプリケーション実行処理操作クラス
 
-    Args:
-        ABC (_type_): 抽象クラス
+    Returns:
+        _type_: _description_
     """
+    http_methods = ["GET", "POST", "PUT", "DELETE"]
 
-    @abstractclassmethod
-    def dispatch(self, method="GET") -> Tuple[Callable, Dict]:
-        """コールバック取得
+    def dispatch(self, request: Request) -> Tuple[Callable, Dict]:
+        handler = self.get
 
-        Returns:
-            Tuple[Response, Dict]: レスポンス、レスポンス引数
+        if request.method in self.http_methods:
+            handler = getattr(self, request.method.lower(), get_405_callback())
+        else:
+            return get_405_callback(), {}
 
-        Returns:
-            Tuple[Callable, Dict]: コールバック,コールバック引数
-        """
-        raise NotImplementedError
+        argument = self.get_argument(request)
+
+        return handler, argument
+
+    def get_argument(self, request: Request) -> Dict:
+        return {}
+
+    def get(self, request: Request, **kwargs) -> Response:
+        return Response()
+
+    def post(self, request: Request, **kwargs) -> Response:
+        return Response()
+
+    def put(self, request: Request, **kwargs) -> Response:
+        return Response()
+
+    def delete(self, request: Request, **kwargs) -> Response:
+        return Response()

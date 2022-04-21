@@ -1,14 +1,13 @@
-
-from todo_scratch.bk_base.controller.base_controller import BaseController
+from todo_scratch.bk_base.controller.controller import Controller
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.response import Response
 
 
-class HelloController(BaseController):
+class HelloController(Controller):
     """HelloWorld
 
     Args:
-        BaseController (_type_): _description_
+        Controller (_type_): _description_
     """
 
     def get(self, request: Request, **kwargs) -> Response:

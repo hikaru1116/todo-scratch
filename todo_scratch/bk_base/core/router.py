@@ -1,6 +1,6 @@
 import typing as t
 from todo_scratch.bk_base.core.url_pattern import UrlPattern
-from todo_scratch.bk_base.http.http_error import get_404_callback
+from todo_scratch.bk_base.http.response.http_error_response import get_404_callback
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.util.settings_util import get_module_path_by_settings
 from todo_scratch.bk_base.util.class_loader_util import import_module_member_from_file_route
@@ -31,9 +31,9 @@ class Router:
             t.Tuple[t.Callable, dict]: wsgiレスポンスコールバック
         """
         for urlpattern in self.urlpatterns:
-            matchd = urlpattern.get_path_compiled().match(request.path)
+            matchd = urlpattern.path_compiled.match(request.path)
             if not matchd:
                 continue
-            return urlpattern.get_controller().dispatch(method=request.method)
+            return urlpattern.controller.dispatch(request)
 
         return get_404_callback()
