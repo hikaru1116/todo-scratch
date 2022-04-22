@@ -1,10 +1,22 @@
-import typing as t
 
 
-class TestMiddleware:
-    def __init__(self, app) -> None:
-        self.app = app
+from typing import Dict, Tuple
+from todo_scratch.bk_base.http.request import Request
+from todo_scratch.bk_base.http.response.response import Response
+from todo_scratch.bk_base.core.middleware import Middleware
 
-    def __call__(self, env: dict, start_response: t.Callable) -> t.Any:
-        print("Fire TestMiddleWare!!")
-        return self.app(env, start_response)
+
+class TestMiddleware(Middleware):
+
+    def request_process(self,
+                        response: Response,
+                        request: Request,
+                        **kwargs) -> Tuple[bool, Response, Request, Dict]:
+        print("request test middleware")
+
+        return True, response, request, kwargs
+
+    def response_process(self,
+                         response: Response) -> Tuple[bool, Response]:
+        print("response test middleware")
+        return True, response

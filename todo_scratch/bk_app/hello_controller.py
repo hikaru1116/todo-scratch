@@ -11,7 +11,9 @@ class HelloController(Controller):
     """
 
     def get(self, request: Request, **kwargs) -> Response:
+        print('hello world get')
         return Response('Hello World GET\n')
 
     def post(self, request: Request, **kwargs) -> Response:
+        print('hello world post')
         return Response('Hello, World POST\n')
