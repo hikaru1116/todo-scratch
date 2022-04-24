@@ -21,6 +21,14 @@ class Request:
         return self.environ['PATH_INFO'] or '/'
 
     @property
+    def server_name(self):
+        return self.environ['SERVER_NAME']
+
+    @property
+    def server_protocol(self):
+        return self.environ['SERVER_PROTOCOL']
+
+    @property
     def method(self):
         return self.environ['REQUEST_METHOD'].upper()
 

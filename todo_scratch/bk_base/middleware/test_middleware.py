@@ -12,11 +12,9 @@ class TestMiddleware(Middleware):
                         response: Response,
                         request: Request,
                         **kwargs) -> Tuple[bool, Response, Request, Dict]:
-        print("request test middleware")
 
         return True, response, request, kwargs
 
     def response_process(self,
                          response: Response) -> Tuple[bool, Response]:
-        print("response test middleware")
         return True, response
