@@ -12,32 +12,49 @@ class TestTemplate(unittest.TestCase):
     Args:
         unittest (_type_): ユニットテスト
     """
-
-    db_config = {
-        'host': '192.168.64.3',
-        'port': '3306',
-        'user': 'admin',
-        'password': 'P@ssw0rd',
-        'database': 'todo_scratch'
-    }
-
     @classmethod
     def setUpClass(cls):
         os.environ.setdefault('SETTINGS_PATH', 'todo_scratch.bk_app.settings')
 
-    def test_db(self):
-        from todo_scratch.bk_base.db.db_drivers.db_driver import DbDriver
-        from todo_scratch.bk_base.db.db_drivers.db_driver_maneger import DbDriverManeger
+    def test_db(self,):
+        from todo_scratch.bk_app.entities.user_entity import UserEntity
+        from todo_scratch.bk_base.db.db_accesors.query_db_accesor import QueryDbAccesor
 
-        db_driver: DbDriver = DbDriverManeger.get_db_driver('mysql')
-
-        db_driver.connect()
-        print(db_driver.__class__.__name__)
-        print('connect ', db_driver.is_connect())
-        result = db_driver.query("select * from todo_scratch.`user`")
-        print(result)
-        db_driver.disconnect()
+        accesor = QueryDbAccesor(UserEntity)
+        entity: UserEntity = accesor.select(
+            "select * from todo_scratch.`user`"
+        )
+        print(entity.name.value, entity.age.value,)
         self.assertEqual(1, 1)
+
+    # db_config = {
+    #     'host': '192.168.64.3',
+    #     'port': '3306',
+    #     'user': 'admin',
+    #     'password': 'P@ssw0rd',
+    #     'database': 'todo_scratch'
+    # }
+
+    # def test_db(self):
+
+        # from todo_scratch.bk_base.db.db_drivers.db_driver import DbDriver
+        # from todo_scratch.bk_base.db.db_drivers.db_driver_maneger import DbDriverManeger
+
+        # db_driver: DbDriver = DbDriverManeger.get_db_driver('mysql')
+
+        # db_driver.connect()
+        # print(db_driver.__class__.__name__)
+        # print('connect ', db_driver.is_connect())
+        # result = db_driver.query("select * from todo_scratch.`user`")
+        # print(result)
+        # db_driver.disconnect()
+
+        # accesor = QueryDbAccesor(UserEntity)
+        # entity = accesor.select(
+        #     "select * from todo_scratch.`user`"
+        # )
+        # print(entity)
+        # self.assertEqual(1, 1)
 
     # def test_class_loader(self):
     #     query_select = "select * from todo_scratch.`user`"

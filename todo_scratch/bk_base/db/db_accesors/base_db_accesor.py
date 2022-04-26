@@ -5,7 +5,7 @@ from todo_scratch.bk_base.util.settings_util import get_member_by_settings
 
 class BaseDbAccesor:
     def __init__(self) -> None:
-        self.db_driver = self._create_db_driver()
+        self.db_driver: DbDriver = self._create_db_driver()
 
     def _create_db_driver(self) -> DbDriver:
         db_type = get_member_by_settings('DB_TYPE')

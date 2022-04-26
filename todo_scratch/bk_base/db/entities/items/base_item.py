@@ -1,27 +1,20 @@
+class BaseItem:
 
-
-from abc import ABCMeta, abstractclassmethod
-from typing import Dict
-
-
-class BaseItem(metaclass=ABCMeta):
-
-    value = None
-    attribute: Dict = {}
-    is_primary = False
-
-    @abstractclassmethod
-    def to_item(self):
-        pass
-
-    @abstractclassmethod
-    def get_value(self,):
-        pass
-
-    @abstractclassmethod
-    def validate(self,):
-        pass
+    _value = None
 
     @property
-    def value(self):
-        return self.value
+    def value(self,):
+        return self._value
+
+    def set_value(self, value):
+        self._value = value
+
+    @classmethod
+    def to_item(self, data):
+        raise NotImplementedError()
+
+    def to_param(self):
+        raise NotImplementedError()
+
+    def validate(self,):
+        raise NotImplementedError()
