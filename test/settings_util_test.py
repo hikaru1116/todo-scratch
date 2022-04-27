@@ -18,9 +18,9 @@ class TestTemplate(unittest.TestCase):
     def test_class_loader(self):
         from todo_scratch.bk_base.util.settings_util import get_settings
         settings = get_settings()
-        print(settings.app_name)
+        print(settings.APP_PATH)
 
-        self.assertEqual(settings.app_name, 'bk_app')
+        self.assertEqual(settings.APP_PATH, 'todo_scratch.bk_app')
 
 
 if __name__ == '__main__':

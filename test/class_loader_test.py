@@ -1,10 +1,15 @@
 
 import os
 import unittest
-from test_class import TestClass
 import sys
 sys.path.append('../')
 print(sys.path)
+
+
+class TestClass:
+
+    def shori(self):
+        return "shori"
 
 
 class TestClassLoder(unittest.TestCase):
@@ -17,7 +22,7 @@ class TestClassLoder(unittest.TestCase):
         from todo_scratch.bk_base.util.class_loader_util import import_module_from_file_location
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         print(BASE_DIR)
-        import_cls = import_module_from_file_location('TestClass', BASE_DIR + '/test_class.py')
+        import_cls = import_module_from_file_location('TestClass', BASE_DIR + '/class_loader_test.py')
 
         # 動的モジュールからクラス生成
         import_test_class = import_cls.TestClass()
@@ -25,21 +30,6 @@ class TestClassLoder(unittest.TestCase):
         test_class: TestClass = TestClass()
 
         self.assertEqual(test_class.shori(), import_test_class.shori())
-
-    def test_load_list(self):
-        """動的モジュールからリスト生成テスト
-        """
-        from todo_scratch.bk_base.util.class_loader_util import import_module_from_file_location
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        print(BASE_DIR)
-        import_list_module = import_module_from_file_location('test_list', BASE_DIR + '/settings_test.py')
-
-        # 動的モジュールからリストを生成
-        import_list = import_list_module.test_list
-        print(import_list)
-        # リストを生成
-        tmp_list = [1, 2, 3, 4, 5]
-        self.assertEqual(tmp_list, import_list)
 
     def test_route_loder(self):
         from todo_scratch.bk_base.util.class_loader_util import import_module_member_from_file_route
