@@ -1,6 +1,7 @@
 class BaseItem:
 
     _value = None
+    _default_value = None
 
     @property
     def value(self,):
@@ -8,13 +9,3 @@ class BaseItem:
 
     def set_value(self, value):
         self._value = value
-
-    @classmethod
-    def to_item(self, data):
-        raise NotImplementedError()
-
-    def to_param(self):
-        raise NotImplementedError()
-
-    def validate(self,):
-        raise NotImplementedError()

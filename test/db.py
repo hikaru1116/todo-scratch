@@ -16,15 +16,16 @@ class TestTemplate(unittest.TestCase):
     def setUpClass(cls):
         os.environ.setdefault('SETTINGS_PATH', 'todo_scratch.bk_app.settings')
 
-    def test_db(self,):
+    def test_db_access(self,):
         from todo_scratch.bk_app.entities.user_entity import UserEntity
-        from todo_scratch.bk_base.db.db_accesors.query_db_accesor import QueryDbAccesor
+        from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAccesor
 
-        accesor = QueryDbAccesor(UserEntity)
-        entity: UserEntity = accesor.select(
+        accesor = SelectDbAccesor(UserEntity)
+        entities: UserEntity = accesor.select(
             "select * from todo_scratch.`user`"
         )
-        print(entity.name.value, entity.age.value,)
+        for entity in entities:
+            print(entity.name.value, entity.age.value, entity.context.value)
         self.assertEqual(1, 1)
 
     # db_config = {

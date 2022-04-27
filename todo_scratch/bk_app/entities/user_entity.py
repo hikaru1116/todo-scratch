@@ -6,9 +6,11 @@ class UserEntity(Entity):
 
     table_name = "user"
 
-    user_id = items.IntItem()
-    name = items.CharItem()
-    age = items.IntItem()
-    context = items.TextItem()
-    created_at = items.DatetimeItem()
-    update_at = items.DatetimeItem()
+    def __init__(self) -> None:
+        self.user_id = items.IntItem()
+        self.name = items.CharItem()
+        self.age = items.IntItem()
+        self.context = items.TextItem()
+        self.created_at = items.DatetimeItem()
+        self.update_at = items.DatetimeItem()
+        super().__init__()
