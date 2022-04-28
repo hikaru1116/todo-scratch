@@ -4,6 +4,10 @@ python で作るフルスクラッチな TODO アプリケーション
 
 ## 構成
 
+##　利用ライブラリ
+
+- mysql-connector-python:8.0.22
+
 ### バックエンド
 
 - python

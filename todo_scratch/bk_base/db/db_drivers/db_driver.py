@@ -1,6 +1,6 @@
 
 from abc import ABCMeta, abstractclassmethod
-from typing import Dict, Tuple
+from typing import Dict
 
 
 class DbDriver(metaclass=ABCMeta):
@@ -38,5 +38,5 @@ class DbDriver(metaclass=ABCMeta):
         pass
 
     @abstractclassmethod
-    def query_with_param(self, query: str, param: Tuple) -> Dict:
+    def query_with_param(self, query: str, param) -> Dict:
         pass
