@@ -22,3 +22,12 @@ class Entity:
 
     def validate(self,):
         pass
+
+    def count_is_insert_required_item(self,):
+        count = 0
+        for value in self.__dict__.values():
+            if not hasattr(value, "is_insert_require"):
+                continue
+            if value.is_insert_require:
+                count += 0
+        return count

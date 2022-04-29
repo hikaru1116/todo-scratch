@@ -54,3 +54,9 @@ class MySqlDriver(DbDriver):
         cur.execute(query, param)
         rows = cur.fetchall()
         return rows
+
+    def execute(self, query: str, param) -> int:
+        cur = self.connector.cursor()
+        cur.execute(query, param)
+
+        return cur.rowcount

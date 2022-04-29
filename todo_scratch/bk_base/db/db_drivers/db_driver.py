@@ -14,7 +14,7 @@ class DbDriver(metaclass=ABCMeta):
         pass
 
     @abstractclassmethod
-    def connect(self,):
+    def connect(self, is_transaction=False):
         pass
 
     @abstractclassmethod
@@ -39,4 +39,8 @@ class DbDriver(metaclass=ABCMeta):
 
     @abstractclassmethod
     def query_with_param(self, query: str, param) -> Dict:
+        pass
+
+    @abstractclassmethod
+    def execute(self, query: str, param) -> int:
         pass

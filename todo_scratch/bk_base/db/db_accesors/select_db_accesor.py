@@ -29,7 +29,9 @@ class SelectDbAccesor(BaseDbAccesor):
                 rows = self.db_driver.query_with_param(query, param)
             entities = self.entity_service.create_entity_list(rows)
             self.db_driver.disconnect()
-        except BaseException:
-            self.db_driver.disconnect()
+        except Exception:
             self.logger.error(traceback.format_exc())
+        finally:
+            self.db_driver.disconnect()
+
         return entities
