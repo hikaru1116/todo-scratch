@@ -2,7 +2,6 @@ import logging
 import traceback
 from typing import Dict, List
 from todo_scratch.bk_base.db.db_accesors.base_db_accesor import BaseDbAccesor
-from todo_scratch.bk_base.db.db_accesors.query_factory import QueryFactory
 from todo_scratch.bk_base.db.entities.entity import Entity
 from todo_scratch.bk_base.util.log.log_util import get_main_logger
 
@@ -11,7 +10,6 @@ class DbAccesor(BaseDbAccesor):
 
     def __init__(self, entity_type: type) -> None:
         self.logger: logging.Logger = get_main_logger()
-        self.query_factory = QueryFactory()
         super().__init__(entity_type)
 
     def select(self,) -> List[Entity]:

@@ -1,5 +1,6 @@
 
 from typing import Dict, Tuple
+from todo_scratch.bk_base.db.db_accesors.query_factory import MysqlQueryFactory
 from todo_scratch.bk_base.db.db_drivers.db_driver import DbDriver
 import mysql.connector as mysql
 from todo_scratch.bk_base.util.settings_util import get_member_by_settings
@@ -16,6 +17,9 @@ class MySqlDriver(DbDriver):
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.disconnect()
+
+    def get_query_factory(self) -> MysqlQueryFactory:
+        return MysqlQueryFactory()
 
     def connect(self, is_transaction=False):
         db_config = get_member_by_settings(self.DB_CONFIG_SETTING_NAME)

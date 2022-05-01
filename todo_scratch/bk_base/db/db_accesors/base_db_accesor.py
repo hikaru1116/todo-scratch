@@ -8,6 +8,7 @@ class BaseDbAccesor:
 
     def __init__(self, entity_type: type) -> None:
         self.db_driver: DbDriver = self._create_db_driver()
+        self.query_factory = self.db_driver.get_query_factory()
         self.entity_type: type = entity_type
         self.entity_service = EntityService(entity_type)
         super().__init__()

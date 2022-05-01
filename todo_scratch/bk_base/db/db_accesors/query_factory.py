@@ -1,8 +1,9 @@
 from typing import List
+from todo_scratch.bk_base.db.db_accesors.base_query_factory import BaseQueryFactory
 from todo_scratch.bk_base.db.entities.entity import Entity
 
 
-class QueryFactory:
+class MysqlQueryFactory(BaseQueryFactory):
 
     select = """
     SELECT
