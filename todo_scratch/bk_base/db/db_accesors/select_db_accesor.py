@@ -23,10 +23,7 @@ class SelectDbAccesor(BaseDbAccesor):
         try:
             self.db_driver.connect()
             rows: Dict = {}
-            if param is tuple:
-                rows = self.db_driver.query_with_param(query, param)
-            else:
-                rows = self.db_driver.query_with_param(query, param)
+            rows = self.db_driver.fetch_with_param(query, param)
             entities = self.entity_service.create_entity_list(rows)
             self.db_driver.disconnect()
         except Exception:

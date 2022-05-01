@@ -34,11 +34,11 @@ class DbDriver(metaclass=ABCMeta):
         pass
 
     @abstractclassmethod
-    def query(self, query: str) -> Dict:
+    def fetch(self, query: str) -> Dict:
         pass
 
     @abstractclassmethod
-    def query_with_param(self, query: str, param) -> Dict:
+    def fetch_with_param(self, query: str, param) -> Dict:
         pass
 
     @abstractclassmethod

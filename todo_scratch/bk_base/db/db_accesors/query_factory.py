@@ -16,6 +16,16 @@ class QueryFactory:
     {insert_rows}
     """
 
+    update = """
+    UPDATE {table_name} SET {update_cloums}
+    WHERE {where_colums}
+    """
+
+    delete = """
+    DELETE FROM {table_name}
+    WHERE {where_colums}
+    """
+
     def create_select_query(self, entity: Entity) -> str:
         items = []
         for key in entity.__dict__.keys():
@@ -58,7 +68,7 @@ class QueryFactory:
             "WHERE " + \
             " AND ".join(list(map(generate_where_query, key_names)))
 
-    def create_insert_query(self, entity: Entity, insert_rows_length: int) -> str:
+    def create_insert_query(self, entity: Entity, insert_rows_row: int) -> str:
 
         item_keys = []
         for key, value in entity.__dict__.items():
@@ -70,5 +80,36 @@ class QueryFactory:
         return self.insert.format(
             table_name=entity.table_name,
             items=",".join(item_keys),
-            insert_rows=",".join([insert_row for _ in range(insert_rows_length)])
+            insert_rows=",".join([insert_row for _ in range(insert_rows_row)])
+        )
+
+    def create_update_query_by_id(self, entity: Entity) -> str:
+        update_cloums = []
+        where_colums = []
+        for key, value in entity.__dict__.items():
+            if not value.is_primary and value.is_insert_require:
+                update_cloums.append(key)
+
+            if value.is_primary:
+                where_colums.append(key)
+
+        return self.update.format(
+            table_name=entity.table_name,
+            update_cloums=",".join(["{}=%s".format(colum) for colum in update_cloums]),
+            where_colums=" AND ".join(["{}=%s".format(colum) for colum in where_colums])
+        )
+
+    def create_delete_query_by_id(self, entity: Entity) -> str:
+        update_cloums = []
+        where_colums = []
+        for key, value in entity.__dict__.items():
+            if not value.is_primary and value.is_insert_require:
+                update_cloums.append(key)
+
+            if value.is_primary:
+                where_colums.append(key)
+
+        return self.delete.format(
+            table_name=entity.table_name,
+            where_colums=" AND ".join(["{}=%s".format(colum) for colum in where_colums])
         )

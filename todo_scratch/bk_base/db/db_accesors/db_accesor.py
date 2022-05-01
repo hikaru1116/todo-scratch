@@ -1,7 +1,6 @@
-from functools import wraps
 import logging
 import traceback
-from typing import Callable, Dict, List
+from typing import Dict, List
 from todo_scratch.bk_base.db.db_accesors.base_db_accesor import BaseDbAccesor
 from todo_scratch.bk_base.db.db_accesors.query_factory import QueryFactory
 from todo_scratch.bk_base.db.entities.entity import Entity
@@ -20,7 +19,7 @@ class DbAccesor(BaseDbAccesor):
         try:
             self.db_driver.connect()
             query = self.query_factory.create_select_query(self.entity_type())
-            rows = self.db_driver.query_with_param(query, ())
+            rows = self.db_driver.fetch_with_param(query, ())
             entities = self.entity_service.create_entity_list(rows)
         except Exception:
             self.logger.error(traceback.format_exc())
@@ -33,13 +32,13 @@ class DbAccesor(BaseDbAccesor):
         try:
             self.db_driver.connect()
             query = self.query_factory.create_select_query_by_id(self.entity_type())
-            rows = self.db_driver.query_with_param(query, (id,))
+            rows = self.db_driver.fetch_with_param(query, (id,))
             entities = self.entity_service.create_entity_list(rows)
         except Exception:
             self.logger.error(traceback.format_exc())
         finally:
             self.db_driver.disconnect()
-        return entities
+        return None if len(entities) <= 0 else entities[0]
 
     def select_by_param(self, param: Dict) -> Entity:
         entities: List[Entity] = []
@@ -47,7 +46,7 @@ class DbAccesor(BaseDbAccesor):
             self.db_driver.connect()
             query = self.query_factory.\
                 create_select_query_by_param(self.entity_type(), param.keys())
-            rows = self.db_driver.query_with_param(query, param)
+            rows = self.db_driver.fetch_with_param(query, param)
             entities = self.entity_service.create_entity_list(rows)
         except Exception:
             self.logger.error(traceback.format_exc())
@@ -63,7 +62,6 @@ class DbAccesor(BaseDbAccesor):
                 len(entities)
             )
             params = self._create_param_extra_insert_require(entities)
-            print(query, params)
             rows = self.db_driver.execute(query, params)
             self.db_driver.commit()
         except Exception:
@@ -73,17 +71,34 @@ class DbAccesor(BaseDbAccesor):
             self.db_driver.disconnect()
         return rows
 
-    def update(self,):
-        pass
+    def update(self, entity: Entity) -> int:
+        try:
+            self.db_driver.connect(is_transaction=True)
+            query = self.query_factory.create_update_query_by_id(entity)
+            set_params = entity.get_is_insert_required_items()
+            where_params = entity.get_primary_colum_values()
+            effect_row_count = self.db_driver.execute(query, set_params + where_params)
+            self.db_driver.commit()
+        except Exception:
+            self.db_driver.rollback()
+            self.logger.error(traceback.format_exc())
+        finally:
+            self.db_driver.disconnect()
+        return effect_row_count
 
-    def delete(self,):
-        pass
-
-    def exception_callback(self,):
-        self.logger.error(traceback.format_exc())
-
-    def final_callback(self,):
-        self.db_driver.disconnect()
+    def delete(self, entity: Entity) -> int:
+        try:
+            self.db_driver.connect(is_transaction=True)
+            query = self.query_factory.create_delete_query_by_id(entity)
+            where_params = entity.get_primary_colum_values()
+            effect_row_count = self.db_driver.execute(query, where_params)
+            self.db_driver.commit()
+        except Exception:
+            self.db_driver.rollback()
+            self.logger.error(traceback.format_exc())
+        finally:
+            self.db_driver.disconnect()
+        return effect_row_count
 
     def _create_param_extra_insert_require(self, entities: List[Entity]) -> List[str]:
         params = []
@@ -93,19 +108,3 @@ class DbAccesor(BaseDbAccesor):
                     params.append(value.value)
 
         return params
-
-
-def exception_handling(exception_callback: Callable,
-                       final_callback: Callable):
-    def exception_handling_wrapper(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            try:
-                result = func(*args, **kwargs)
-            except Exception:
-                exception_callback()
-            finally:
-                final_callback()
-            return result
-        return wrapper
-    return exception_handling_wrapper

@@ -40,14 +40,14 @@ class MySqlDriver(DbDriver):
             return False
         return self.connector.is_connected()
 
-    def query(self, query: str) -> Dict:
+    def fetch(self, query: str) -> Dict:
         cur = self.connector.cursor(dictionary=True)
 
         cur.execute(query)
         rows = cur.fetchall()
         return rows
 
-    def query_with_param(self, query: str, param: Tuple) -> Dict:
+    def fetch_with_param(self, query: str, param: Tuple) -> Dict:
 
         cur = self.connector.cursor(dictionary=True)
 
