@@ -1,5 +1,5 @@
 from http.client import responses as http_responses
-from typing import cast
+from typing import Dict, cast
 from wsgiref.headers import Headers
 
 
@@ -69,3 +69,8 @@ class Response:
             cookies (Dict): クッキー情報
         """
         self.headers.add_header('Set-Cookie', item)
+
+    def add_headers(self, headers: Dict) -> None:
+        if headers:
+            for name, value in headers.items():
+                self.headers.add_header(name, value)

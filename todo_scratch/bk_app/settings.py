@@ -14,3 +14,12 @@ DB_CONFIG = {
     'password': 'P@ssw0rd',
     'database': 'todo_scratch'
 }
+
+ACCESS_ALLOW_ORIGIN = ["http://localhost:3000"]
+
+
+MIDDLEWARES = [
+    "todo_scratch.bk_base.middleware.http_log_middleware.HttpLogMiddleware",
+    "todo_scratch.bk_base.middleware.cors_middleware.CorsMiddleware",
+    "todo_scratch.bk_base.middleware.test_middleware.TestMiddleware"
+]

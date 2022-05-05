@@ -5,6 +5,19 @@ from importlib.util import spec_from_file_location
 from typing import Any
 
 
+def import_module_by_route(route: str) -> Any:
+    last_sepalation_index = route.rfind(".")
+    if last_sepalation_index < 0:
+        raise Exception()
+
+    import_module_route = route[:last_sepalation_index]
+    member_name = route[last_sepalation_index + 1:]
+
+    print(last_sepalation_index, import_module_route, member_name)
+
+    return import_module_member_from_file_route(member_name, import_module_route)
+
+
 def import_module_member_from_file_route(member_name: str, route: str) -> Any:
     """モジュールルートから動的にモジュールをimportし、メンバーを取得します
 

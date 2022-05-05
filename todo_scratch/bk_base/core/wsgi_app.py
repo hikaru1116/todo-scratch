@@ -3,10 +3,10 @@ import typing as t
 from todo_scratch.bk_base.core.router import Router
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.response import Response
-from todo_scratch.bk_base.middleware.http_log_middleware import HttpLogMiddleware
 from todo_scratch.bk_base.core.middleware import Middleware, MiddlewareProcess
-from todo_scratch.bk_base.middleware.test_middleware import TestMiddleware
+from todo_scratch.bk_base.util.class_loader_util import import_module_by_route
 from todo_scratch.bk_base.util.log.log_util import get_main_logger
+from todo_scratch.bk_base.util.settings_util import get_member_by_settings
 
 
 class WsgiApp:
@@ -43,9 +43,21 @@ class WsgiApp:
         return self._create_wsgi_response(start_response, response)
 
     def _load_middleware(self,) -> Middleware:
-        tmp_middleware = HttpLogMiddleware()
-        tmp_middleware.set_next_middleware(TestMiddleware())
-        return tmp_middleware
+        middlewares_str: t.List[str] = get_member_by_settings("MIDDLEWARES")
+        middlewares = []
+        for middleware in middlewares_str:
+            middlewares.append(import_module_by_route(middleware)())
+        if len(middlewares) <= 0:
+            return None
+
+        base_middleware = middlewares[0]
+
+        if len(middleware) > 1:
+            next_middleware = base_middleware
+            for middleware in middlewares[1:]:
+                next_middleware = next_middleware.set_next_middleware(middleware)
+
+        return base_middleware
 
     def _create_wsgi_response(self, start_response: t.Callable, response: Response) -> t.Any:
         # レスポンスからステータス、ヘッダーを設定
