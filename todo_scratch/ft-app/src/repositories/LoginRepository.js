@@ -1,7 +1,13 @@
 import axios from "axios";
 
 export const login = () => {
-  axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
-    console.log(res.data);
-  });
+  axios
+    .get("http://localhost:8000")
+    .then((res) => {
+      console.log(res.data);
+      console.log(res);
+    })
+    .catch((error) => {
+      console.log(error.response);
+    });
 };

@@ -1,20 +1,23 @@
+import { login } from "../repositories/LoginRepository";
+
 export function LoginReducer(state, action) {
-  switch (action.type) {
-    case "add_1":
+  switch (action) {
+    case "sign_in":
+      // サインイン処理発火
+      login();
       return {
         ...state,
-        value: state.value + 1,
+        isLoading: true,
       };
-    case "multiple_3":
-      console.log("multi");
+    case "sign_up":
       return {
         ...state,
-        value: state.value * 3,
+        isLoading: true,
       };
-    case "reset":
+    case "validate":
       return {
         ...state,
-        value: action.initialState,
+        isLoading: false,
       };
     default:
       return state;

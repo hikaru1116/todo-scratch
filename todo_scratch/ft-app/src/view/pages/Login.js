@@ -4,8 +4,7 @@ import { LoginReducer } from "../../reducers/LoginReducer";
 import LoginForm from "../compornents/LoginForm";
 
 const initialState = {
-  title: "login form",
-  value: 0,
+  isLoading: false,
 };
 
 const Login = () => {

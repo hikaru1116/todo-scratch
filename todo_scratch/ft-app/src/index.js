@@ -24,16 +24,14 @@ const theme = createTheme({
 });
 
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Navbar />
-      <Router>
-        <Routes>
-          <Route path="/" element={<TodoList />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/*" element={<Page404 />} />
-        </Routes>
-      </Router>
-    </ThemeProvider>
-  </React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <Navbar />
+    <Router>
+      <Routes>
+        <Route path="/" element={<TodoList />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/*" element={<Page404 />} />
+      </Routes>
+    </Router>
+  </ThemeProvider>
 );
