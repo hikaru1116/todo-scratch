@@ -17,5 +17,5 @@ class AuthUserEntity(Entity):
     def set_entity_values(self, user_name, email, password, is_admin):
         self.user_name.set_value(user_name)
         self.email.set_value(email)
-        self.email.set_value(password)
+        self.password.set_value(password)
         self.is_admin.set_value(is_admin)

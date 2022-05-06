@@ -3,6 +3,7 @@ from todo_scratch.bk_base.db.entities.items import items
 
 
 class SessionEntity(Entity):
+    table_name = "session"
 
     def __init__(self) -> None:
         self.session_id = items.IntItem(is_praimary=True, is_insert_require=False)

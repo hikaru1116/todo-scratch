@@ -1,6 +1,7 @@
 from typing import List
 from todo_scratch.bk_base.db.db_accesors.base_query_factory import BaseQueryFactory
 from todo_scratch.bk_base.db.entities.entity import Entity
+from todo_scratch.bk_base.db.entities.items.base_item import BaseItem
 
 
 class MysqlQueryFactory(BaseQueryFactory):
@@ -73,6 +74,8 @@ class MysqlQueryFactory(BaseQueryFactory):
 
         item_keys = []
         for key, value in entity.__dict__.items():
+            if not isinstance(value, BaseItem):
+                continue
             if value.is_insert_require:
                 item_keys.append(key)
 

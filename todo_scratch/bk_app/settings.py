@@ -26,3 +26,9 @@ MIDDLEWARES = [
 
 
 AUTH_USER_ENTITY = "todo_scratch.bk_app.entities.user_entity.UserEntity"
+
+SECRET_KEY = "xxxxx"
+
+IS_TWO_STEP_VERFICATION_BY_EMAIL = False
+
+SESSION_EXPIRED_DAYS = 31

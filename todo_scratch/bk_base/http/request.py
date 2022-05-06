@@ -1,4 +1,6 @@
+import cgi
 import json
+import urllib.parse
 
 
 class Request:
@@ -46,3 +48,17 @@ class Request:
     @property
     def json(self):
         return json.loads(self.body)
+
+    @property
+    def multipart_form(self):
+        form = cgi.FieldStorage(fp=self.environ['wsgi.input'], environ=self.environ)
+        return form
+
+    @property
+    def content_type(self):
+        return self.environ['CONTENT_TYPE']
+
+    @property
+    def x_www_form_urlencoded(self):
+        data = urllib.parse.parse_qs(self.body.decode())
+        return data

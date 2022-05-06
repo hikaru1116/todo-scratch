@@ -132,5 +132,4 @@ class MainLogger(Logger):
         logger.addHandler(handler1)
         logger.addHandler(handler2)
         logger.setLevel(logging.DEBUG if get_member_by_settings("IS_DEBUG") else logging.INFO)
-        print("create logger")
         return logger

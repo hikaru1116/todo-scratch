@@ -7,6 +7,14 @@ class HttpErrorResponse(Response):
     pass
 
 
+class Response401(HttpErrorResponse):
+    default_status = "401"
+
+
+class Response403(HttpErrorResponse):
+    default_status = "403"
+
+
 class Response404(HttpErrorResponse):
     default_status = "404"
 
