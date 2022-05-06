@@ -25,6 +25,14 @@ class Controller:
         return handler, argument
 
     def get_argument(self, request: Request) -> Dict:
+        """リクエストからコントローラへ渡す引数値を取得します
+
+        Args:
+            request (Request): リクエスト
+
+        Returns:
+            Dict: リクエストからコントローラへ渡す引数値
+        """
         return {}
 
     def get(self, request: Request, **kwargs) -> Response:

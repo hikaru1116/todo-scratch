@@ -4,8 +4,7 @@ from todo_scratch.bk_base.core.router import Router
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.response import Response
 from todo_scratch.bk_base.core.middleware import Middleware, MiddlewareProcess
-from todo_scratch.bk_base.util.class_loader_util import import_module_by_route
-from todo_scratch.bk_base.util.log.log_util import get_main_logger
+from todo_scratch.bk_base.util.class_loader_util import get_module_by_full_route
 from todo_scratch.bk_base.util.settings_util import get_member_by_settings
 
 
@@ -39,21 +38,20 @@ class WsgiApp:
         response: Response = \
             middleware_process.get_response_with_middleware_chain(request, **kwargs)
 
-        get_main_logger().info('success wsgi app')
         return self._create_wsgi_response(start_response, response)
 
     def _load_middleware(self,) -> Middleware:
         middlewares_str: t.List[str] = get_member_by_settings("MIDDLEWARES")
         middlewares = []
         for middleware in middlewares_str:
-            middlewares.append(import_module_by_route(middleware)())
+            middlewares.append(get_module_by_full_route(middleware)())
         if len(middlewares) <= 0:
             return None
 
         base_middleware = middlewares[0]
 
         if len(middleware) > 1:
-            next_middleware = base_middleware
+            next_middleware: Middleware = base_middleware
             for middleware in middlewares[1:]:
                 next_middleware = next_middleware.set_next_middleware(middleware)
 

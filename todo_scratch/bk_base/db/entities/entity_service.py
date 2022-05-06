@@ -1,7 +1,7 @@
 from typing import Dict, List
 from todo_scratch.bk_base.db.entities.entity import Entity
 
-from todo_scratch.bk_base.util.class_loader_util import import_module_member_from_file_route
+from todo_scratch.bk_base.util.class_loader_util import get_module_by_route
 
 
 class EntityService:
@@ -12,7 +12,7 @@ class EntityService:
     def create_entity_list(self, rows: List[Dict]) -> List:
         entities = []
         for row in rows:
-            entity_module: type = import_module_member_from_file_route(
+            entity_module: type = get_module_by_route(
                 self.entity_module.__name__,
                 self.entity_module.__module__
             )

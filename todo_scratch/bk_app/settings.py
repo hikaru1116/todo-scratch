@@ -23,3 +23,6 @@ MIDDLEWARES = [
     "todo_scratch.bk_base.middleware.cors_middleware.CorsMiddleware",
     "todo_scratch.bk_base.middleware.test_middleware.TestMiddleware"
 ]
+
+
+AUTH_USER_ENTITY = "todo_scratch.bk_app.entities.user_entity.UserEntity"

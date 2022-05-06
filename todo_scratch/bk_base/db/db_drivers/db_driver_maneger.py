@@ -1,5 +1,5 @@
 from todo_scratch.bk_base.db.db_drivers.db_driver import DbDriver
-from todo_scratch.bk_base.util.class_loader_util import import_module_member_from_file_route
+from todo_scratch.bk_base.util.class_loader_util import get_module_by_route
 
 
 class DbDriverManeger:
@@ -13,6 +13,6 @@ class DbDriverManeger:
         for key, value in cls.DB_TYPE_DICT.items():
             if key == db_type:
                 driver_module_member = \
-                    import_module_member_from_file_route(value[0], value[1])
+                    get_module_by_route(value[0], value[1])
                 return driver_module_member()
         return Exception("not exist db driver")

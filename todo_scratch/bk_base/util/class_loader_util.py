@@ -21,8 +21,6 @@ def get_module_by_full_route(route: str) -> Any:
     import_module_route = route[:last_sepalation_index]
     member_name = route[last_sepalation_index + 1:]
 
-    print(last_sepalation_index, import_module_route, member_name)
-
     return get_module_by_route(member_name, import_module_route)
 
 
