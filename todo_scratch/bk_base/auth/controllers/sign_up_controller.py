@@ -1,5 +1,6 @@
 import base64
 import hashlib
+import re
 from todo_scratch.bk_base.auth.entities.auth_user_entity import AuthUserEntity
 from todo_scratch.bk_base.auth.session_maneger import SessionManeger
 from todo_scratch.bk_base.controller.controller import Controller
@@ -12,6 +13,11 @@ from todo_scratch.bk_base.util.settings_util import get_member_by_settings
 
 
 class SignUpController(Controller):
+    """ユーザ登録コントローラ
+
+    Args:
+        Controller (_type_): コントローラ基底クラス
+    """
 
     def post(self, request: Request, **kwargs) -> Response:
         body = request.json
@@ -22,7 +28,12 @@ class SignUpController(Controller):
         email = body.get("email")
         password = body.get("password")
 
-        if not (self._validate_user_name(user_name) and self._validate_email(email) and self._validate_password(password)):
+        user_entity_module = get_module_by_full_route(get_member_by_settings("AUTH_USER_ENTITY"))
+        user_db_accesor: DbAccesor = DbAccesor(user_entity_module)
+
+        if not (self._validate_user_name(user_name, user_db_accesor) and
+                self._validate_email(email, user_db_accesor) and
+                self._validate_password(password)):
             return Response404()
 
         is_two_step_verification_by_email = get_member_by_settings("IS_TWO_STEP_VERFICATION_BY_EMAIL")
@@ -31,11 +42,8 @@ class SignUpController(Controller):
             # TODO: emailによる二段階認証処理を実装
             return Response(status="200", body="二段階認証")
 
-        user_entity_module = get_module_by_full_route(get_member_by_settings("AUTH_USER_ENTITY"))
-
         # ユーザ情報を保存
         password_hashed = self.get_hash(password)
-        user_db_accesor: DbAccesor = DbAccesor(user_entity_module)
         user_entity = user_entity_module()
         user_entity.set_entity_values(
             user_name=user_name,
@@ -62,11 +70,17 @@ class SignUpController(Controller):
         hash = hashlib.sha256(base64.b64encode(secret_key.encode()) + password).hexdigest()
         return hash
 
-    def _validate_user_name(self, user_name,) -> bool:
-        return True
+    def _validate_user_name(self, user_name, db_accesor: DbAccesor) -> bool:
+        user_entities = db_accesor.select_by_param({"user_name": user_name})
+        return len(user_entities) <= 0
 
-    def _validate_email(self, email) -> bool:
-        return True
+    def _validate_email(self, email, db_accesor: DbAccesor) -> bool:
+        email_pattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"
+        if re.match(email_pattern, email) is None:
+            return False
+
+        user_entities = db_accesor.select_by_param({"email": email})
+        return len(user_entities) <= 0
 
     def _validate_password(self, password) -> bool:
-        return True
+        return len(password) >= 8
