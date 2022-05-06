@@ -5,7 +5,15 @@ from importlib.util import spec_from_file_location
 from typing import Any
 
 
-def import_module_by_route(route: str) -> Any:
+def get_module_by_full_route(route: str) -> Any:
+    """連結したモジュールルートから動的にモジュールをimportし、メンバーを取得します。
+
+    Args:
+        route (str): 連結したモジュールルート
+
+    Returns:
+        Any: モジュールメンバー
+    """
     last_sepalation_index = route.rfind(".")
     if last_sepalation_index < 0:
         raise Exception()
@@ -15,25 +23,25 @@ def import_module_by_route(route: str) -> Any:
 
     print(last_sepalation_index, import_module_route, member_name)
 
-    return import_module_member_from_file_route(member_name, import_module_route)
+    return get_module_by_route(member_name, import_module_route)
 
 
-def import_module_member_from_file_route(member_name: str, route: str) -> Any:
+def get_module_by_route(module_name: str, route: str) -> Any:
     """モジュールルートから動的にモジュールをimportし、メンバーを取得します
 
     Args:
-        member_name (str): メンバー変数名
+        module_name (str): メンバー変数名
         route (str): ルート
 
     Returns:
         Any: メンバー
     """
     module = import_module(route)
-    member = getattr(module, member_name, None)
+    member = getattr(module, module_name, None)
     return member
 
 
-def import_module_from_file_location(name, location):
+def get_module_by_file_path(name, location):
     """ファイルパスから動的にモジュールをimportします
 
     Args:
