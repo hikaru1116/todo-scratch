@@ -71,6 +71,11 @@ class Response:
         self.headers.add_header('Set-Cookie', item)
 
     def add_headers(self, headers: Dict) -> None:
+        """ヘッダー追加
+
+        Args:
+            headers (Dict): ヘッダー辞書
+        """
         if headers:
             for name, value in headers.items():
                 self.headers.add_header(name, value)

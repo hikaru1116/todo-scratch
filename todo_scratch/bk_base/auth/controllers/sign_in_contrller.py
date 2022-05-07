@@ -42,7 +42,10 @@ class SignInController(Controller):
         session_maneger = SessionManeger()
         session_code = session_maneger.generete_session(user_entity.user_id.value)
 
-        return Response(status="200", body=session_code)
+        response = Response(status="200", body=session_code)
+        response.set_cookie(session_maneger.generate_set_cookie_syntax(session_code))
+
+        return response
 
     def _get_query(self) -> str:
         db_type: str = get_member_by_settings("DB_TYPE")

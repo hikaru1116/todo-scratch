@@ -45,3 +45,7 @@ class SessionManeger:
 
         return now + \
             datetime.timedelta(days=session_expired_days if session_expired_days is not None else self.DEFAULT_EXPIRED_DAYS)
+
+    @staticmethod
+    def generate_set_cookie_syntax(session_code: str) -> str:
+        return "session={0}; SameSite=Lax;HttpOnly".format(session_code)

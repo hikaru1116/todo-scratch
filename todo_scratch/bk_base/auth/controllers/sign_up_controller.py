@@ -59,7 +59,9 @@ class SignUpController(Controller):
         session_maneger = SessionManeger()
         session_code = session_maneger.generete_session(insert_user_entitiy.user_id.value)
 
-        return Response(status="200", body=session_code)
+        response = Response(status="200", body=session_code)
+        response.set_cookie(session_maneger.generate_set_cookie_syntax(session_code))
+        return response
 
     def _validate_user_name(self, user_name, db_accesor: DbAccesor) -> bool:
         user_entities = db_accesor.select_by_param({"user_name": user_name})

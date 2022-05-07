@@ -14,9 +14,14 @@ class SessionMiddleware(Middleware):
                         **kwargs) -> Tuple[bool, Response, Request, Dict]:
 
         # TODO:セッションIDの有無チェック
+        cookie = request.cookie
+        if not cookie:
+            return True, response, request, kwargs
+            
+        session = request.cookie.get("session")
+        print(session)
 
         # TODO:セッションIDからユーザ情報を取得
-
         return True, response, request, kwargs
 
     def response_process(self,

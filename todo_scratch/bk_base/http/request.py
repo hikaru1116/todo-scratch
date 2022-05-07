@@ -62,3 +62,10 @@ class Request:
     def x_www_form_urlencoded(self):
         data = urllib.parse.parse_qs(self.body.decode())
         return data
+
+    @property
+    def cookie(self):
+        if "HTTP_COOKIE" not in self.environ:
+            return None
+        data = urllib.parse.parse_qs(self.environ["HTTP_COOKIE"])
+        return data
