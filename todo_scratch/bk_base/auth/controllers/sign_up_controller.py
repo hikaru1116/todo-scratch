@@ -1,6 +1,5 @@
-import base64
-import hashlib
 import re
+from todo_scratch.bk_base.auth.encrypt_maneger import EncryptManeger
 from todo_scratch.bk_base.auth.entities.auth_user_entity import AuthUserEntity
 from todo_scratch.bk_base.auth.session_maneger import SessionManeger
 from todo_scratch.bk_base.controller.controller import Controller
@@ -43,7 +42,7 @@ class SignUpController(Controller):
             return Response(status="200", body="二段階認証")
 
         # ユーザ情報を保存
-        password_hashed = self.get_hash(password)
+        password_hashed = EncryptManeger.get_hash(password)
         user_entity = user_entity_module()
         user_entity.set_entity_values(
             user_name=user_name,
@@ -61,14 +60,6 @@ class SignUpController(Controller):
         session_code = session_maneger.generete_session(insert_user_entitiy.user_id.value)
 
         return Response(status="200", body=session_code)
-
-    def get_hash(self, password) -> str:
-        password = bytes(password, 'utf-8')
-        secret_key = get_member_by_settings("SECRET_KEY")
-        if secret_key is None:
-            raise Exception()
-        hash = hashlib.sha256(base64.b64encode(secret_key.encode()) + password).hexdigest()
-        return hash
 
     def _validate_user_name(self, user_name, db_accesor: DbAccesor) -> bool:
         user_entities = db_accesor.select_by_param({"user_name": user_name})
