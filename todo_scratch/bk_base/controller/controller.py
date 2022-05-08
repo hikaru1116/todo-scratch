@@ -16,7 +16,7 @@ class Controller:
         handler = self.get
 
         if request.method in self.http_methods:
-            handler = getattr(self, request.method.lower(), get_405_callback())
+            handler = self.get_mehod_callback(request.method.lower())
         else:
             return get_405_callback(), {}
 
@@ -34,6 +34,9 @@ class Controller:
             Dict: リクエストからコントローラへ渡す引数値
         """
         return {}
+
+    def get_mehod_callback(self, method: str) -> Callable:
+        return getattr(self, method, get_405_callback())
 
     def get(self, request: Request, **kwargs) -> Response:
         return Response()
