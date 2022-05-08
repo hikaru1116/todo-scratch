@@ -69,13 +69,15 @@ class DbAccesor(BaseDbAccesor):
             self.db_driver.disconnect()
         return rows
 
-    def update(self, entity: Entity) -> int:
+    def update(self, entities: List[Entity]) -> int:
+        effect_row_count = 0
         try:
             self.db_driver.connect(is_transaction=True)
-            query = self.query_factory.create_update_query_by_id(entity)
-            set_params = entity.get_is_insert_required_items()
-            where_params = entity.get_primary_colum_values()
-            effect_row_count = self.db_driver.execute(query, set_params + where_params)
+            for entity in entities:
+                query = self.query_factory.create_update_query_by_id(entity)
+                set_params = entity.get_is_insert_required_items()
+                where_params = entity.get_primary_colum_values()
+                effect_row_count += self.db_driver.execute(query, set_params + where_params)
             self.db_driver.commit()
         except Exception:
             self.db_driver.rollback()
@@ -84,12 +86,14 @@ class DbAccesor(BaseDbAccesor):
             self.db_driver.disconnect()
         return effect_row_count
 
-    def delete(self, entity: Entity) -> int:
+    def delete(self, entities: List[Entity]) -> int:
+        effect_row_count = 0
         try:
             self.db_driver.connect(is_transaction=True)
-            query = self.query_factory.create_delete_query_by_id(entity)
-            where_params = entity.get_primary_colum_values()
-            effect_row_count = self.db_driver.execute(query, where_params)
+            for entity in entities:
+                query = self.query_factory.create_delete_query_by_id(entity)
+                where_params = entity.get_primary_colum_values()
+                effect_row_count += self.db_driver.execute(query, where_params)
             self.db_driver.commit()
         except Exception:
             self.db_driver.rollback()

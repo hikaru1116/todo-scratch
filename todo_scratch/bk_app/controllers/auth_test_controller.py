@@ -1,7 +1,7 @@
 
 
 from urllib.request import Request
-from todo_scratch.bk_base.auth.controllers.auth_mixin import AuthMixin
+from todo_scratch.bk_base.controller.auth_mixin import AuthMixin
 from todo_scratch.bk_base.controller.controller import Controller
 from todo_scratch.bk_base.http.response.response import Response
 
