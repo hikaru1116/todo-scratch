@@ -1,8 +1,7 @@
-
-
 from typing import Dict, List, Tuple
 from todo_scratch.bk_base.auth.entities.auth_user_entity import AuthUserEntity
 from todo_scratch.bk_base.auth.entities.session_entitiy import SessionEntity
+from todo_scratch.bk_base.auth.session_maneger import SessionManeger
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.response import Response
@@ -12,6 +11,12 @@ from todo_scratch.bk_base.util.settings_util import get_member_by_settings
 
 
 class SessionMiddleware(Middleware):
+    """セッション管理ミドルウェア
+    アプリケーションのセッション情報の取得、判別処理を行います
+
+    Args:
+        Middleware (_type_): ミドルウェア基底クラス
+    """
 
     def request_process(self,
                         response: Response,
@@ -32,6 +37,11 @@ class SessionMiddleware(Middleware):
         })
 
         if len(session_entities) <= 0:
+            return True, response, request, kwargs
+
+        session_entitiy = session_entities[0]
+
+        if not SessionManeger.check_epired(session_entitiy.expired_at.value):
             return True, response, request, kwargs
 
         user_entity_module = get_module_by_full_route(get_member_by_settings("AUTH_USER_ENTITY"))

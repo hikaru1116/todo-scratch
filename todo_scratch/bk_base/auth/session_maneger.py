@@ -49,3 +49,7 @@ class SessionManeger:
     @staticmethod
     def generate_set_cookie_syntax(session_code: str) -> str:
         return "session={0}; SameSite=Lax;HttpOnly".format(session_code)
+
+    @staticmethod
+    def check_epired(expired: datetime.datetime) -> bool:
+        return expired >= datetime.datetime.now()

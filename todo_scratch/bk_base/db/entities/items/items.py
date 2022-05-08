@@ -1,3 +1,4 @@
+import datetime
 from todo_scratch.bk_base.db.entities.items.base_item import BaseItem
 
 
@@ -24,4 +25,7 @@ class BoolItem(BaseItem):
 
 
 class DatetimeItem(BaseItem):
-    pass
+    def set_value(self, value):
+        if isinstance(value, str):
+            value = datetime.datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
+        self._value = value
