@@ -6,19 +6,23 @@ class Entity:
 
     table_name = None
 
+    def to_dict(self) -> Dict:
+        result: Dict = {}
+        for key, item in self.__dict__.items():
+            if not isinstance(item, BaseItem):
+                continue
+            result[key] = item.value
+
+        return result
+
     def set_values_by_row(cls, row: Dict):
-        """Queryの結果をentityへ変換
+        """Queryの結果をentityへ設定
         """
         for key, value in row.items():
             item = getattr(cls, key, None)
             if not item or not isinstance(item, BaseItem):
                 continue
             item.set_value(value)
-
-    def convert_to_param(self,):
-        """Entityをパラメータへ変換
-        """
-        pass
 
     def validate(self,):
         pass
