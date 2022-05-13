@@ -36,7 +36,7 @@ class ValidatorItem:
             if value is None:
                 return False
 
-        if self.validate(value):
+        if not self.validate(value):
             return False
 
         return self.validate_callback(value)

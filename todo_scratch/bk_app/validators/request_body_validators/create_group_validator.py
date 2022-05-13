@@ -1,3 +1,4 @@
+from typing import Any
 from todo_scratch.bk_base.validator.json_validator import JsonValidator
 from todo_scratch.bk_base.validator.validator_item import VcharValidatorItem
 
@@ -13,7 +14,7 @@ class CreateGroupValidator(JsonValidator):
         self.group_name = VcharValidatorItem(is_required=True)
         self.description = VcharValidatorItem(is_required=True)
 
-        
+
 #         self.invite_users = InviteUsersValidator()
 
 

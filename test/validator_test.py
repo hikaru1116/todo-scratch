@@ -17,20 +17,20 @@ class ValidatorTest(unittest.TestCase):
     def test_json_validator(self):
 
         from todo_scratch.bk_app.validators.request_body_validators.create_group_validator import CreateGroupValidator
-        data = {
-            "group_name": "test_group",
+        data1 = {
+            "group_name": "group_name_test",
             "description": "description text"
         }
+        create_group_validator1 = CreateGroupValidator(json.dumps(data1).encode())
+        validation_result = create_group_validator1.validate()
+        self.assertTrue((validation_result) and len(create_group_validator1.result) > 0)
 
-        create_group_validator = CreateGroupValidator(json.dumps(data).encode())
-
-        if not create_group_validator.validate():
-            print("fail validate")
-
-        else:
-            print("success validate")
-
-        self.assertEqual(create_group_validator.result.get("group_name"), data.get("group_name"))
+        data2 = {
+            "description": "description text"
+        }
+        create_group_validator2 = CreateGroupValidator(json.dumps(data2).encode())
+        validation_result = create_group_validator2.validate()
+        self.assertTrue((not validation_result) and len(create_group_validator2.result) <= 0)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 import json
-from typing import Any
+from typing import Any, Dict
 from todo_scratch.bk_base.validator.base_validator import BaseValidator
 from todo_scratch.bk_base.validator.validator_item import ValidatorItem
 
@@ -15,23 +15,23 @@ class JsonValidator(BaseValidator):
         super().__init__(json.loads(target))
 
     def validate(self):
+        self._result: Dict = {}
+
         for key, value in self.__dict__.items():
             if not isinstance(value, ValidatorItem):
                 continue
 
             validator: ValidatorItem = value
-            target_item = self.target.get(key)
+            target_item = self.target.get(key, None)
 
-            if target_item is None:
-                continue
-
-            if not validator.validate(target_item):
+            if not validator.execute_validate(target_item):
                 return False
+
+        self._convert_when_success_validate()
 
         return True
 
-    @property
-    def result(self):
+    def _convert_when_success_validate(self) -> None:
         for key, value in self.__dict__.items():
             if not isinstance(value, ValidatorItem):
                 continue
@@ -42,7 +42,8 @@ class JsonValidator(BaseValidator):
             if target_item is None:
                 continue
 
-            print(target_item)
             self._result[key] = validator.convert(target_item)
 
+    @property
+    def result(self):
         return self._result
