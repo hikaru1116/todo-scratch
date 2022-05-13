@@ -290,7 +290,7 @@ sessionId に紐づく選択中のグループ情報を取得
 #### メソッド、エンドポイント
 
 ```
-POST /gorup
+POST /group
 ```
 
 #### 認証・認可
@@ -352,7 +352,7 @@ POST /gorup
 #### メソッド、エンドポイント
 
 ```
-PUT /gorup
+PUT /group
 ```
 
 #### 認証・認可
@@ -415,7 +415,7 @@ PUT /gorup
 #### メソッド、エンドポイント
 
 ```
-GET /gorup/joined
+GET /group/joined
 ```
 
 #### 認証・認可
@@ -451,7 +451,7 @@ GET /gorup/joined
 #### メソッド、エンドポイント
 
 ```
-GET /gorup/approval-request
+GET /group/approval-request
 ```
 
 #### 認証・認可
@@ -486,7 +486,7 @@ GET /gorup/approval-request
 #### メソッド、エンドポイント
 
 ```
-POST /gorup/approval-request
+POST /group/approval-request
 ```
 
 #### 認証・認可
@@ -539,7 +539,7 @@ POST /gorup/approval-request
 #### メソッド、エンドポイント
 
 ```
-POST /gorup/change
+POST /group/change
 ```
 
 #### 認証・認可
@@ -595,7 +595,7 @@ POST /gorup/change
 #### メソッド、エンドポイント
 
 ```
-POST /gorup/leave
+POST /group/leave
 ```
 
 #### 認証・認可
@@ -633,7 +633,7 @@ POST /gorup/leave
 #### メソッド、エンドポイント
 
 ```
-POST /gorup/invite
+POST /group/invite
 ```
 
 #### 認証・認可

@@ -1,5 +1,4 @@
-import json
-from typing import Any, Dict
+from typing import Dict
 from todo_scratch.bk_base.validator.base_validator import BaseValidator
 from todo_scratch.bk_base.validator.validator_item import ValidatorItem
 
@@ -10,9 +9,6 @@ class JsonValidator(BaseValidator):
     Args:
         BaseValidator (_type_): バリデーション基底クラス
     """
-
-    def __init__(self, target: Any) -> None:
-        super().__init__(json.loads(target))
 
     def validate(self):
         self._result: Dict = {}

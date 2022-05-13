@@ -1,5 +1,5 @@
 
-from typing import Any, Callable
+from typing import Any, Callable, List
 
 from todo_scratch.bk_base.validator.base_validator import BaseValidator
 
@@ -101,6 +101,31 @@ class ObjectValidatorItem(ValidatorItem):
 
 
 class ListValidatorItem(ValidatorItem):
-    def __init__(self, validator: BaseValidator, is_required=False) -> None:
-        self.validator = validator
+    def __init__(self, validator_type: type, is_required=False) -> None:
+        self.validator: type = validator_type
+        self.validator_validated_list: List[BaseValidator] = []
         super().__init__(is_required)
+
+    def validate(self, list: List) -> bool:
+        self.validator_validated_list = []
+
+        for object in list:
+            validator: BaseValidator = self.validator(object)
+
+            if not validator.validate():
+                return False
+            
+            self.validator_validated_list.append(validator)
+
+        return True
+
+    def convert(self, list: List) -> Any:
+
+        if len(self.validator_validated_list) <= 0:
+            raise Exception('not validated before convert')
+
+        result = []
+        for validator in self.validator_validated_list:
+            result.append(validator.result)
+
+        return result
