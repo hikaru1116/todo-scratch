@@ -23,9 +23,9 @@ class BaseValidator:
         """バリデーション処理
 
         Returns:
-            bool: バリデーション結果
+            bool: バリデーション判定
         """
-        pass
+        return True
 
     @property
     def result(self):

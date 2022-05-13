@@ -12,9 +12,11 @@ class CreateGroupValidator(JsonValidator):
     def init_validator_items(self):
         self.group_name = VcharValidatorItem(is_required=True)
         self.description = VcharValidatorItem(is_required=True)
-        self.invite_users = InviteUsersValidator()
+
+        
+#         self.invite_users = InviteUsersValidator()
 
 
-class InviteUsersValidator(JsonValidator):
-    def init_validator_items(self) -> None:
-        self.identify = VcharValidatorItem(is_required=True)
+# class InviteUsersValidator(JsonValidator):
+#     def init_validator_items(self) -> None:
+#         self.identify = VcharValidatorItem(is_required=True)

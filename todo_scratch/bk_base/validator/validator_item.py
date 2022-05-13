@@ -1,6 +1,8 @@
 
 from typing import Any, Callable
 
+from todo_scratch.bk_base.validator.base_validator import BaseValidator
+
 
 class ValidatorItem:
     """バリデーションアイテム基底クラス
@@ -70,7 +72,7 @@ class VcharValidatorItem(ValidatorItem):
     """
 
     def convert(self, value: Any):
-        if isinstance(value, str):
+        if not isinstance(value, str):
             return str(value)
         return value
 
@@ -92,3 +94,13 @@ class BoolValidatorItem(ValidatorItem):
 
 class DatetimeValidatorItem(ValidatorItem):
     pass
+
+
+class ObjectValidatorItem(ValidatorItem):
+    pass
+
+
+class ListValidatorItem(ValidatorItem):
+    def __init__(self, validator: BaseValidator, is_required=False) -> None:
+        self.validator = validator
+        super().__init__(is_required)
