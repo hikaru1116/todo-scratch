@@ -34,7 +34,7 @@ class TestTemplate(unittest.TestCase):
         from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
         from todo_scratch.bk_app.entities.user_entity import UserEntity
         acceser = DbAccesor(UserEntity)
-        entities: UserEntity = acceser.select()
+        entities: UserEntity = acceser.select_all()
         for entity in entities:
             print(entity.name.value)
         self.assertLess(0, len(entities))
@@ -71,7 +71,7 @@ class TestTemplate(unittest.TestCase):
         user_entity_test3 = UserEntity.create_instance("test3", 10)
         user_entity_test4 = UserEntity.create_instance("test4", 11)
 
-        effected_rows = acceser.insert([
+        effected_rows = acceser.insert_bulk([
             user_entity_test3, user_entity_test4
         ])
         self.assertLess(0, effected_rows)
@@ -85,7 +85,7 @@ class TestTemplate(unittest.TestCase):
 
         # テストユーザの追加
         user_entity_test = UserEntity.create_instance("update_test_user", 99)
-        acceser.insert([
+        acceser.insert_bulk([
             user_entity_test
         ])
         entities: UserEntity = acceser.select_by_param({
@@ -97,7 +97,7 @@ class TestTemplate(unittest.TestCase):
         # テストユーザの更新
         test_user.name.set_value("change_update_test_user")
         test_user.age.set_value(0)
-        effect_rows = acceser.update(test_user)
+        effect_rows = acceser.update_bulk(test_user)
 
         # 更新したテストユーザの更新
         update_test_user: UserEntity = acceser.select_by_id(test_user.user_id.value)
@@ -112,7 +112,7 @@ class TestTemplate(unittest.TestCase):
 
         # テストユーザの追加
         user_entity_test = UserEntity.create_instance("update_test_user", 99)
-        acceser.insert([
+        acceser.insert_bulk([
             user_entity_test
         ])
         entities: UserEntity = acceser.select_by_param({
@@ -122,7 +122,7 @@ class TestTemplate(unittest.TestCase):
         print("select update user", test_user.name.value, test_user.age.value)
 
         # テストユーザの削除
-        effect_rows = acceser.delete(test_user)
+        effect_rows = acceser.delete_bulk(test_user)
 
         entity: UserEntity = acceser.select_by_id(test_user.user_id.value)
 

@@ -31,7 +31,7 @@ class SessionManeger:
             session=session_code,
             expired_at=self._create_expired_datetime()
         )
-        session_db_accesor.insert([session_entity])
+        session_db_accesor.insert(session_entity)
 
         return session_code
 

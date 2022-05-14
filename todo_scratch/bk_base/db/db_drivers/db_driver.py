@@ -49,3 +49,7 @@ class DbDriver(metaclass=ABCMeta):
     @abstractclassmethod
     def execute(self, query: str, param) -> int:
         pass
+
+    @abstractclassmethod
+    def execute_bulk(self, query: str, param) -> int:
+        pass

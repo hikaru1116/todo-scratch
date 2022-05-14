@@ -24,7 +24,7 @@ class SignOutController(AuthMixin, Controller):
         if len(delete_session_entities) <= 0:
             return Response(status='202')
 
-        effected_rows_count = session_db_accesor.delete(delete_session_entities)
+        effected_rows_count = session_db_accesor.delete_bulk(delete_session_entities)
 
         if effected_rows_count <= 0:
             return Response(status='202')

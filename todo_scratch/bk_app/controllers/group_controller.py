@@ -1,14 +1,23 @@
+from typing import Dict
+from todo_scratch.bk_app.entities.user_entity import UserEntity
 from todo_scratch.bk_app.handlers.group_handler import GroupHandler
 from todo_scratch.bk_app.validators.request_body_validators.create_group_validator import CreateGroupValidator
 from todo_scratch.bk_base.controller.controller import Controller
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.http_error_response import Response404
+from todo_scratch.bk_base.http.response.json_response import JSONResponse
 from todo_scratch.bk_base.http.response.response import Response
 
 
 class GroupController(Controller):
+    """グループコントローラ
+    ApiUrl[/group]のメソッドをまとめたクラスです
 
-    def post(self, request: Request, **kwargs) -> Response:
+    Args:
+        Controller (_type_): コントローラ基底クラス
+    """
+
+    def post(self, request: Request, user: UserEntity) -> Response:
         body = request.json
 
         validator = CreateGroupValidator(body)
@@ -16,8 +25,13 @@ class GroupController(Controller):
             return Response404()
 
         request_body = validator.result
-        print(request_body)
-        return Response()
+        group_handler = self._get_handler()
 
-    def get_handler(self):
+        created_group_id = group_handler.create_group(request_body, user.user_id.value)
+
+        group_info: Dict = group_handler.get_detail_group_info(created_group_id)
+
+        return JSONResponse(dic=group_info)
+
+    def _get_handler(self):
         return GroupHandler()

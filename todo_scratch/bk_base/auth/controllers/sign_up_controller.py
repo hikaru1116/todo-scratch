@@ -50,12 +50,11 @@ class SignUpController(Controller):
             password=password_hashed,
             is_admin=False
         )
-        user_db_accesor.insert([user_entity])
+        insert_user_id = user_db_accesor.insert(user_entity)
+        print(insert_user_id)
 
         # セッションを作成
-        insert_user_entitiy: AuthUserEntity = user_db_accesor.select_by_param(
-            {"user_name": user_name, "email": email, "password": password_hashed}
-        )[0]
+        insert_user_entitiy: AuthUserEntity = user_db_accesor.select_by_id(insert_user_id)
         session_maneger = SessionManeger()
         session_code = session_maneger.generete_session(insert_user_entitiy.user_id.value)
 

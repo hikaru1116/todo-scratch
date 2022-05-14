@@ -63,4 +63,11 @@ class MySqlDriver(DbDriver):
         cur = self.connector.cursor()
         cur.execute(query, param)
 
+        return cur.lastrowid
+
+    def execute_bulk(self, query: str, param) -> int:
+        cur = self.connector.cursor()
+        cur.execute(query, param)
+        print(cur.lastrowid)
+
         return cur.rowcount
