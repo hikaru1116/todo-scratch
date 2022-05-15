@@ -37,6 +37,16 @@ class GroupRepository:
 
     selected_group_by_user_id_query = """
     SELECT
+        ts_group.*
+    FROM todo_scratch.`group` as ts_group
+    LEFT JOIN todo_scratch.group_belongs as ts_group_belongs
+    ON ts_group.group_id = ts_group_belongs.group_id
+    WHERE ts_group_belongs.user_id = %(user_id)s
+    AND ts_group_belongs.is_selected = TRUE
+    """
+
+    selected_group_belongs_by_user_id_query = """
+    SELECT
         ts_group_belongs.*
     FROM todo_scratch.`group` as ts_group
     LEFT JOIN todo_scratch.group_belongs as ts_group_belongs
@@ -48,6 +58,22 @@ class GroupRepository:
     def __init__(self) -> None:
         self.group_db_accesor = DbAccesor(GroupEntity)
 
+    def get_selected_group_by_user_id(self, user_id) -> List[GroupEntity]:
+        """選択済みのグループエンティティを取得します
+
+        Args:
+            user_id (_type_): ユーザID
+
+        Returns:
+            List[GroupEntity]: グループエンティティ
+        """
+        select_db_accesor = SelectDbAccesor(GroupEntity)
+        group_entities = select_db_accesor.select(
+            query=self.selected_group_by_user_id_query,
+            param={"user_id": user_id}
+        )
+        return group_entities
+
     def get_selected_group_belongs_by_user_id(self, user_id) -> List[GroupBelongEntity]:
         """選択済みのグループ所属情報エンティティを取得します
 
@@ -58,11 +84,11 @@ class GroupRepository:
             List[GroupBelongEntity]: グループ所属情報エンティティ
         """
         select_db_accesor = SelectDbAccesor(GroupBelongEntity)
-        group_entities = select_db_accesor.select(
-            query=self.selected_group_by_user_id_query,
+        group_belongs_entities = select_db_accesor.select(
+            query=self.selected_group_belongs_by_user_id_query,
             param={"user_id": user_id}
         )
-        return group_entities
+        return group_belongs_entities
 
     def save_group(self, group_entity: GroupEntity) -> int:
         """グループの追加

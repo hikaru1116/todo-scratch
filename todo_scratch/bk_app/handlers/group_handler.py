@@ -89,8 +89,8 @@ class GroupHandler:
 
         return insert_group_id
 
-    def get_detail_group_info(self, call_user_id, group_id: int) -> Dict:
-        """詳細なグループ情報を取得します
+    def get_detail_group_info(self, call_user_id: int, group_id: int) -> Dict:
+        """指定したグループの詳細なグループ情報を取得します
 
         Args:
             group_id (int): グループID
@@ -101,8 +101,35 @@ class GroupHandler:
 
         group_entity: GroupEntity = self.group_repository.get_group_entity(group_id)
 
+        return self._create_detail_group_info_by_group_entity(
+            user_id=call_user_id,
+            group_entity=group_entity
+        )
+
+    def get_selected_detail_group_info(self, call_user_id) -> Dict:
+        """選択済みの詳細なグループ情報を取得します
+
+        Args:
+            call_user_id (_type_): ユーザID
+
+        Returns:
+            Dict: グループ情報
+        """
+        group_entities: GroupEntity = self.group_repository.get_selected_group_by_user_id(
+            user_id=call_user_id
+        )
+
+        if len(group_entities) <= 0:
+            return {}
+
+        return self._create_detail_group_info_by_group_entity(
+            user_id=call_user_id,
+            group_entity=group_entities[0]
+        )
+
+    def _create_detail_group_info_by_group_entity(self, user_id: int, group_entity: GroupEntity) -> Dict:
         group_belongs_user_entities: List[GroupBelongsUserEntity] \
-            = self.group_repository.get_group_belongs_with_user_entities(group_id)
+            = self.group_repository.get_group_belongs_with_user_entities(group_entity.group_id.value)
 
         group_detail_info: Dict = {}
 
@@ -115,9 +142,9 @@ class GroupHandler:
         call_user_auth_type = int(GroupAuthTypeEnum.NOMAL)
         call_user_user_state = int(GroupUserStateEnum.UNAPPROVED)
         for group_belong_user in group_belongs_user_entities:
-            if group_belong_user.user_id == call_user_id:
-                call_user_auth_type = GroupAuthTypeEnum.get_value(group_belong_user.auth_type)
-                call_user_user_state = GroupUserStateEnum.get_value(group_belong_user.user_status)
+            if group_belong_user.user_id.value == user_id:
+                call_user_auth_type = GroupAuthTypeEnum.get_value(group_belong_user.auth_type.value)
+                call_user_user_state = GroupUserStateEnum.get_value(group_belong_user.user_status.value)
 
             group_belongs_users.append(group_belong_user.to_dict())
 

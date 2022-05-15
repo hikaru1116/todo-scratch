@@ -18,7 +18,8 @@ class GroupController(Controller):
     """
 
     def get(self, request: Request, user: UserEntity) -> Response:
-        return JSONResponse()
+        group_info = self._get_handler().get_selected_detail_group_info(user.user_id.value)
+        return JSONResponse(dic=group_info)
 
     def post(self, request: Request, user: UserEntity) -> Response:
         body = request.json
