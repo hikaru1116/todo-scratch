@@ -17,6 +17,9 @@ class GroupController(Controller):
         Controller (_type_): コントローラ基底クラス
     """
 
+    def get(self, request: Request, user: UserEntity) -> Response:
+        return JSONResponse()
+
     def post(self, request: Request, user: UserEntity) -> Response:
         body = request.json
 
@@ -33,5 +36,5 @@ class GroupController(Controller):
 
         return JSONResponse(dic=group_info)
 
-    def _get_handler(self):
+    def _get_handler(self) -> GroupHandler:
         return GroupHandler()

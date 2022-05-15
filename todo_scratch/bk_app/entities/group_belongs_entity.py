@@ -11,18 +11,20 @@ class GroupBelongEntity(Entity):
         self.user_id = items.IntItem()
         self.auth_type = items.IntItem()
         self.user_status = items.IntItem()
+        self.is_selected = items.BoolItem()
         self.created_at = items.DatetimeItem(is_insert_require=False)
         self.updated_at = items.DatetimeItem(is_insert_require=False)
         super().__init__()
 
-    def set_entity_values(self, group_id, user_id, auth_type, user_status):
+    def set_entity_values(self, group_id, user_id, auth_type, user_status, is_selected):
         self.group_id.set_value(group_id)
         self.user_id.set_value(user_id)
         self.auth_type.set_value(auth_type)
         self.user_status.set_value(user_status)
+        self.is_selected.set_value(is_selected)
 
     @staticmethod
-    def create_instance(group_id, user_id, auth_type, user_status):
+    def create_instance(group_id, user_id, auth_type, user_status, is_selected):
         entity = GroupBelongEntity()
-        entity.set_entity_values(group_id, user_id, auth_type, user_status)
+        entity.set_entity_values(group_id, user_id, auth_type, user_status, is_selected)
         return entity

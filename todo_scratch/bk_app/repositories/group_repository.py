@@ -35,9 +35,34 @@ class GroupRepository:
     WHERE ts_group_belongs.group_id = %(group_id)s
     """
 
+    selected_group_by_user_id_query = """
+    SELECT
+        ts_group_belongs.*
+    FROM todo_scratch.`group` as ts_group
+    LEFT JOIN todo_scratch.group_belongs as ts_group_belongs
+    ON ts_group.group_id = ts_group_belongs.group_id
+    WHERE ts_group_belongs.user_id = %(user_id)s
+    AND ts_group_belongs.is_selected = TRUE
+    """
+
     def __init__(self) -> None:
         self.group_db_accesor = DbAccesor(GroupEntity)
-        self.group_belong_db_accesor = DbAccesor(GroupBelongEntity)
+
+    def get_selected_group_belongs_by_user_id(self, user_id) -> List[GroupBelongEntity]:
+        """選択済みのグループ所属情報エンティティを取得します
+
+        Args:
+            user_id (_type_): ユーザID
+
+        Returns:
+            List[GroupBelongEntity]: グループ所属情報エンティティ
+        """
+        select_db_accesor = SelectDbAccesor(GroupBelongEntity)
+        group_entities = select_db_accesor.select(
+            query=self.selected_group_by_user_id_query,
+            param={"user_id": user_id}
+        )
+        return group_entities
 
     def save_group(self, group_entity: GroupEntity) -> int:
         """グループの追加
@@ -59,7 +84,8 @@ class GroupRepository:
         Returns:
             int: 追加したグループ所属情報のID
         """
-        return self.group_belong_db_accesor.insert(group_belongs_entity)
+        group_belong_db_accesor = DbAccesor(GroupBelongEntity)
+        return group_belong_db_accesor.insert(group_belongs_entity)
 
     def save_group_belongs_list(self, group_belongs_entities: List[GroupBelongEntity]) -> int:
         """グループ所属情報の複数
@@ -70,7 +96,8 @@ class GroupRepository:
         Returns:
             int: 複数したグループ所属情報の数
         """
-        return self.group_belong_db_accesor.insert_bulk(group_belongs_entities)
+        group_belong_db_accesor = DbAccesor(GroupBelongEntity)
+        return group_belong_db_accesor.insert_bulk(group_belongs_entities)
 
     def get_user_entity_by_identifier(self, identifier: str) -> List[UserEntity]:
         """ユーザの識別情報からユーザエンティティを取得します
@@ -117,3 +144,39 @@ class GroupRepository:
                 "group_id": group_id
             }
         )
+
+    def update_group_selected(self, user_id, select_group_id=0, is_selected_off_only=False) -> None:
+        """選択中のグループを変更します
+
+        Args:
+            user_id (_type_): 変更するユーザのID
+            select_group_id (int, optional): 変更先のグループのID. Defaults to 0.
+            is_selected_off_only (bool, optional): 選択中であるグループをOFFにするのみにするかのフラグ. Defaults to False.
+        """
+        selected_group_belongs_entities = self.get_selected_group_belongs_by_user_id(user_id)
+        if len(selected_group_belongs_entities) <= 0:
+            return
+
+        selected_group_belongs_entity = selected_group_belongs_entities[0]
+        group_belongs_db_accesor = DbAccesor(GroupBelongEntity)
+        selected_group_belongs_entity.is_selected.set_value(False)
+        # すでに選択中のグループを未選択へ更新
+        group_belongs_db_accesor.update(selected_group_belongs_entity)
+
+        if not is_selected_off_only:
+            # オフにするのみである場合、
+            return
+
+        group_belongs_entities = group_belongs_db_accesor.select_by_param(
+            param={
+                "user_id": user_id,
+                "group_id": select_group_id
+            }
+        )
+        if len(group_belongs_entities) <= 0:
+            return
+
+        group_belings_entity: GroupBelongEntity = group_belongs_entities[0]
+        group_belings_entity.is_selected.set_value(True)
+        # 変更先のグループを選択済みへ更新
+        group_belongs_db_accesor.update(group_belings_entity)
