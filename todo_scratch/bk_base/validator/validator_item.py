@@ -108,13 +108,15 @@ class ListValidatorItem(ValidatorItem):
 
     def validate(self, list: List) -> bool:
         self.validator_validated_list = []
+        if list is None or len(list) <= 0:
+            return True
 
         for object in list:
             validator: BaseValidator = self.validator(object)
 
             if not validator.validate():
                 return False
-            
+
             self.validator_validated_list.append(validator)
 
         return True

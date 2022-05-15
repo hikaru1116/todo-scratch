@@ -35,6 +35,15 @@ class GroupRepository:
     WHERE ts_group_belongs.group_id = %(group_id)s
     """
 
+    group_belongs_query = """
+    SELECT
+        ts_group_belongs.*
+    FROM todo_scratch.group_belongs as ts_group_belongs
+    INNER JOIN todo_scratch.`user` as ts_user
+    ON ts_group_belongs.user_id = ts_user.user_id
+    WHERE ts_group_belongs.group_id = %(group_id)s
+    """
+
     selected_group_by_user_id_query = """
     SELECT
         ts_group.*
@@ -125,6 +134,17 @@ class GroupRepository:
         group_belong_db_accesor = DbAccesor(GroupBelongEntity)
         return group_belong_db_accesor.insert_bulk(group_belongs_entities)
 
+    def update_group(self, group_entity: GroupEntity) -> int:
+        """グループの更新
+
+        Args:
+            group_entity (GroupEntity): 更新するグループのエンティティ
+
+        Returns:
+            int: 変更したグループのID
+        """
+        return self.group_db_accesor.update(group_entity)
+
     def get_user_entity_by_identifier(self, identifier: str) -> List[UserEntity]:
         """ユーザの識別情報からユーザエンティティを取得します
 
@@ -153,6 +173,23 @@ class GroupRepository:
             GroupEntity: グループエンティティ
         """
         return self.group_db_accesor.select_by_id(group_id)
+
+    def get_group_belongs_entities(self, group_id) -> List[GroupBelongEntity]:
+        """グループ所属情報の取得
+
+        Args:
+            group_id (_type_): 取得するグループのID
+
+        Returns:
+            _type_: グループ所属情報エンティティ
+        """
+        select_db_accesor = SelectDbAccesor(GroupBelongEntity)
+        return select_db_accesor.select(
+            query=self.group_belongs_query,
+            param={
+                "group_id": group_id
+            }
+        )
 
     def get_group_belongs_with_user_entities(self, group_id) -> List[GroupBelongsUserEntity]:
         """ユーザの権限情報とグループ所属情報の取得

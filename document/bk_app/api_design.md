@@ -369,11 +369,14 @@ PUT /group
 
 #### リクエストボディ
 
-| 項目        | 型     | 概要             |
-| ----------- | ------ | ---------------- |
-| group_name  | string | グループ名       |
-| description | string | グループの説明文 |
-| icon        | string | グループアイコン |
+| 項目        | 型     | 概要               |
+| ----------- | ------ | ------------------ |
+| group_name  | string | グループ名         |
+| description | string | グループの説明文   |
+| icon        | string | グループアイコン   |
+| users       | list   | 参加中のユーザ情報 |
+| □├user_id   | int    | ユーザ ID          |
+| □└auth_type | string | ユーザ権限         |
 
 #### レスポンスステータス
 
