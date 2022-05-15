@@ -37,5 +37,9 @@ class GroupController(Controller):
 
         return JSONResponse(dic=group_info)
 
+    def put(self, request: Request, **kwargs) -> Response:
+
+        return JSONResponse()
+
     def _get_handler(self) -> GroupHandler:
         return GroupHandler()

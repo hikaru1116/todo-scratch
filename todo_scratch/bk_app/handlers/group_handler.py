@@ -14,10 +14,6 @@ class GroupHandler:
     def __init__(self) -> None:
         self.group_repository = GroupRepository()
 
-    def get_group_entity_by_user_id(self, user_id: int) -> GroupEntity:
-
-        return self.group_repository.get_group_entity_by_user_id(user_id)
-
     def create_group(self, group_info: Dict, post_user_id) -> int:
         """グループの新規作成処理
 
@@ -153,3 +149,16 @@ class GroupHandler:
         group_detail_info["users"] = group_belongs_users
 
         return group_detail_info
+
+    def change_selected_group(self, user_id, select_group_id):
+        """指定したユーザの選択するグループを変更します
+
+        Args:
+            user_id (_type_): ユーザID
+            select_group_id (_type_): 選択するグループID
+        """
+
+        self.group_repository.update_group_selected(
+            user_id=user_id,
+            select_group_id=select_group_id
+        )

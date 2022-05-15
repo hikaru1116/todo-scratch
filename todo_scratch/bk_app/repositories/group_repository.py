@@ -180,16 +180,15 @@ class GroupRepository:
             is_selected_off_only (bool, optional): 選択中であるグループをOFFにするのみにするかのフラグ. Defaults to False.
         """
         selected_group_belongs_entities = self.get_selected_group_belongs_by_user_id(user_id)
-        if len(selected_group_belongs_entities) <= 0:
-            return
 
-        selected_group_belongs_entity = selected_group_belongs_entities[0]
         group_belongs_db_accesor = DbAccesor(GroupBelongEntity)
-        selected_group_belongs_entity.is_selected.set_value(False)
-        # すでに選択中のグループを未選択へ更新
-        group_belongs_db_accesor.update(selected_group_belongs_entity)
+        if len(selected_group_belongs_entities) > 0:
+            selected_group_belongs_entity = selected_group_belongs_entities[0]
+            selected_group_belongs_entity.is_selected.set_value(False)
+            # すでに選択中のグループを未選択へ更新
+            group_belongs_db_accesor.update(selected_group_belongs_entity)
 
-        if not is_selected_off_only:
+        if is_selected_off_only:
             # オフにするのみである場合、
             return
 
