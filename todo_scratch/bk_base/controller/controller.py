@@ -1,3 +1,4 @@
+import re
 from typing import Dict, Tuple, Callable
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.http_error_response import get_405_callback
@@ -33,7 +34,15 @@ class Controller:
         Returns:
             Dict: リクエストからコントローラへ渡す引数値
         """
-        return {}
+
+        # urlパラメータの取得
+        # TODO:intのみ対応している。他のデータ型も対応する。
+        if not request.url_path.find("<int>"):
+            return {}
+
+        return {
+            "url_path_param": re.findall(r'[0-9]+', request.path)
+        }
 
     def get_mehod_callback(self, method: str) -> Callable:
         return getattr(self, method, get_405_callback())

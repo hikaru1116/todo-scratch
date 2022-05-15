@@ -47,6 +47,7 @@ class Router:
             matchd = urlpattern.path_compiled.match(request.path)
             if not matchd:
                 continue
+            request.set_url_path(urlpattern.path)
             return urlpattern.controller.dispatch(request)
 
         return get_404_callback()

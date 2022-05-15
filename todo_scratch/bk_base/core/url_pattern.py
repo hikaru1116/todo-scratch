@@ -8,7 +8,7 @@ class UrlPattern:
 
     def __init__(self, path='^/$', controller: Controller = None) -> None:
         self.__path = path
-        self.__path_compiled = re.compile(path)
+        self.__path_compiled = re.compile(self._exchange_path_query(path))
         self.__controller = controller
 
     @property
@@ -22,3 +22,10 @@ class UrlPattern:
     @property
     def controller(self,) -> Controller:
         return self.__controller
+
+    def _exchange_path_query(self, path: str):
+        # TODO:数字のパスパラメータのみ対応している。他のデータ型でも対応できるようにする
+        if path.find("<int>") < 0:
+            return path
+
+        return path.replace("<int>", "[0-9]+")

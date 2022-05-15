@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 from todo_scratch.bk_app.entities.user_entity import UserEntity
 from todo_scratch.bk_app.handlers.group_handler import GroupHandler
 from todo_scratch.bk_app.validators.request_body_validators.create_group_validator import CreateGroupValidator
@@ -18,11 +18,19 @@ class GroupController(Controller):
         Controller (_type_): コントローラ基底クラス
     """
 
-    def get(self, request: Request, user: UserEntity) -> Response:
-        group_info = self._get_handler().get_selected_detail_group_info(user.user_id.value)
-        return JSONResponse(dic=group_info)
+    def get(self, request: Request, user: UserEntity, url_path_param: List) -> Response:
+        if len(url_path_param) <= 0:
+            return Response404()
 
-    def post(self, request: Request, user: UserEntity) -> Response:
+        group_id = int(url_path_param[0])
+
+        group_handler = self._get_handler()
+        if not group_handler.is_join_to_group(user.user_id.value, group_id):
+            return Response403()
+
+        return JSONResponse(dic=group_handler.get_detail_group_info(user.user_id.value, group_id))
+
+    def post(self, request: Request, user: UserEntity, **kwargs) -> Response:
         body = request.json
 
         validator = CreateGroupValidator(body)
@@ -38,30 +46,34 @@ class GroupController(Controller):
 
         return JSONResponse(dic=group_info)
 
-    def put(self, request: Request, user: UserEntity) -> Response:
-        # リクエストボディチェック
+    def put(self, request: Request, user: UserEntity, url_path_param: List) -> Response:
+        if len(url_path_param) <= 0:
+            return Response404()
+
+        group_id = int(url_path_param[0])
+
         body = request.json
         validator = UpdateGroupValidator(body)
         if not validator.validate():
             return Response404()
 
-        # ホストユーザのチェック
         group_handler = self._get_handler()
-        if not group_handler.is_host_user_by_group(user_id=user.user_id.value):
+        if not group_handler.is_host_user_in_group(user.user_id.value, group_id):
             return Response403()
 
         request_body = validator.result
 
         # グループ情報の更新
-        update_group_id = group_handler.update_selected_group_by_user(
+        update_group_id = group_handler.update_group_by_id(
             user_id=user.user_id.value,
+            group_id=group_id,
             group_name=request_body.get("group_name"),
             description=request_body.get("description")
         )
 
         if request_body.get("users") is not None and len(request_body.get("users")) > 0:
             # グループのユーザ権限の更新
-            group_handler.update_group_belongs(
+            group_handler.update_or_save_group_belongs_by_user_dic(
                 group_id=update_group_id,
                 group_belongs_list=request_body.get("users")
             )

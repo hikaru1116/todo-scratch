@@ -17,6 +17,14 @@ class Request:
         self.environ = environ
         self._body = None
         self.charset = charset
+        self._url_path = '/'
+
+    def set_url_path(self, url_path: str):
+        self._url_path = url_path
+
+    @property
+    def url_path(self):
+        return self._url_path
 
     @property
     def path(self):
