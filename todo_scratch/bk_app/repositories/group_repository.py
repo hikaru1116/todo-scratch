@@ -8,7 +8,7 @@ from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAcceso
 
 
 class GroupRepository:
-    """グループコントローラの永続化処理をまとめたクラス
+    """グループテーブルの永続化処理をまとめたクラス
     """
 
     user_entity_by_identifier = """

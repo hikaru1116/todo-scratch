@@ -1,4 +1,5 @@
 import typing as t
+from todo_scratch.bk_app.controllers.account_controller import AccountController
 from todo_scratch.bk_app.controllers.auth_test_controller import AuthorizedController, ForbddenController
 from todo_scratch.bk_app.controllers.group_change_controller import GroupChangeController
 from todo_scratch.bk_app.controllers.group_controller import GroupController
@@ -11,4 +12,5 @@ urlpatterns: t.List[UrlPattern] = [
     UrlPattern(path='^/forbidden', controller=ForbddenController()),
     UrlPattern(path='^/group$', controller=GroupController()),
     UrlPattern(path='^/group/change$', controller=GroupChangeController()),
+    UrlPattern(path='^/account$', controller=AccountController()),
 ]
