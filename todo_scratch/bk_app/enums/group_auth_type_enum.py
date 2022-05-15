@@ -9,3 +9,12 @@ class GroupAuthTypeEnum(IntFlag):
     """
     HOST = 0  # ホストユーザ
     NOMAL = 1  # 一般ユーザ
+
+    @staticmethod
+    def get_value(num: int):
+        if num == int(GroupAuthTypeEnum.HOST):
+            return GroupAuthTypeEnum.HOST
+        elif num == int(GroupAuthTypeEnum.NOMAL):
+            return GroupAuthTypeEnum.NOMAL
+        else:
+            return GroupAuthTypeEnum.NOMAL

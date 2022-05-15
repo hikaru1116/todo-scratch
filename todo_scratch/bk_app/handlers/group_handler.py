@@ -77,7 +77,7 @@ class GroupHandler:
 
         return insert_group_id
 
-    def get_detail_group_info(self, group_id: int) -> Dict:
+    def get_detail_group_info(self, call_user_id, group_id: int) -> Dict:
         """詳細なグループ情報を取得します
 
         Args:
@@ -97,9 +97,20 @@ class GroupHandler:
         group_detail_info["group_id"] = group_entity_dic.get("group_id")
         group_detail_info["group_name"] = group_entity_dic.get("group_name")
         group_detail_info["description"] = group_entity_dic.get("description")
-        group_belongs_users: List = []
-        for group_belong_user in group_belongs_user_entities:
-            group_belongs_users.append(group_belong_user.to_dict())
 
+        group_belongs_users: List = []
+
+        call_user_auth_type = int(GroupAuthTypeEnum.NOMAL)
+        call_user_user_state = int(GroupUserStateEnum.UNAPPROVED)
+        for group_belong_user in group_belongs_user_entities:
+            group_belong_user_dict = group_belong_user.to_dict()
+            if not group_belong_user_dict.get("user_id") and int(group_belong_user_dict.get("user_id")) == call_user_id:
+                call_user_auth_type = GroupAuthTypeEnum.get_value(group_belong_user_dict.get("auth_type"))
+                call_user_user_state = GroupUserStateEnum.get_value(group_belong_user_dict.get("user_state"))
+
+            group_belongs_users.append(group_belong_user_dict)
+
+        group_detail_info["auth_type"] = call_user_auth_type
+        group_detail_info["user_state"] = call_user_user_state
         group_detail_info["users"] = group_belongs_users
         return group_detail_info

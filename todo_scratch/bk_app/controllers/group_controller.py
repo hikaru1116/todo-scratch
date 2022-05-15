@@ -29,7 +29,7 @@ class GroupController(Controller):
 
         created_group_id = group_handler.create_group(request_body, user.user_id.value)
 
-        group_info: Dict = group_handler.get_detail_group_info(created_group_id)
+        group_info: Dict = group_handler.get_detail_group_info(user.user_id.value, created_group_id)
 
         return JSONResponse(dic=group_info)
 
