@@ -1,6 +1,8 @@
 
 from typing import List
 from todo_scratch.bk_app.entities.account_entity import AccountEntity
+from todo_scratch.bk_app.entities.user_entity import UserEntity
+from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAccesor
 
 
@@ -37,3 +39,15 @@ class AccountRepository:
                 "user_id": user_id
             }
         )
+
+    def update_account(self, user_entity: UserEntity) -> int:
+        """アカウント（ユーザ）の更新
+
+        Args:
+            user_entity (UserEntity): ユーザエンティティ
+
+        Returns:
+            int: 更新したユーザのID
+        """
+        db_accesor = DbAccesor(UserEntity)
+        return db_accesor.update(user_entity)
