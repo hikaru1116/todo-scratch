@@ -14,13 +14,9 @@ class AccountRepository:
     SELECT
         ts_user.user_id,
         ts_user.user_name,
-        ts_user.email,
-        ts_group_belongs.group_id
+        ts_user.email
     FROM todo_scratch.`user` as ts_user
-    LEFT JOIN todo_scratch.group_belongs as ts_group_belongs
-    ON ts_user.user_id = ts_group_belongs.user_id
-    WHERE ts_group_belongs.user_id = %(user_id)s
-    AND ts_group_belongs.is_selected = TRUE
+    WHERE ts_user.user_id = %(user_id)s
     """
 
     def get_account(self, user_id: int) -> List[AccountEntity]:

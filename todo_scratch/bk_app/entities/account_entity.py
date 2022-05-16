@@ -9,9 +9,9 @@ class AccountEntity(Entity):
     Args:
         Entity (_type_): エンティティ基底クラス
     """
+
     def __init__(self) -> None:
         self.user_id = items.IntItem(is_praimary=True)
         self.user_name = items.CharItem(length=30)
         self.email = items.CharItem(length=100)
-        self.group_id = items.IntItem()
         super().__init__()

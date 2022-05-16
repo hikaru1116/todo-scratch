@@ -188,13 +188,12 @@ GET /account
 
 #### レスポンスボディ
 
-| 項目      | 型     | 概要                          |
-| --------- | ------ | ----------------------------- |
-| user_id   | string | ユーザ ID                     |
-| user_name | string | ユーザのアカウント名          |
-| email     | string | ユーザのメールアドレス        |
-| group_id  | string | 選択中のグループのグループ ID |
-| icon      | string | ユーザアイコン                |
+| 項目      | 型     | 概要                   |
+| --------- | ------ | ---------------------- |
+| user_id   | string | ユーザ ID              |
+| user_name | string | ユーザのアカウント名   |
+| email     | string | ユーザのメールアドレス |
+| icon      | string | ユーザアイコン         |
 
 #### 処理内容
 
@@ -226,6 +225,7 @@ PUT /account
 
 | 項目      | 型     | 概要                   |
 | --------- | ------ | ---------------------- |
+| user_id   | string | ユーザ ID              |
 | user_name | string | ユーザのアカウント名   |
 | email     | string | ユーザのメールアドレス |
 | icon      | string | ユーザアイコン         |

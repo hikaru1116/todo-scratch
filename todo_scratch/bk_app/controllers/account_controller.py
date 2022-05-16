@@ -18,12 +18,12 @@ class AccountController(Controller):
         Controller (_type_): コントローラ基底クラス
     """
 
-    def get(self, request: Request, user: UserEntity) -> Response:
+    def get(self, request: Request, user: UserEntity, **kwargs) -> Response:
         return JSONResponse(
             dic=self._get_handler().get_account(user.user_id.value)
         )
 
-    def put(self, request: Request, user: UserEntity) -> Response:
+    def put(self, request: Request, user: UserEntity, **kwargs) -> Response:
 
         body = request.json
 
