@@ -1,9 +1,11 @@
 from typing import List
 from todo_scratch.bk_app.entities.group_belongs_entity import GroupBelongEntity
 from todo_scratch.bk_app.entities.group_belongs_user_entity import GroupBelongsUserEntity
+from todo_scratch.bk_app.entities.group_detail_entity import GroupDetailEntity
 from todo_scratch.bk_app.entities.group_entity import GroupEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_app.entities.user_entity import UserEntity
+from todo_scratch.bk_app.enums.group_user_state_enum import GroupUserStateEnum
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAccesor
 
@@ -53,6 +55,20 @@ class GroupRepository:
     ON ts_group.group_id = ts_group_belongs.group_id
     WHERE ts_group_belongs.user_id = %(user_id)s
     AND ts_group_belongs.group_id = %(group_id)s
+    """
+
+    get_joined_group_by_user_id_query = """
+    SELECT
+        ts_group.group_id,
+        ts_group.group_name,
+        ts_group.description,
+        ts_group_belongs.auth_type,
+    ts_group_belongs.user_status
+    FROM todo_scratch.group_belongs as ts_group_belongs
+    LEFT JOIN todo_scratch.`group` as ts_group
+    ON ts_group_belongs.group_id = ts_group.group_id
+    WHERE ts_group_belongs.user_id = %(user_id)s
+    AND ts_group_belongs.user_status = %(user_status)s
     """
 
     def __init__(self) -> None:
@@ -171,6 +187,24 @@ class GroupRepository:
             query=self.get_group_belongs_with_user_entities_query,
             param={
                 "group_id": group_id
+            }
+        )
+
+    def get_joined_group_by_user_id(self, user_id: int) -> List[GroupDetailEntity]:
+        """参加済みのグループの詳細情報の取得
+
+        Args:
+            user_id (int): ユーザID
+
+        Returns:
+            List[GroupDetailEntity]: グループ詳細情報エンティティリスト
+        """
+        select_db_accesor = SelectDbAccesor(GroupDetailEntity)
+        return select_db_accesor.select(
+            query=self.get_joined_group_by_user_id_query,
+            param={
+                "user_id": user_id,
+                "user_status": int(GroupUserStateEnum.APPROVED)
             }
         )
 
