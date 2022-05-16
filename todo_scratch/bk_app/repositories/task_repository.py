@@ -51,3 +51,15 @@ class TaskRepository:
         """
         db_accesor = DbAccesor(TaskEntity)
         return db_accesor.update(task_entity)
+
+    def delete_task(self, task_entites: List[TaskEntity]) -> int:
+        """タスクの削除
+
+        Args:
+            task_entites (List[TaskEntity]): 削除するタスクエンティティ
+
+        Returns:
+            int: 削除したレコード数
+        """
+        db_accesor = DbAccesor(TaskEntity)
+        return db_accesor.delete_bulk(task_entites)

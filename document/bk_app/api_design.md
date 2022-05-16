@@ -772,13 +772,6 @@ DELETE /group/{group_id}/task/{task_id}
 | ---- | ------ |
 | ◯    | ×      |
 
-#### リクエストボディ
-
-| 項目      | 型   | 概要                |
-| --------- | ---- | ------------------- |
-| list      | list | list                |
-| □├task_id | int  | 削除対象のタスク ID |
-
 #### レスポンスステータス
 
 | ステータス | 概要             |
@@ -799,7 +792,7 @@ DELETE /group/{group_id}/task/{task_id}
 #### メソッド、エンドポイント
 
 ```
-POST /task/change/staus
+POST /group/{group_id}/task/{task_id}/change-status
 ```
 
 #### 認証・認可
@@ -812,7 +805,6 @@ POST /task/change/staus
 
 | 項目           | 型  | 概要                          |
 | -------------- | --- | ----------------------------- |
-| task_id        | int | 変更するタスク のタスク ID    |
 | task_status_id | int | 変更するタスクステータスの ID |
 
 #### レスポンスステータス
@@ -835,7 +827,7 @@ POST /task/change/staus
 #### メソッド、エンドポイント
 
 ```
-GET /task/history/{task_id}
+GET /group/{group_id}/task/{task_id}/history
 ```
 
 #### 認証・認可
@@ -874,7 +866,7 @@ GET /task/history/{task_id}
 #### メソッド、エンドポイント
 
 ```
-POST /task/comment
+POST /group/{group_id}/task/{task_id}/comment
 ```
 
 #### 認証・認可
@@ -885,10 +877,9 @@ POST /task/comment
 
 #### リクエストボディ
 
-| 項目    | 型     | 概要                      |
-| ------- | ------ | ------------------------- |
-| task_id | int    | 投稿するタスクのタスク ID |
-| comment | string | コメントテキスト          |
+| 項目    | 型     | 概要             |
+| ------- | ------ | ---------------- |
+| comment | string | コメントテキスト |
 
 #### レスポンスステータス
 

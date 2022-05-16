@@ -56,5 +56,17 @@ class TaskController(Controller):
 
         return Response()
 
+    def delete(self, request: Request, user: UserEntity, url_path_param: List, **kwargs) -> Response:
+        if len(url_path_param) <= 1:
+            return Response404()
+
+        group_id = int(url_path_param[0])
+        task_id = int(url_path_param[1])
+
+        if not self._get_handler().delete_task(task_id, group_id, user.user_id.value):
+            return Response404()
+
+        return Response()
+
     def _get_handler(self) -> TaskHandler:
         return TaskHandler()

@@ -77,7 +77,7 @@ class TaskHandler:
             param (dict): 更新タスク情報
 
         Returns:
-            bool: 新規追加できたか判定
+            bool: 新規追加の可否
         """
 
         task_entities = self.task_repository.get_task_by_id(
@@ -98,3 +98,25 @@ class TaskHandler:
 
         self.task_repository.update_task(update_task_entity)
         return True
+
+    def delete_task(self, task_id, group_id: int, user_id: int) -> bool:
+        """タスクの削除
+
+        Args:
+            task_id (_type_): タスクID
+            group_id (int): グループID
+            user_id (int): ユーザID
+
+        Returns:
+            bool: 削除の可否
+        """
+        task_entities = self.task_repository.get_task_by_id(
+            task_id=task_id,
+            group_id=group_id,
+            user_id=user_id
+        )
+
+        if len(task_entities) <= 0:
+            return False
+
+        return self.task_repository.delete_task(task_entities) > 0
