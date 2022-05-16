@@ -21,7 +21,7 @@ class GroupJoinedController(Controller):
 
         group_detail_entities: List[GroupDetailEntity] = self._get_handler().get_joined_group_list(user.user_id.value)
         if len(group_detail_entities) <= 0:
-            return Response()
+            return JSONResponse(dic={})
 
         result = []
         for group_detail_entity in group_detail_entities:

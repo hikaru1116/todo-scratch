@@ -1,9 +1,12 @@
-from typing import List
+from typing import Dict, List
 from todo_scratch.bk_app.entities.group_detail_entity import GroupDetailEntity
 from todo_scratch.bk_app.entities.user_entity import UserEntity
+from todo_scratch.bk_app.enums.group_user_state_enum import GroupUserStateEnum
 from todo_scratch.bk_app.handlers.group_approcal_request_handler import GroupApprovalRequestHandler
+from todo_scratch.bk_app.handlers.group_handler import GroupHandler
 from todo_scratch.bk_base.controller.controller import Controller
 from todo_scratch.bk_base.http.request import Request
+from todo_scratch.bk_base.http.response.http_error_response import Response404
 from todo_scratch.bk_base.http.response.json_response import JSONResponse
 from todo_scratch.bk_base.http.response.response import Response
 
@@ -22,7 +25,7 @@ class GroupApprovalRequestController(Controller):
             self._get_handler().get_un_approved_group_list(user.user_id.value)
 
         if len(group_detail_entities) <= 0:
-            return Response()
+            return JSONResponse(dic={})
 
         result = []
         for group_detail_entity in group_detail_entities:
@@ -32,8 +35,30 @@ class GroupApprovalRequestController(Controller):
             dic=result
         )
 
-    def post(self, request: Request, user: UserEntity) -> Response:
-        return JSONResponse()
+    def post(self, request: Request, user: UserEntity, **kwargs) -> Response:
+        body: Dict = request.json
+        group_id = body.get('group_id', None)
+
+        if group_id is None:
+            return Response404()
+
+        group_handler = self._get_group_handler()
+
+        if group_handler.is_join_to_group(user.user_id.value, group_id):
+            return Response404()
+
+        group_handler.update_group_belongs_by_user_status(
+            user.user_id.value,
+            group_id,
+            GroupUserStateEnum.APPROVED
+        )
+
+        return JSONResponse(
+            dic=group_handler.get_detail_group_info(user.user_id.value, group_id)
+        )
 
     def _get_handler(self):
         return GroupApprovalRequestHandler()
+
+    def _get_group_handler(self,):
+        return GroupHandler()

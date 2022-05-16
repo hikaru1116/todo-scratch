@@ -35,7 +35,6 @@ class MiddlewareProcess:
             request,
             **kwargs)
 
-        print(kwargs, request.url_path)
         if response is not None:
             return response
 

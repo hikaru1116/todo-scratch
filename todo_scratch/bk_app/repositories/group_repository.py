@@ -266,3 +266,14 @@ class GroupRepository:
             int: 変更したグループのID
         """
         return self.group_db_accesor.update(group_entity)
+
+    def update_group_belongs(self, group_belongs_entity: GroupBelongEntity) -> int:
+        """グループの更新
+
+        Args:
+            group_entity (GroupEntity): 更新するグループのエンティティ
+
+        Returns:
+            int: 変更したグループ所属情報のID
+        """
+        return self.group_db_accesor.update(group_belongs_entity)

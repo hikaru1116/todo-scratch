@@ -8,6 +8,7 @@ from todo_scratch.bk_app.repositories.group_repository import GroupRepository
 class GroupApprovalRequestHandler:
     """グループ承認リクエストハンドラー
     """
+
     def __init__(self) -> None:
         self.group_repository = GroupRepository()
 
@@ -24,4 +25,3 @@ class GroupApprovalRequestHandler:
             user_id=user_id,
             user_status=GroupUserStateEnum.UNAPPROVED
         )
-        
