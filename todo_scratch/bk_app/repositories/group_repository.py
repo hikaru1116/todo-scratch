@@ -190,11 +190,12 @@ class GroupRepository:
             }
         )
 
-    def get_joined_group_by_user_id(self, user_id: int) -> List[GroupDetailEntity]:
+    def get_detail_group_by_user_status(self, user_id: int, user_status: GroupUserStateEnum) -> List[GroupDetailEntity]:
         """参加済みのグループの詳細情報の取得
 
         Args:
             user_id (int): ユーザID
+            user_status (GroupUserStateEnum): ユーザ状態Enum 承認/未承認
 
         Returns:
             List[GroupDetailEntity]: グループ詳細情報エンティティリスト
@@ -204,7 +205,7 @@ class GroupRepository:
             query=self.get_joined_group_by_user_id_query,
             param={
                 "user_id": user_id,
-                "user_status": int(GroupUserStateEnum.APPROVED)
+                "user_status": int(user_status)
             }
         )
 

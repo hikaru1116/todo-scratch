@@ -1,6 +1,7 @@
 import typing as t
 from todo_scratch.bk_app.controllers.account_controller import AccountController
 from todo_scratch.bk_app.controllers.auth_test_controller import AuthorizedController, ForbddenController
+from todo_scratch.bk_app.controllers.group_approval_request_controller import GroupApprovalRequestController
 from todo_scratch.bk_app.controllers.group_controller import GroupController
 from todo_scratch.bk_app.controllers.group_joined_controller import GroupJoinedController
 from todo_scratch.bk_app.controllers.hello_controller import HelloController
@@ -13,5 +14,6 @@ urlpatterns: t.List[UrlPattern] = [
     UrlPattern(path='^/group$', controller=GroupController()),
     UrlPattern(path='/group/<int>$', controller=GroupController()),
     UrlPattern(path='/group/joined$', controller=GroupJoinedController()),
+    UrlPattern(path='^/group/approval-request$', controller=GroupApprovalRequestController()),
     UrlPattern(path='^/account$', controller=AccountController()),
 ]
