@@ -7,6 +7,7 @@ from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_app.enums.group_auth_type_enum import GroupAuthTypeEnum
 from todo_scratch.bk_app.enums.group_user_state_enum import GroupUserStateEnum
 from todo_scratch.bk_app.repositories.group_repository import GroupRepository
+from todo_scratch.bk_app.services.group_auth_service import GroupAuthService
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 
 
@@ -27,13 +28,7 @@ class GroupHandler:
         Returns:
             Boolean: グループの参加有無
         """
-        group_belongs_entities = self.group_repository.get_group_belongs_by_id(
-            user_id=user_id,
-            group_id=group_id
-        )
-        if len(group_belongs_entities) <= 0:
-            return False
-        return group_belongs_entities[0].user_status.value == int(GroupUserStateEnum.APPROVED)
+        return GroupAuthService.is_join_to_group(user_id, group_id)
 
     def is_host_user_in_group(self, user_id: int, group_id: int) -> Boolean:
         """グループのホストユーザであるか判定
@@ -45,14 +40,7 @@ class GroupHandler:
         Returns:
             Boolean: ホストユーザであるかの有無
         """
-        group_belongs_entities = self.group_repository.get_group_belongs_by_id(
-            user_id=user_id,
-            group_id=group_id
-        )
-        if len(group_belongs_entities) <= 0:
-            return False
-        return group_belongs_entities[0].user_status.value == int(GroupUserStateEnum.APPROVED) and \
-            group_belongs_entities[0].auth_type.value == int(GroupAuthTypeEnum.HOST)
+        return GroupAuthService.is_host_user_in_group(user_id, group_id)
 
     def create_group(self, group_info: Dict, post_user_id) -> int:
         """グループの新規作成処理
