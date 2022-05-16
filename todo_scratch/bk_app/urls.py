@@ -20,4 +20,5 @@ urlpatterns: t.List[UrlPattern] = [
     UrlPattern(path='^/group/leave$', controller=GroupLeaveController()),
     UrlPattern(path='^/account$', controller=AccountController()),
     UrlPattern(path='^/group/<int>/task$', controller=TaskController()),
+    UrlPattern(path='^/group/<int>/task/<int>$', controller=TaskController()),
 ]

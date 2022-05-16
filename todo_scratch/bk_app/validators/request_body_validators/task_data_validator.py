@@ -2,8 +2,8 @@ from todo_scratch.bk_base.validator.json_validator import JsonValidator
 from todo_scratch.bk_base.validator.validator_item import DatetimeValidatorItem, IntValidatorItem, TextValidatorItem, VcharValidatorItem
 
 
-class CreateTaskValidator(JsonValidator):
-    """タスク新規作成用リクエストボディバリデータ
+class TaskDataValidator(JsonValidator):
+    """タスク情報データリクエストボディバリデータ
 
     Args:
         JsonValidator (_type_): Jsonバリデーション基底クラス

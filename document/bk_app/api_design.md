@@ -20,8 +20,8 @@
 | [グループ招待](#グループ招待)                         | /group/invite                                  | POST     | 有   | グループ招待                             | グループ管理 |
 | [タスク一覧取得](#タスク一覧取得)                     | /group/{group_id}/task                         | GET      | 有   | タスク一覧取得                           | アプリ       |
 | [タスク新規作成](#タスク新規作成)                     | /group/{group_id}/task                         | POST     | 有   | タスク新規作成                           | アプリ       |
-| [タスク更新](#タスク更新)                             | /group/{group_id}/task                         | PUT      | 有   | タスク更新                               | アプリ       |
-| [タスク削除](#タスク削除)                             | /group/{group_id}/task                         | DELETE   | 有   | タスク削除                               | アプリ       |
+| [タスク更新](#タスク更新)                             | /group/{group_id}/task/{task_id}               | PUT      | 有   | タスク更新                               | アプリ       |
+| [タスク削除](#タスク削除)                             | /group/{group_id}/task/{task_id}               | DELETE   | 有   | タスク削除                               | アプリ       |
 | [タスクステータス変更](#タスクステータス変更)         | /group/{group_id}/task/{task_id}/change-status | PUT      | 有   | タスクステータス変更                     | アプリ       |
 | [タスク履歴情報取得](#タスク履歴情報取得)             | /group/{group_id}/task/{task_id}/history       | GET      | 有   | タスク履歴情報取得                       | アプリ       |
 | [タスクコメント投稿](#タスクコメント投稿)             | /group/{group_id}/task/{task_id}/comment       | POST     | 有   | タスクコメント投稿                       | アプリ       |
@@ -726,7 +726,7 @@ POST /group/{group_id}/task
 #### メソッド、エンドポイント
 
 ```
-PUT /group/{group_id}/task
+PUT /group/{group_id}/task/{task_id}
 ```
 
 #### 認証・認可
@@ -737,12 +737,11 @@ PUT /group/{group_id}/task
 
 #### リクエストボディ
 
-| 項目        | 型       | 概要                |
-| ----------- | -------- | ------------------- |
-| task_id     | int      | 削除対象のタスク ID |
-| title       | string   | タスクタイトル      |
-| context     | int      | タスク内容テキスト  |
-| deadline_at | datetime | 期限日時            |
+| 項目        | 型       | 概要               |
+| ----------- | -------- | ------------------ |
+| title       | string   | タスクタイトル     |
+| context     | int      | タスク内容テキスト |
+| deadline_at | datetime | 期限日時           |
 
 #### レスポンスステータス
 
@@ -764,7 +763,7 @@ PUT /group/{group_id}/task
 #### メソッド、エンドポイント
 
 ```
-DELETE /group/{group_id}/task
+DELETE /group/{group_id}/task/{task_id}
 ```
 
 #### 認証・認可

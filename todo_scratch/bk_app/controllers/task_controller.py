@@ -2,7 +2,7 @@
 from typing import List
 from todo_scratch.bk_app.entities.user_entity import UserEntity
 from todo_scratch.bk_app.handlers.task_handler import TaskHandler
-from todo_scratch.bk_app.validators.request_body_validators.create_task_validator import CreateTaskValidator
+from todo_scratch.bk_app.validators.request_body_validators.task_data_validator import TaskDataValidator
 from todo_scratch.bk_base.controller.controller import Controller
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.http_error_response import Response404
@@ -24,7 +24,7 @@ class TaskController(Controller):
         group_id = int(url_path_param[0])
         body = request.json
 
-        validator = CreateTaskValidator(body)
+        validator = TaskDataValidator(body)
         if not validator.validate():
             return Response404()
 
@@ -33,9 +33,25 @@ class TaskController(Controller):
         if not handler.is_join_to_group(user.user_id.value, group_id):
             return Response404()
 
-        param = validator.result
+        if not handler.create_task(group_id, user.user_id.value, validator.result):
+            return Response404()
 
-        if not handler.create_task(group_id, user.user_id.value, param):
+        return Response()
+
+    def put(self, request: Request, user: UserEntity, url_path_param: List) -> Response:
+        if len(url_path_param) <= 1:
+            return Response404()
+
+        group_id = int(url_path_param[0])
+        task_id = int(url_path_param[1])
+
+        body = request.json
+
+        validator = TaskDataValidator(body)
+        if not validator.validate():
+            return Response404()
+
+        if not self._get_handler().update_task(task_id, group_id, user.user_id.value, validator.result):
             return Response404()
 
         return Response()

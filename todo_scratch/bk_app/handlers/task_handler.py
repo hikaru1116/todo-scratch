@@ -66,3 +66,35 @@ class TaskHandler:
         )
 
         return self.task_repository.save_task(task_entity=task_entity) > 0
+
+    def update_task(self, task_id: int, group_id: int, user_id: int, param: Dict) -> bool:
+        """タスクの更新
+
+        Args:
+            task_id (int): タスクID
+            group_id (int): グループID
+            user_id (int): ユーザID
+            param (dict): 更新タスク情報
+
+        Returns:
+            bool: 新規追加できたか判定
+        """
+
+        task_entities = self.task_repository.get_task_by_id(
+            task_id=task_id,
+            group_id=group_id,
+            user_id=user_id
+        )
+
+        if len(task_entities) <= 0:
+            return False
+
+        update_task_entity = task_entities[0]
+
+        update_task_entity.title.set_value(param.get("title"))
+        update_task_entity.context.set_value(param.get("context"))
+        update_task_entity.deadline_at.set_value(param.get("deadline_at"))
+        update_task_entity.task_status_id.set_value(param.get("task_status_id"))
+
+        self.task_repository.update_task(update_task_entity)
+        return True
