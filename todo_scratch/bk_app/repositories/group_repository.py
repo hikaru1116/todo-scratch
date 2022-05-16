@@ -74,7 +74,7 @@ class GroupRepository:
     def __init__(self) -> None:
         self.group_db_accesor = DbAccesor(GroupEntity)
 
-    def get_group_entity(self, group_id: int) -> GroupEntity:
+    def get_group_entity_by_group_id(self, group_id: int) -> GroupEntity:
         """グループエンティティの取得
 
         Args:
@@ -85,7 +85,7 @@ class GroupRepository:
         """
         return self.group_db_accesor.select_by_id(group_id)
 
-    def get_group_by_user_id(self, user_id, group_id: int) -> List[GroupEntity]:
+    def get_group_by_user_id(self, user_id: int, group_id: int) -> List[GroupEntity]:
         """指定したIDのグループ情報の取得
 
         Args:
@@ -277,3 +277,16 @@ class GroupRepository:
             int: 変更したグループ所属情報のID
         """
         return self.group_db_accesor.update(group_belongs_entity)
+
+    def delete_group_belongs_bulk(self, group_belongs_entities: List[GroupBelongEntity]) -> int:
+        """グループ所属情報の一括削除
+
+        Args:
+            group_belongs_entities (List[GroupBelongEntity]): 削除対象のグループ所属情報エンティティリスト
+
+        Returns:
+            int: 削除したレコードの数
+        """
+        
+        db_accesor = DbAccesor(GroupBelongEntity)
+        return db_accesor.delete_bulk(group_belongs_entities)

@@ -47,11 +47,8 @@ class GroupApprovalRequestController(Controller):
         if group_handler.is_join_to_group(user.user_id.value, group_id):
             return Response404()
 
-        group_handler.update_group_belongs_by_user_status(
-            user.user_id.value,
-            group_id,
-            GroupUserStateEnum.APPROVED
-        )
+        if not group_handler.update_group_belongs_by_user_status(user.user_id.value, group_id, GroupUserStateEnum.APPROVED):
+            return Response404()
 
         return JSONResponse(
             dic=group_handler.get_detail_group_info(user.user_id.value, group_id)

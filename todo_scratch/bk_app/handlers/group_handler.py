@@ -199,7 +199,7 @@ class GroupHandler:
         if len(insert_group_belongs_entities) > 0:
             self.group_repository.save_group_belongs_list(insert_group_belongs_entities)
 
-    def update_group_belongs_by_user_status(self, user_id: int, group_id: int, user_status: GroupUserStateEnum):
+    def update_group_belongs_by_user_status(self, user_id: int, group_id: int, user_status: GroupUserStateEnum) -> Boolean:
         """グループ所属情報の新規作成
 
         Args:
@@ -208,12 +208,12 @@ class GroupHandler:
         """
         group_belongs_entities = self.group_repository.get_group_belongs_by_id(user_id, group_id)
         if len(group_belongs_entities) <= 0:
-            return
+            return False
 
         update_entity = group_belongs_entities[0]
         update_entity.user_status.set_value(int(user_status))
 
-        self.group_repository.update_group_belongs(update_entity)
+        return self.group_repository.update_group_belongs(update_entity) > 0
 
     def get_detail_group_info(self, call_user_id: int, group_id: int) -> Dict:
         """指定したグループの詳細なグループ情報を取得します
@@ -225,7 +225,7 @@ class GroupHandler:
             Dict: グループ情報
         """
 
-        group_entity: GroupEntity = self.group_repository.get_group_entity(group_id)
+        group_entity: GroupEntity = self.group_repository.get_group_entity_by_group_id(group_id)
 
         if group_entity is None:
             return {}
