@@ -1,6 +1,7 @@
 
 from typing import List
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
+from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 
 
@@ -63,3 +64,19 @@ class TaskRepository:
         """
         db_accesor = DbAccesor(TaskEntity)
         return db_accesor.delete_bulk(task_entites)
+
+    def get_task_status_by_group_id(self, group_id: int) -> List[TaskStatusEntity]:
+        """指定したグループのタスク状態マスタの取得
+
+        Args:
+            group_id (int): グループID
+
+        Returns:
+            List[TaskStatusEntity]: タスク情報エンティティ
+        """
+        db_accesor = DbAccesor(TaskStatusEntity)
+        return db_accesor.select_by_param(
+            param={
+                "group_id": group_id
+            }
+        )

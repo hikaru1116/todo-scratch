@@ -120,3 +120,44 @@ class TaskHandler:
             return False
 
         return self.task_repository.delete_task(task_entities) > 0
+
+    def change_task_status(self, task_id: int, group_id: int, user_id: int, task_status_id: int) -> bool:
+        """タスクのステータスの変更
+
+        Args:
+            task_id (int): タスクID
+            group_id (int): グループID
+            user_id (int): ユーザID
+            task_status_id (int): 変更するタスクステータスID
+
+        Returns:
+            bool: 変更の可否
+        """
+        task_entities = self.task_repository.get_task_by_id(
+            task_id=task_id,
+            group_id=group_id,
+            user_id=user_id
+        )
+
+        if len(task_entities) <= 0:
+            return False
+
+        task_status_entities = self.task_repository.get_task_status_by_group_id(
+            group_id=group_id
+        )
+
+        is_update_done = False
+        for task_entity in task_entities:
+            is_update = False
+            for task_status_entity in task_status_entities:
+                if task_status_entity.task_status_id.value == task_status_id:
+                    is_update = True
+                    is_update_done = True
+                    task_entity.task_status_id.set_value(
+                        task_status_entity.task_status_id.value
+                    )
+
+            if is_update:
+                self.task_repository.update_task(task_entity)
+
+        return is_update_done

@@ -38,7 +38,7 @@ class TaskController(Controller):
 
         return Response()
 
-    def put(self, request: Request, user: UserEntity, url_path_param: List) -> Response:
+    def put(self, request: Request, user: UserEntity, url_path_param: List, **kwargs) -> Response:
         if len(url_path_param) <= 1:
             return Response404()
 
