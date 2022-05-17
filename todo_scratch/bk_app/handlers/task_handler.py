@@ -1,6 +1,7 @@
-from typing import Dict
+from typing import Dict, List
 from todo_scratch.bk_app.entities.comment_entity import CommentEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
+from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_app.repositories.task_repository import TaskRepository
 from todo_scratch.bk_app.services.group_auth_service import GroupAuthService
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
@@ -45,6 +46,31 @@ class TaskHandler:
             bool: ホストユーザであるかの有無
         """
         return GroupAuthService.is_host_user_in_group(user_id, group_id)
+
+    def get_task_status_list(self, group_id) -> List[Dict]:
+        """タスクステータス情報の取得
+
+        Args:
+            group_id (_type_): グループID
+
+        Returns:
+            List[Dict]: タスクステータス情報エンティティリスト
+        """
+        entities: List[TaskStatusEntity] = self.task_repository.get_task_status_by_group_id(
+            group_id=group_id
+        )
+
+        list = []
+        for entity in entities:
+            list.append(
+                {
+                    "task_status_id": entity.task_status_id.value,
+                    "group_id": entity.group_id.value,
+                    "task_status_name": entity.task_status_name.value,
+                    "status_color": entity.status_color.value
+                }
+            )
+        return list
 
     def create_task(self, group_id: int, user_id: int, param: Dict) -> bool:
         """タスクの新規追加
@@ -116,7 +142,15 @@ class TaskHandler:
         update_task_entity.title.set_value(param.get("title"))
         update_task_entity.context.set_value(param.get("context"))
         update_task_entity.deadline_at.set_value(param.get("deadline_at"))
-        update_task_entity.task_status_id.set_value(param.get("task_status_id"))
+
+        task_status_entities = self.task_repository.get_task_status_by_group_id(
+            group_id=group_id
+        )
+        update_task_status_id = param.get("task_status_id")
+        for task_status_entity in task_status_entities:
+            if not task_status_entity.task_status_id.value == update_task_status_id:
+                continue
+            update_task_entity.task_status_id.set_value(update_task_status_id)
 
         self.task_repository.update_task(update_task_entity)
         return True
