@@ -1,5 +1,7 @@
 
 from typing import List
+from todo_scratch.bk_app.entities.comment_entity import CommentEntity
+from todo_scratch.bk_app.entities.history_entity import HistoryEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
@@ -29,7 +31,7 @@ class TaskRepository:
             }
         )
 
-    def save_task(self, task_entity: TaskEntity) -> int:
+    def insert_task(self, task_entity: TaskEntity) -> int:
         """タスクの追加
 
         Args:
@@ -40,6 +42,32 @@ class TaskRepository:
         """
         db_accesor = DbAccesor(TaskEntity)
         return db_accesor.insert(task_entity)
+
+    def insert_task_comment(self, task_comment_entity: CommentEntity) -> int:
+        """タスクコメントの追加
+
+        Args:
+            task_comment_entity (CommentEntity): タスクコメントエンティティ
+
+        Returns:
+            int: 追加したタスクコメントID
+        """
+
+        db_accesor = DbAccesor(CommentEntity)
+        return db_accesor.insert(task_comment_entity)
+
+    def insert_task_history(self, task_hisotry_entity: HistoryEntity) -> int:
+        """タスク履歴の追加
+
+        Args:
+            task_hisotry_entity (HistoryEntity): タスク履歴エンティティ
+
+        Returns:
+            int: 追加したタスク履歴ID
+        """
+
+        db_accesor = DbAccesor(HistoryEntity)
+        return db_accesor.insert(task_hisotry_entity)
 
     def update_task(self, task_entity: TaskEntity) -> int:
         """タスクの更新

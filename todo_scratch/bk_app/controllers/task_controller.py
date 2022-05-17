@@ -51,7 +51,7 @@ class TaskController(Controller):
         if not validator.validate():
             return Response404()
 
-        if not self._get_handler().update_task(task_id, group_id, user.user_id.value, validator.result):
+        if not self._get_handler().update_task(task_id, group_id, user, validator.result):
             return Response404()
 
         return Response()

@@ -31,7 +31,7 @@ class TaskChangeStatusController(Controller):
         if not handler.is_join_to_group(user.user_id.value, group_id):
             return Response403()
 
-        if not handler.change_task_status(task_id, group_id, user.user_id.value, task_status_id):
+        if not handler.change_task_status(task_id, group_id, user, task_status_id):
             return Response404()
 
         return Response()

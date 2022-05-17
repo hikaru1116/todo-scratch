@@ -1,10 +1,11 @@
 from typing import Dict, List
 from todo_scratch.bk_app.entities.comment_entity import CommentEntity
+from todo_scratch.bk_app.entities.history_entity import HistoryEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
+from todo_scratch.bk_app.entities.user_entity import UserEntity
 from todo_scratch.bk_app.repositories.task_repository import TaskRepository
 from todo_scratch.bk_app.services.group_auth_service import GroupAuthService
-from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 
 
 class TaskHandler:
@@ -93,7 +94,7 @@ class TaskHandler:
             deadline_at=param.get("deadline_at")
         )
 
-        return self.task_repository.save_task(task_entity=task_entity) > 0
+        return self.task_repository.insert_task(task_entity=task_entity) > 0
 
     def post_task_comment(self, task_id: int, user_id: int, comment: str) -> int:
         """タスクコメントの追加
@@ -112,16 +113,34 @@ class TaskHandler:
             comment=comment
         )
 
-        db_accesor = DbAccesor(CommentEntity)
-        return db_accesor.insert(comment_entity)
+        return self.task_repository.insert_task_comment(comment_entity)
 
-    def update_task(self, task_id: int, group_id: int, user_id: int, param: Dict) -> bool:
+    def _insert_task_history(self, task_id: int, hitory_text: str, inner_texts=()) -> int:
+        """タスク履歴の追加
+
+        Args:
+            task_id (int): 追加するタスクID
+            hitory_text (str): 履歴テキスト
+            post_user_name (str, optional): 履歴テキストに含める文字列. Defaults to "".
+
+        Returns:
+            int: _description_
+        """
+
+        task_history_entity = HistoryEntity.create_instance(
+            task_id=task_id,
+            history_text=hitory_text.format(*inner_texts)
+        )
+
+        return self.task_repository.insert_task_history(task_history_entity)
+
+    def update_task(self, task_id: int, group_id: int, user: UserEntity, param: Dict) -> bool:
         """タスクの更新
 
         Args:
             task_id (int): タスクID
             group_id (int): グループID
-            user_id (int): ユーザID
+            user (UserEntity): ユーザエンティティ
             param (dict): 更新タスク情報
 
         Returns:
@@ -131,7 +150,7 @@ class TaskHandler:
         task_entities = self.task_repository.get_task_by_id(
             task_id=task_id,
             group_id=group_id,
-            user_id=user_id
+            user_id=user.user_id.value
         )
 
         if len(task_entities) <= 0:
@@ -147,12 +166,24 @@ class TaskHandler:
             group_id=group_id
         )
         update_task_status_id = param.get("task_status_id")
+        change_task_status_name = ""
         for task_status_entity in task_status_entities:
-            if not task_status_entity.task_status_id.value == update_task_status_id:
+            if update_task_entity.task_status_id.value == update_task_status_id or\
+                    not task_status_entity.task_status_id.value == update_task_status_id:
                 continue
+            change_task_status_name = task_status_entity.task_status_name.value
             update_task_entity.task_status_id.set_value(update_task_status_id)
+            break
+
+        if len(change_task_status_name) > 0:
+            self._insert_task_history(
+                task_id=task_id,
+                hitory_text="{}が{}へ変更しました",
+                inner_texts=(user.user_name.value, change_task_status_name)
+            )
 
         self.task_repository.update_task(update_task_entity)
+
         return True
 
     def delete_task(self, task_id, group_id: int, user_id: int) -> bool:
@@ -177,7 +208,7 @@ class TaskHandler:
 
         return self.task_repository.delete_task(task_entities) > 0
 
-    def change_task_status(self, task_id: int, group_id: int, user_id: int, task_status_id: int) -> bool:
+    def change_task_status(self, task_id: int, group_id: int, user: UserEntity, task_status_id: int) -> bool:
         """タスクのステータスの変更
 
         Args:
@@ -192,7 +223,7 @@ class TaskHandler:
         task_entities = self.task_repository.get_task_by_id(
             task_id=task_id,
             group_id=group_id,
-            user_id=user_id
+            user_id=user.user_id.value
         )
 
         if len(task_entities) <= 0:
@@ -202,18 +233,29 @@ class TaskHandler:
             group_id=group_id
         )
 
-        is_update_done = False
-        for task_entity in task_entities:
-            is_update = False
-            for task_status_entity in task_status_entities:
-                if task_status_entity.task_status_id.value == task_status_id:
-                    is_update = True
-                    is_update_done = True
-                    task_entity.task_status_id.set_value(
-                        task_status_entity.task_status_id.value
-                    )
+        update_task_entity = task_entities[0]
 
-            if is_update:
-                self.task_repository.update_task(task_entity)
+        change_task_status_name = ""
+        is_update = False
+        for task_status_entity in task_status_entities:
+            if not update_task_entity.task_status_id.value == task_status_id and\
+                    task_status_entity.task_status_id.value == task_status_id:
 
-        return is_update_done
+                update_task_entity.task_status_id.set_value(
+                    task_status_entity.task_status_id.value
+                )
+                change_task_status_name = task_status_entity.task_status_name.value
+                is_update = True
+
+        if not is_update:
+            return False
+
+        self.task_repository.update_task(update_task_entity)
+
+        self._insert_task_history(
+            task_id=task_id,
+            hitory_text="{}が{}へ変更しました",
+            inner_texts=(user.user_name.value, change_task_status_name)
+        )
+
+        return True

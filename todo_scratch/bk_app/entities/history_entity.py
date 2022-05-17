@@ -18,7 +18,7 @@ class HistoryEntity(Entity):
         self.history_text.set_value(history_text)
 
     @staticmethod
-    def create_instance(group_id, history_text,):
+    def create_instance(task_id, history_text,):
         entity = HistoryEntity()
-        entity.set_entity_values(group_id, history_text,)
+        entity.set_entity_values(task_id, history_text,)
         return entity
