@@ -83,12 +83,57 @@ class TaskHandler:
             row["user_id"] = task_entity.user_id.value
             row["title"] = task_entity.title.value
             row["context"] = task_entity.context.value
-            row["deadline_at"] = task_entity.deadline_at.to_str
+            row["deadline_at"] = task_entity.deadline_at.to_dict_value
             row["task_status_id"] = task_entity.task_status_id.value
+            row["created_at"] = task_entity.created_at.to_dict_value
+            row["updated_at"] = task_entity.updated_at.to_dict_value
 
             list.append(row)
 
         return list
+
+    def get_task_detail(self, task_id: int, group_id: int) -> Dict:
+        """タスク詳細情報の取得
+
+        Args:
+            task_id (int): タスクID
+            group_id (int): グループID
+
+        Returns:
+            Dict: タスク詳細情報
+        """
+
+        task_entities = self.task_repository.get_task_by_task_id(task_id, group_id)
+        if len(task_entities) <= 0:
+            return {}
+
+        select_task_entity = task_entities[0]
+
+        task_history_entities = self.task_repository.get_task_history(task_id)
+        result: Dict = {}
+        result["task_id"] = select_task_entity.task_id.to_dict_value
+        result["group_id"] = select_task_entity.group_id.to_dict_value
+        result["user_id"] = select_task_entity.user_id.to_dict_value
+        result["title"] = select_task_entity.title.to_dict_value
+        result["deadline_at"] = select_task_entity.deadline_at.to_dict_value
+        result["task_status_id"] = select_task_entity.task_status_id.to_dict_value
+        task_history_list: List = []
+        task_hisotry_id = 0
+        for task_history_entity in task_history_entities:
+            task_hisotry_id += 1
+            task_history_list.append(
+                {
+                    "task_hisotry_id": task_hisotry_id,
+                    "is_system_post": (not task_history_entity.post_user_id.value == 0),  # 投稿ユーザがシステムユーザ(0)であるか判定
+                    "user_id": task_history_entity.post_user_id.to_dict_value,
+                    "context": task_history_entity.context.to_dict_value,
+                    "created_at": task_history_entity.created_at.to_dict_value,
+                    "updated_at": task_history_entity.updated_at.to_dict_value,
+                }
+            )
+        result["history"] = task_history_list
+
+        return result
 
     def get_task_status_list(self, group_id) -> List[Dict]:
         """タスクステータス情報の取得

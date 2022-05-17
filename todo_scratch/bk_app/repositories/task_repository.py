@@ -3,6 +3,7 @@ from typing import List
 from todo_scratch.bk_app.entities.comment_entity import CommentEntity
 from todo_scratch.bk_app.entities.history_entity import HistoryEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
+from todo_scratch.bk_app.entities.task_history_entity import TaskHistoryEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAccesor
@@ -29,6 +30,30 @@ class TaskRepository:
         *
     FROM todo_scratch.task
     WHERE group_id = %(group_id)s
+    """
+
+    get_task_hisotry_query = """
+    SELECT
+    task_history.*
+    FROM(
+
+        SELECT
+            ts_comment.user_id as post_user_id,
+            ts_comment.task_id,
+            ts_comment.`comment` as context,
+            ts_comment.created_at,
+            ts_comment.updated_at
+        FROM todo_scratch.`comment` as ts_comment
+        UNION ALL
+        SELECT
+            0 as post_user_id,
+            ts_history.task_id,
+            ts_history.history_text as context,
+            ts_history.created_at,
+            ts_history.updated_at
+            FROM todo_scratch.history as ts_history
+    ) as task_history
+    ORDER BY task_history.created_at
     """
 
     def get_task_list(self,
@@ -78,6 +103,41 @@ class TaskRepository:
                 "task_id": task_id,
                 "group_id": group_id,
                 "user_id": user_id
+            }
+        )
+
+    def get_task_by_task_id(self, task_id: int, group_id: int,) -> List[TaskEntity]:
+        """指定したタスクIDのタスクの取得
+
+        Args:
+            task_id (int): タスクID
+            group_id (int): グループID
+
+        Returns:
+            _type_: タスクエンティティリスト
+        """
+        db_accesor = DbAccesor(TaskEntity)
+        return db_accesor.select_by_param(
+            param={
+                "task_id": task_id,
+                "group_id": group_id
+            }
+        )
+
+    def get_task_history(self, task_id: int) -> List[TaskHistoryEntity]:
+        """タスクコメント・履歴統合情報の取得
+
+        Args:
+            task_id (int): タスクID
+
+        Returns:
+            List[TaskHistoryEntity]:タスクコメント・履歴統合情報エンティティリスト
+        """
+        select_db_accesor = SelectDbAccesor(TaskHistoryEntity)
+        return select_db_accesor.select(
+            query=self.get_task_hisotry_query,
+            param={
+                "task_id": task_id
             }
         )
 

@@ -33,3 +33,7 @@ class DatetimeItem(BaseItem):
     @property
     def to_str(self,):
         return self._value.strftime('%Y-%m-%d %H:%M:%S')
+
+    @property
+    def to_dict_value(self,):
+        return self._value.strftime('%Y-%m-%d %H:%M:%S')

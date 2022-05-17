@@ -14,6 +14,10 @@ class BaseItem:
         return self._value
 
     @property
+    def to_dict_value(self,):
+        return self._value
+
+    @property
     def is_primary(self):
         return self._is_primary
 

@@ -11,7 +11,7 @@ class Entity:
         for key, item in self.__dict__.items():
             if not isinstance(item, BaseItem):
                 continue
-            result[key] = item.value
+            result[key] = item.to_dict_value
 
         return result
 
