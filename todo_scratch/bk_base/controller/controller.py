@@ -1,7 +1,7 @@
 import re
 from typing import Dict, Tuple, Callable
 from todo_scratch.bk_base.http.request import Request
-from todo_scratch.bk_base.http.response.http_error_response import get_405_callback
+from todo_scratch.bk_base.http.response.http_error_response import Response405, get_405_callback
 from todo_scratch.bk_base.http.response.response import Response
 
 
@@ -48,13 +48,13 @@ class Controller:
         return getattr(self, method, get_405_callback())
 
     def get(self, request: Request, **kwargs) -> Response:
-        return Response()
+        return Response405()
 
     def post(self, request: Request, **kwargs) -> Response:
-        return Response()
+        return Response405()
 
     def put(self, request: Request, **kwargs) -> Response:
-        return Response()
+        return Response405()
 
     def delete(self, request: Request, **kwargs) -> Response:
-        return Response()
+        return Response405()

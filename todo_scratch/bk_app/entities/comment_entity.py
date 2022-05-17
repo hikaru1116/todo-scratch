@@ -2,7 +2,7 @@ from todo_scratch.bk_base.db.entities.entity import Entity
 from todo_scratch.bk_base.db.entities.items import items
 
 
-class Comment(Entity):
+class CommentEntity(Entity):
     table_name = "todo_scratch.comment"
 
     def __init__(self) -> None:
@@ -20,7 +20,7 @@ class Comment(Entity):
         self.comment.set_value(comment)
 
     @staticmethod
-    def create_instance(group_id, user_id, comment,):
-        entity = Comment()
-        entity.set_entity_values(group_id, user_id, comment,)
+    def create_instance(task_id, user_id, comment,):
+        entity = CommentEntity()
+        entity.set_entity_values(task_id, user_id, comment,)
         return entity

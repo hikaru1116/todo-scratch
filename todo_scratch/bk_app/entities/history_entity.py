@@ -2,7 +2,7 @@ from todo_scratch.bk_base.db.entities.entity import Entity
 from todo_scratch.bk_base.db.entities.items import items
 
 
-class History(Entity):
+class HistoryEntity(Entity):
     table_name = "todo_scratch.history"
 
     def __init__(self) -> None:
@@ -19,6 +19,6 @@ class History(Entity):
 
     @staticmethod
     def create_instance(group_id, history_text,):
-        entity = History()
+        entity = HistoryEntity()
         entity.set_entity_values(group_id, history_text,)
         return entity

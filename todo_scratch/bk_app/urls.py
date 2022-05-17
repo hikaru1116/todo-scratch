@@ -7,6 +7,7 @@ from todo_scratch.bk_app.controllers.group_joined_controller import GroupJoinedC
 from todo_scratch.bk_app.controllers.group_leave_controller import GroupLeaveController
 from todo_scratch.bk_app.controllers.hello_controller import HelloController
 from todo_scratch.bk_app.controllers.task_change_status_controller import TaskChangeStatusController
+from todo_scratch.bk_app.controllers.task_comment_controller import TaskCommentController
 from todo_scratch.bk_app.controllers.task_controller import TaskController
 from todo_scratch.bk_base.core.url_pattern import UrlPattern
 
@@ -23,4 +24,5 @@ urlpatterns: t.List[UrlPattern] = [
     UrlPattern(path='^/group/<int>/task$', controller=TaskController()),
     UrlPattern(path='^/group/<int>/task/<int>$', controller=TaskController()),
     UrlPattern(path='^/group/<int>/task/<int>/change-status$', controller=TaskChangeStatusController()),
+    UrlPattern(path='^/group/<int>/task/<int>/comment$', controller=TaskCommentController()),
 ]

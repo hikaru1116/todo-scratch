@@ -1,7 +1,9 @@
 from typing import Dict
+from todo_scratch.bk_app.entities.comment_entity import CommentEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
 from todo_scratch.bk_app.repositories.task_repository import TaskRepository
 from todo_scratch.bk_app.services.group_auth_service import GroupAuthService
+from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 
 
 class TaskHandler:
@@ -66,6 +68,26 @@ class TaskHandler:
         )
 
         return self.task_repository.save_task(task_entity=task_entity) > 0
+
+    def post_task_comment(self, task_id: int, user_id: int, comment: str) -> int:
+        """タスクコメントの追加
+
+        Args:
+            task_id (int): タスクID
+            user_id (int): ユーザID
+            comment (str): コメントテキスト
+
+        Returns:
+            int: 追加したタスクコメントのID
+        """
+        comment_entity = CommentEntity.create_instance(
+            task_id=task_id,
+            user_id=user_id,
+            comment=comment
+        )
+
+        db_accesor = DbAccesor(CommentEntity)
+        return db_accesor.insert(comment_entity)
 
     def update_task(self, task_id: int, group_id: int, user_id: int, param: Dict) -> bool:
         """タスクの更新
