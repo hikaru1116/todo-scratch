@@ -43,6 +43,10 @@ class Request:
         return self.environ['REQUEST_METHOD'].upper()
 
     @property
+    def path_query(self):
+        return urllib.parse.parse_qs(self.environ['QUERY_STRING'])
+
+    @property
     def body(self):
         if self._body is None:
             content_length = int(self.environ.get('CONTENT_LENGTH', 0))

@@ -5,11 +5,61 @@ from todo_scratch.bk_app.entities.history_entity import HistoryEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
+from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAccesor
 
 
 class TaskRepository:
     """タスクテーブルの永続化処理をまとめたクラス
     """
+
+    # get_task_list_query = """
+    # SELECT
+    #     *
+    # FROM todo_scratch.task
+    # WHERE group_id = 44
+    # AND task_status_id = 19
+    # AND title LIKE '%ta%'
+    # AND user_id = 1
+    # AND deadline_at >= '2022-05-16 23:56:26'
+    # AND deadline_at <= '2022-05-30 23:56:26'
+    # """
+
+    get_task_list_query = """
+    SELECT
+        *
+    FROM todo_scratch.task
+    WHERE group_id = %(group_id)s
+    """
+
+    def get_task_list(self,
+                      group_id: int,
+                      task_status_id=0,
+                      title='',
+                      post_user_id=0,
+                      deadline_at_from="",
+                      deadline_at_to="") -> List[TaskEntity]:
+        """タスクの取得
+
+        Args:
+            group_id (int): グループID
+            task_status_id (int, optional): タスクステータスID. Defaults to 0.
+            title (str, optional): タイトル. Defaults to ''.
+            post_user_id (int, optional): 投稿ユーザ. Defaults to 0.
+            deadline_at_from (str, optional): 期限開始日時. Defaults to "".
+            deadline_at_to (str, optional): 期限終了日時. Defaults to "".
+
+        Returns:
+            List[TaskEntity]: タスクエンティティリスト
+        """
+
+        select_db_accesor = SelectDbAccesor(TaskEntity)
+
+        return select_db_accesor.select(
+            query=self.get_task_list_query,
+            param={
+                "group_id": group_id
+            }
+        )
 
     def get_task_by_id(self, task_id: int, group_id: int, user_id: int) -> List[TaskEntity]:
         """指定したIDのタスクの取得

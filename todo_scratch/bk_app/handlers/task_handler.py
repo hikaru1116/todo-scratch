@@ -48,6 +48,48 @@ class TaskHandler:
         """
         return GroupAuthService.is_host_user_in_group(user_id, group_id)
 
+    def get_task(self, group_id: int, param: Dict) -> List[Dict]:
+        """タスクの取得
+
+        Args:
+            group_id (int): グループID
+            task_status_id (int, optional): タスクステータスID. Defaults to 0.
+            title (str, optional): タイトル. Defaults to ''.
+            post_user_id (int, optional): 投稿ユーザ. Defaults to 0.
+            deadline_at_from (str, optional): 期限開始日時. Defaults to "".
+            deadline_at_to (str, optional): 期限終了日時. Defaults to "".
+
+        Returns:
+            List[Dic]: タスクエンティティ情報
+        """
+        task_status_id = param.get("task_status_id") if param.get("task_status_id") is None else 0
+        title = param.get("title") if param.get("title") is None else ""
+        post_user_id = param.get("post_user_id") if param.get("post_user_id") is None else 0
+        deadline_at_from = param.get("deadline_at_from") if param.get("deadline_at_from") is None else ""
+        deadline_at_to = param.get("deadline_at_to") if param.get("deadline_at_to") is None else ""
+
+        task_entities = self.task_repository.get_task_list(
+            group_id=group_id,
+            task_status_id=task_status_id,
+            title=title,
+            post_user_id=post_user_id,
+            deadline_at_from=deadline_at_from,
+            deadline_at_to=deadline_at_to
+        )
+        list = []
+        for task_entity in task_entities:
+            row: Dict = {}
+            row["task_id"] = task_entity.task_id.value
+            row["user_id"] = task_entity.user_id.value
+            row["title"] = task_entity.title.value
+            row["context"] = task_entity.context.value
+            row["deadline_at"] = task_entity.deadline_at.to_str
+            row["task_status_id"] = task_entity.task_status_id.value
+
+            list.append(row)
+
+        return list
+
     def get_task_status_list(self, group_id) -> List[Dict]:
         """タスクステータス情報の取得
 

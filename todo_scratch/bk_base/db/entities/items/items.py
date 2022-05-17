@@ -29,3 +29,7 @@ class DatetimeItem(BaseItem):
         if isinstance(value, str):
             value = datetime.datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
         self._value = value
+
+    @property
+    def to_str(self,):
+        return self._value.strftime('%Y-%m-%d %H:%M:%S')

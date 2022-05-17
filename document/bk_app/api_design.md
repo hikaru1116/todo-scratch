@@ -19,6 +19,7 @@
 | [グループ離脱](#グループ離脱)                         | /group/{group_id}/leave                        | POST     | 有   | グループ離脱                             | グループ管理 |
 | [グループ招待](#グループ招待)                         | /group/invite                                  | POST     | 有   | グループ招待                             | グループ管理 |
 | [タスク一覧取得](#タスク一覧取得)                     | /group/{group_id}/task                         | GET      | 有   | タスク一覧取得                           | アプリ       |
+| [タスク詳細情報取得](#タスク詳細情報取得)             | /group/{group_id}/task/{task_id}               | GET      | 有   | タスク詳細情報取得                       | アプリ       |
 | [タスク新規作成](#タスク新規作成)                     | /group/{group_id}/task                         | POST     | 有   | タスク新規作成                           | アプリ       |
 | [タスク更新](#タスク更新)                             | /group/{group_id}/task/{task_id}               | PUT      | 有   | タスク更新                               | アプリ       |
 | [タスク削除](#タスク削除)                             | /group/{group_id}/task/{task_id}               | DELETE   | 有   | タスク削除                               | アプリ       |
@@ -661,20 +662,63 @@ GET /group/{group_id}/task
 
 #### レスポンスボディ
 
-| 項目              | 型       | 概要                  |
-| ----------------- | -------- | --------------------- |
-| list              | list     | list                  |
-| □├task_id         | int      | タスク ID             |
-| □├user_id         | int      | 投稿ユーザ ID         |
-| □├title           | string   | タスクタイトル        |
-| □├context         | int      | タスク内容テキスト    |
-| □├deadline_at     | datetime | 期限日時              |
-| □├task_status_id  | int      | タスクのステータス ID |
-| □├history         | list     | タスク履歴            |
-| □□├id             | int      | 識別番号              |
-| □□├is_system_post | boolean  | システム投稿履歴有無  |
-| □□├user_id        | int      | 投稿ユーザ ID         |
-| □□├context        | string   | 履歴内容テキスト      |
+| 項目             | 型       | 概要                  |
+| ---------------- | -------- | --------------------- |
+| list             | list     | list                  |
+| □├task_id        | int      | タスク ID             |
+| □├group_id       | int      | グループ ID           |
+| □├user_id        | int      | 投稿ユーザ ID         |
+| □├title          | string   | タスクタイトル        |
+| □├context        | int      | タスク内容テキスト    |
+| □├deadline_at    | datetime | 期限日時              |
+| □├task_status_id | int      | タスクのステータス ID |
+
+#### 処理内容
+
+指定した条件のタスク取得
+不正なクエリパラメータの場合、リクエストエラーを返す
+
+---
+
+## タスク詳細情報取得
+
+#### メソッド、エンドポイント
+
+```
+GET /group/{group_id}/task/{task_id}
+```
+
+#### 認証・認可
+
+| 認証 | 管理者 |
+| ---- | ------ |
+| ◯    | ×      |
+
+#### レスポンスステータス
+
+| ステータス | 概要             |
+| ---------- | ---------------- |
+| 200        | 処理成功         |
+| 401        | 認証エラー       |
+| 404        | リクエストエラー |
+| 500        | サーバーエラー   |
+
+#### レスポンスボディ
+
+| 項目             | 型       | 概要                  |
+| ---------------- | -------- | --------------------- |
+| task_id          | int      | タスク ID             |
+| group_id         | int      | グループ ID           |
+| user_id          | int      | 投稿ユーザ ID         |
+| title            | string   | タスクタイトル        |
+| context          | int      | タスク内容テキスト    |
+| deadline_at      | datetime | 期限日時              |
+| task_status_id   | int      | タスクのステータス ID |
+| history          | list     | タスク履歴            |
+| □├id             | int      | 識別番号              |
+| □├is_system_post | boolean  | システム投稿履歴有無  |
+| □├user_id        | int      | 投稿ユーザ ID         |
+| □├context        | string   | 履歴内容テキスト      |
 
 #### 処理内容
 

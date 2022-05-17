@@ -6,6 +6,7 @@ from todo_scratch.bk_app.validators.request_body_validators.task_data_validator 
 from todo_scratch.bk_base.controller.controller import Controller
 from todo_scratch.bk_base.http.request import Request
 from todo_scratch.bk_base.http.response.http_error_response import Response404
+from todo_scratch.bk_base.http.response.json_response import JSONResponse
 from todo_scratch.bk_base.http.response.response import Response
 
 
@@ -17,7 +18,17 @@ class TaskController(Controller):
         Controller (_type_): コントローラ基底クラス
     """
 
-    def post(self, request: Request, user: UserEntity, url_path_param: List) -> Response:
+    def get(self, request: Request, user: UserEntity, url_path_param: List, **kwargs) -> Response:
+
+        if len(url_path_param) <= 0:
+            return Response404()
+
+        return JSONResponse(dic=self._get_handler().get_task(
+            group_id=int(url_path_param[0]),
+            param=request.path_query
+        ))
+
+    def post(self, request: Request, user: UserEntity, url_path_param: List, **kwargs) -> Response:
         if len(url_path_param) <= 0:
             return Response404()
 
