@@ -1,4 +1,5 @@
-from typing import Dict, List
+import datetime
+from typing import Any, Dict, List
 from todo_scratch.bk_app.entities.comment_entity import CommentEntity
 from todo_scratch.bk_app.entities.history_entity import HistoryEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
@@ -48,33 +49,40 @@ class TaskHandler:
         """
         return GroupAuthService.is_host_user_in_group(user_id, group_id)
 
+    def _get_query_param(self, param: Dict, key: str, data_type: type, default_value: Any) -> Any:
+        value_list = param.get(key, [])
+        if len(value_list) <= 0:
+            return default_value
+
+        value = value_list[0]
+        try:
+            return data_type(value)
+        except Exception:
+            return default_value
+
     def get_task(self, group_id: int, param: Dict) -> List[Dict]:
         """タスクの取得
 
         Args:
             group_id (int): グループID
-            task_status_id (int, optional): タスクステータスID. Defaults to 0.
-            title (str, optional): タイトル. Defaults to ''.
-            post_user_id (int, optional): 投稿ユーザ. Defaults to 0.
-            deadline_at_from (str, optional): 期限開始日時. Defaults to "".
-            deadline_at_to (str, optional): 期限終了日時. Defaults to "".
+            param (Dict): 検索パラメータ
 
         Returns:
             List[Dic]: タスクエンティティ情報
         """
-        task_status_id = param.get("task_status_id") if param.get("task_status_id") is None else 0
-        title = param.get("title") if param.get("title") is None else ""
-        post_user_id = param.get("post_user_id") if param.get("post_user_id") is None else 0
-        deadline_at_from = param.get("deadline_at_from") if param.get("deadline_at_from") is None else ""
-        deadline_at_to = param.get("deadline_at_to") if param.get("deadline_at_to") is None else ""
+        task_status_id = self._get_query_param(param, "task_status_id", str, 0)
+        title = self._get_query_param(param, "title", str, "")
+        post_user_id = self._get_query_param(param, "post_user_id", int, 0)
+        deadline_at_from = self._get_query_param(param, "deadline_at_from", str, "1900-01-01T01:01:00")
+        deadline_at_to = self._get_query_param(param, "deadline_at_to", str, "2999-12-31T12:00:00")
 
         task_entities = self.task_repository.get_task_list(
             group_id=group_id,
             task_status_id=task_status_id,
             title=title,
             post_user_id=post_user_id,
-            deadline_at_from=deadline_at_from,
-            deadline_at_to=deadline_at_to
+            deadline_at_from=datetime.datetime.strptime(deadline_at_from, '%Y-%m-%dT%H:%M:%S'),
+            deadline_at_to=datetime.datetime.strptime(deadline_at_to, '%Y-%m-%dT%H:%M:%S'),
         )
         list = []
         for task_entity in task_entities:

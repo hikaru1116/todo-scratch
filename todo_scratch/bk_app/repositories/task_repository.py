@@ -1,5 +1,6 @@
 
-from typing import List
+import datetime
+from typing import Dict, List
 from todo_scratch.bk_app.entities.comment_entity import CommentEntity
 from todo_scratch.bk_app.entities.history_entity import HistoryEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
@@ -13,23 +14,22 @@ class TaskRepository:
     """タスクテーブルの永続化処理をまとめたクラス
     """
 
-    # get_task_list_query = """
-    # SELECT
-    #     *
-    # FROM todo_scratch.task
-    # WHERE group_id = 44
-    # AND task_status_id = 19
-    # AND title LIKE '%ta%'
-    # AND user_id = 1
-    # AND deadline_at >= '2022-05-16 23:56:26'
-    # AND deadline_at <= '2022-05-30 23:56:26'
-    # """
+    get_task_list_query = """
+    SELECT
+        *
+    FROM todo_scratch.task
+    WHERE group_id = %(group_id)s
+    """
 
     get_task_list_query = """
     SELECT
         *
     FROM todo_scratch.task
     WHERE group_id = %(group_id)s
+    {0}
+    AND deadline_at >= %(deadline_at_from)s
+    AND deadline_at <= %(deadline_at_to)s
+    ORDER BY %(order_by_text)s
     """
 
     get_task_hisotry_query = """
@@ -61,8 +61,8 @@ class TaskRepository:
                       task_status_id=0,
                       title='',
                       post_user_id=0,
-                      deadline_at_from="",
-                      deadline_at_to="") -> List[TaskEntity]:
+                      deadline_at_from=datetime.datetime(1900, 1, 1),
+                      deadline_at_to=datetime.datetime(2999, 12, 31)) -> List[TaskEntity]:
         """タスクの取得
 
         Args:
@@ -79,11 +79,27 @@ class TaskRepository:
 
         select_db_accesor = SelectDbAccesor(TaskEntity)
 
+        query_param: Dict = {}
+        query_param["group_id"] = group_id
+        add_where_query = ""
+        if not task_status_id == 0:
+            add_where_query += " AND task_status_id = %(task_status_id)s"
+            query_param["task_status_id"] = task_status_id
+        if len(title) > 0:
+            add_where_query += " AND title LIKE CONCAT('%', %(title)s, '%')"
+            query_param["title"] = title
+        if not post_user_id == 0:
+            add_where_query += " AND user_id = %(post_user_id)s"
+            query_param["post_user_id"] = post_user_id
+
+        query_param["deadline_at_from"] = deadline_at_from
+        query_param["deadline_at_to"] = deadline_at_to
+        query_param["order_by_text"] = "task_id"
+
+        query = self.get_task_list_query.format(add_where_query)
         return select_db_accesor.select(
-            query=self.get_task_list_query,
-            param={
-                "group_id": group_id
-            }
+            query=query,
+            param=query_param
         )
 
     def get_task_by_id(self, task_id: int, group_id: int, user_id: int) -> List[TaskEntity]:
