@@ -1,13 +1,22 @@
 import axios from "axios";
 
-export const login = () => {
-  axios
-    .get("http://localhost:8000")
+export const login = (identifier, password) => {
+  axios.defaults.headers.post["Access-Control-Allow-Origin"] =
+    "http://localhost:3000/";
+
+  return axios
+    .post(
+      "http://localhost:8000/api/signin",
+      {
+        identifier: identifier,
+        password: password,
+      },
+      { withCredentials: true }
+    )
     .then((res) => {
-      console.log(res.data);
-      console.log(res);
+      return res.data;
     })
-    .catch((error) => {
-      console.log(error.response);
+    .catch(() => {
+      return null;
     });
 };

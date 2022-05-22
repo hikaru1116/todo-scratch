@@ -1,3 +1,2 @@
-export const SIGN_IN = "sign_in";
-export const SIGN_UP = "sign_up";
-export const VALIDATE = "validate";
+export const LOGIN = "sign_in";
+export const REGIST_USER = "sign_up";

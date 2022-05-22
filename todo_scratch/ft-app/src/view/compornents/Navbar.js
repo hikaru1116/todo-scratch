@@ -1,25 +1,29 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-const StyledTypography = styled(Typography)(({ theme }) => ({
-  lexGrow: 1,
-  backgroundColor: theme.palette.primary.main,
-}));
-
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-}));
-
 const Navbar = () => {
   return (
-    <StyledAppBar position="static">
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
+    >
       <Toolbar>
-        <StyledTypography variant="h5">TODO APP</StyledTypography>
+        <Typography
+          variant="h5"
+          sx={{
+            color: "#FFFFFF",
+            fontSize: {
+              sm: 16,
+              md: 24,
+            },
+          }}
+        >
+          TODO APP
+        </Typography>
       </Toolbar>
-    </StyledAppBar>
+    </AppBar>
   );
 };
 

@@ -1,18 +1,16 @@
-import { login } from "../repositories/LoginRepository";
-
 export function LoginReducer(state, action) {
-  switch (action) {
-    case "sign_in":
-      // サインイン処理発火
-      login();
+  switch (action.type) {
+    case "loading":
       return {
         ...state,
         isLoading: true,
       };
-    case "sign_up":
+    case "sign_in":
+      console.log("SignIn");
       return {
         ...state,
         isLoading: true,
+        user: action.data,
       };
     case "validate":
       return {
