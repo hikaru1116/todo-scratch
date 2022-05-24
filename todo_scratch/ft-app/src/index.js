@@ -12,6 +12,8 @@ import ProvateRoute from "./view/compornents/PrivateRoute";
 import SignUp from "./view/pages/SignUp";
 import Account from "./view/pages/Account";
 import Signing from "./view/pages/Signing";
+import GroupSettings from "./view/pages/GroupSettings";
+import GroupCreate from "./view/pages/GroupCreate";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -26,19 +28,28 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "Comic Neue",
+    color: "#111111",
   },
 });
 
 root.render(
   <ThemeProvider theme={theme}>
     <AuthContext path={location.pathname}>
-      <Navbar />
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<ProvateRoute element={<TodoList />} />} />
           <Route
             path="/account"
             element={<ProvateRoute element={<Account />} />}
+          />
+          <Route
+            path="/group-settings"
+            element={<ProvateRoute element={<GroupSettings />} />}
+          />
+          <Route
+            path="/group/create"
+            element={<ProvateRoute element={<GroupCreate />} />}
           />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />

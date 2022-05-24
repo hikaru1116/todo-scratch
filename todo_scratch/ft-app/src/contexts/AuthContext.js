@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import AuthReducer from "../reducers/AuthReducer";
-import { getUserInfo } from "../actions/AuthAction";
+import { initUserInfo } from "../actions/AuthAction";
 
 export const AuthOperateContext = createContext({
   state: {},
@@ -9,6 +9,9 @@ export const AuthOperateContext = createContext({
 
 export const authInitState = {
   user: null,
+  selected_group: {
+    group_id: null,
+  },
   isLoading: false,
   validate: {
     isValidate: false,
@@ -22,8 +25,7 @@ export const authInitState = {
 
 export const AuthContext = ({ path, children }) => {
   useEffect(() => {
-    console.log("auth context use effect fire");
-    getUserInfo(dispatch, path);
+    initUserInfo(dispatch, path);
   }, []);
 
   const [state, dispatch] = useReducer(AuthReducer, authInitState);

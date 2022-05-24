@@ -5,7 +5,7 @@ from todo_scratch.bk_base.auth.controllers.sign_up_controller import SignUpContr
 from todo_scratch.bk_base.core.url_pattern import UrlPattern
 
 auth_urlpatterns: t.List[UrlPattern] = [
-    UrlPattern(path='^/signup', controller=SignUpController()),
-    UrlPattern(path='^/signin', controller=SignInController()),
-    UrlPattern(path='^/signout', controller=SignOutController())
+    UrlPattern(path='/signup', controller=SignUpController()),
+    UrlPattern(path='/signin', controller=SignInController()),
+    UrlPattern(path='/signout', controller=SignOutController())
 ]

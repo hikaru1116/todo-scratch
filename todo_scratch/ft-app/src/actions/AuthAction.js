@@ -1,16 +1,25 @@
 import { login } from "../repositories/LoginRepository";
 import { getAccount } from "../repositories/AccountRepository";
+import {
+  setSelectedGroupId,
+  getSelectedGroupId,
+} from "../utils/SelectedGroupStorage";
 
 const loading = {
   type: "loading",
 };
 
-export const getUserInfo = (dispatch, path) => {
+export const initUserInfo = (dispatch, path) => {
   getAccount().then((user) => {
+    const selected_group_id = getSelectedGroupId();
+    console.log(selected_group_id);
     const action = {
       type: "get_user_info",
       data: {
         user: user,
+        selected_group: {
+          group_id: selected_group_id,
+        },
         path: path,
       },
     };
@@ -72,4 +81,15 @@ export const singIn = (dispatch, identifier, password) => {
       dispatch(action);
       return;
     });
+};
+
+export const changeSelectedGroup = (dispatch, selectedGroupId) => {
+  // ローカルストレージへ選択済みグループIDを設定
+  setSelectedGroupId(selectedGroupId);
+  console.log("set selected group");
+  const action = {
+    type: "change_selected_group",
+    data: selectedGroupId,
+  };
+  dispatch(action);
 };

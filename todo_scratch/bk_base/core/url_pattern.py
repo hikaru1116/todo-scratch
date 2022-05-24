@@ -6,9 +6,9 @@ from todo_scratch.bk_base.controller.controller import Controller
 
 class UrlPattern:
 
-    def __init__(self, path='^/$', controller: Controller = None) -> None:
-        self.__path = path
-        self.__path_compiled = re.compile(self._exchange_path_query(path))
+    def __init__(self, path='/$', controller: Controller = None) -> None:
+        self.__path = "^/api" + path
+        self.__path_compiled = re.compile(self._exchange_path_query(self.__path))
         self.__controller = controller
 
     @property

@@ -4,6 +4,9 @@ export default function AuthReducer(state, action) {
       return {
         ...state,
         user: action.data.user,
+        selected_group: {
+          group_id: action.data.selected_group.group_id,
+        },
         judgeLogin: {
           isJudgeLogin: true,
           toPath: action.data.user != null ? action.data.path : "/signin",
@@ -42,6 +45,13 @@ export default function AuthReducer(state, action) {
         validate: {
           isValidate: true,
           message: action.data,
+        },
+      };
+    case "change_selected_group":
+      return {
+        ...state,
+        selected_group: {
+          group_id: action.data,
         },
       };
     default:

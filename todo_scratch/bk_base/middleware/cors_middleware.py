@@ -12,6 +12,18 @@ class CorsMiddleware(Middleware):
                         request: Request,
                         **kwargs) -> Tuple[bool, Response, Request, Dict]:
 
+        if request.method == "OPTIONS":
+            print("option!!")
+            access_control_allo_origins = get_member_by_settings("ACCESS_ALLOW_ORIGIN")
+
+            response_option = Response(headers={
+                "Access-Control-Allow-Origin": ",".join(access_control_allo_origins),
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+            })
+            return False, response_option, request, kwargs
+
         return True, response, request, kwargs
 
     def response_process(self,
@@ -20,7 +32,9 @@ class CorsMiddleware(Middleware):
         response.add_headers(
             {
                 "Access-Control-Allow-Origin": ",".join(access_control_allo_origins),
-                "Access-Control-Allow-Headers": "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
             }
         )
         return True, response
