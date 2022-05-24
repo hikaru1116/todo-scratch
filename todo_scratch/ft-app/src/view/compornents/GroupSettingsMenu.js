@@ -34,7 +34,7 @@ const GroupSettingsMenu = () => {
           </Link>
         </Grid>
         <Grid item>
-          <Link to="/group-settings" style={{ textDecoration: "none" }}>
+          <Link to="/group/joined" style={{ textDecoration: "none" }}>
             <Typography3 align={"center"}>参加グループ一覧</Typography3>
           </Link>
         </Grid>

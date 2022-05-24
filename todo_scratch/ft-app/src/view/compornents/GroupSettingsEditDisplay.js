@@ -25,7 +25,11 @@ const GroupSettingsEditDisplay = () => {
         <Grid item>
           <Box>
             <Typography2>グループ名</Typography2>
-            <Box border={1} sx={{ borderRadius: "16px" }} p={2}>
+            <Box
+              border={1}
+              sx={{ borderRadius: "16px", color: "#c4c4c4" }}
+              p={2}
+            >
               <Typography3>{stateGroupSettings.group_name}</Typography3>
             </Box>
           </Box>
@@ -34,7 +38,11 @@ const GroupSettingsEditDisplay = () => {
         <Grid item>
           <Box>
             <Typography2>説明</Typography2>
-            <Box border={1} sx={{ borderRadius: "16px" }} p={2}>
+            <Box
+              border={1}
+              sx={{ borderRadius: "16px", color: "#c4c4c4" }}
+              p={2}
+            >
               <Typography3>{stateGroupSettings.description}</Typography3>
             </Box>
           </Box>
@@ -42,7 +50,7 @@ const GroupSettingsEditDisplay = () => {
         <Grid item>
           <Box>
             <Typography2>参加ユーザ</Typography2>
-            <Box border={1} sx={{ borderRadius: "16px" }}>
+            <Box border={1} sx={{ borderRadius: "16px", color: "#c4c4c4" }}>
               {stateGroupSettings.users.length > 0 && (
                 <List>
                   {stateGroupSettings.users.map((user) => (

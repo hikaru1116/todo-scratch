@@ -447,13 +447,14 @@ GET /group/joined
 
 #### レスポンスボディ
 
-| 項目        | 型     | 概要                               |
-| ----------- | ------ | ---------------------------------- |
-| group_id    | int    | 作成したグループのグループ ID      |
-| group_name  | string | 作成したグループのグループ名       |
-| description | string | 作成したグループのグループの説明文 |
-| auth_type   | int    | ユーザ の権限種別                  |
-| user_status | int    | ユーザのグループ状態コード         |
+| 項目          | 型     | 概要                               |
+| ------------- | ------ | ---------------------------------- |
+| list          | list   | list                               |
+| □├group_id    | int    | 作成したグループのグループ ID      |
+| □├group_name  | string | 作成したグループのグループ名       |
+| □├description | string | 作成したグループのグループの説明文 |
+| □├auth_type   | int    | ユーザ の権限種別                  |
+| □└user_status | int    | ユーザのグループ状態コード         |
 
 #### 処理内容
 
@@ -540,7 +541,7 @@ POST /group/approval-request
 | icon          | string | 選択中のグループアイコン                 |
 | users         | list   | 参加中のユーザ情報                       |
 | □├user_id     | int    | ユーザ ID                                |
-| □└user_name   | string | ユーザ 名                                |
+| □├user_name   | string | ユーザ 名                                |
 | □├auth_type   | int    | ユーザ の権限種別                        |
 | □├user_status | int    | ユーザのグループ状態コード               |
 | □└icon        | string | アイコン                                 |

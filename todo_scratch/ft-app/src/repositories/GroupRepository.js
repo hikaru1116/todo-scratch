@@ -18,11 +18,26 @@ export const postGroup = (group) => {
   return axios
     .post(endpoint + "/group", group)
     .then((res) => {
-      if (res.status == "200") {
+      if (res.status == 200) {
         return res.data;
       } else {
         return null;
       }
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const getJoinedGroupList = () => {
+  axios.defaults.withCredentials = true;
+  return axios
+    .get(endpoint + "/group/joined", { withCredentials: true })
+    .then((res) => {
+      if (res.status == 200) {
+        return res.data;
+      }
+      return null;
     })
     .catch(() => {
       return null;

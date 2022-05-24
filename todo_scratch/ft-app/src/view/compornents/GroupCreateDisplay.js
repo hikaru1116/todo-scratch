@@ -68,7 +68,11 @@ const GroupCreateDisplay = () => {
         <Grid item>
           <Box>
             <Typography2>グループ名</Typography2>
-            <Box border={1} sx={{ borderRadius: "16px" }} p={2}>
+            <Box
+              border={1}
+              sx={{ borderRadius: "16px", color: "#c4c4c4" }}
+              p={2}
+            >
               <TextField
                 required
                 id="standard-basic"
@@ -84,7 +88,11 @@ const GroupCreateDisplay = () => {
         <Grid item>
           <Box>
             <Typography2>説明</Typography2>
-            <Box border={1} sx={{ borderRadius: "16px" }} p={2}>
+            <Box
+              border={1}
+              sx={{ borderRadius: "16px", color: "#c4c4c4" }}
+              p={2}
+            >
               <TextField
                 required
                 id="standard-basic"
@@ -99,7 +107,7 @@ const GroupCreateDisplay = () => {
         <Grid item>
           <Box>
             <Typography2>参加ユーザ</Typography2>
-            <Box border={1} sx={{ borderRadius: "16px" }}>
+            <Box border={1} sx={{ borderRadius: "16px", color: "#c4c4c4" }}>
               <List>
                 {addUserList.map((addUser) => (
                   <GroupUserEditListItem
