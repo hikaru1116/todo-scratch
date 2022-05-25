@@ -2,7 +2,7 @@ import React from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
-import Typography3 from "./compornents/Typographies/Typography3";
+import Typography3 from "./Typographies/Typography3";
 import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
 
@@ -18,6 +18,7 @@ const JoinedGroupListItem = ({
     <React.Fragment key={group.group_id}>
       <ListItem>
         <ListItemText
+          secondary={group.group_id == selectedGroupId ? "selected" : ""}
           primary={
             <Box>
               <Grid
@@ -31,7 +32,7 @@ const JoinedGroupListItem = ({
                 </Grid>
                 <Grid item>
                   {group.group_id == selectedGroupId ? (
-                    <Typography3>Selected</Typography3>
+                    <Box />
                   ) : (
                     <Button variant="outlined" onClick={change}>
                       <Typography3>Change</Typography3>

@@ -39,7 +39,7 @@ const GroupSettingsMenu = () => {
           </Link>
         </Grid>
         <Grid item>
-          <Link to="/group-settings" style={{ textDecoration: "none" }}>
+          <Link to="/group/approval-request" style={{ textDecoration: "none" }}>
             <Typography3 align={"center"}>グループ承認</Typography3>
           </Link>
         </Grid>

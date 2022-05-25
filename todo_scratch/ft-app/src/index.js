@@ -15,6 +15,7 @@ import Signing from "./view/pages/Signing";
 import GroupSettings from "./view/pages/GroupSettings";
 import GroupCreate from "./view/pages/GroupCreate";
 import GroupJoinedList from "./view/pages/GroupJoinedList";
+import GroupApprovalRequest from "./view/pages/GroupApprovalRequest";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -55,6 +56,10 @@ root.render(
           <Route
             path="/group/joined"
             element={<ProvateRoute element={<GroupJoinedList />} />}
+          />
+          <Route
+            path="/group/approval-request"
+            element={<ProvateRoute element={<GroupApprovalRequest />} />}
           />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />

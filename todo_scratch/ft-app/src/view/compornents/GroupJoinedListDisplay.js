@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Typography2 from "../compornents/Typographies/Typography2";
-import Typography3 from "../compornents/Typographies/Typography3";
+import Typography2 from "./Typographies/Typography2";
+import Typography3 from "./Typographies/Typography3";
 import { GroupJoinedOperateContext } from "../../contexts/GroupJoinedContext";
 import { Navigate } from "react-router-dom";
 import List from "@mui/material/List";
-import JoinedGroupListItem from "../JoinedGroupListItem";
+import JoinedGroupListItem from "./JoinedGroupListItem";
 import { getJoinedGroup } from "../../actions/GroupJoinedAction";
 import { AuthOperateContext } from "../../contexts/AuthContext";
 import { changeGroup } from "../../actions/GroupJoinedAction";
@@ -40,7 +40,7 @@ const GroupJoinedListDisplay = () => {
                   {stateGroupjoined.joinedGroups.map((group) => (
                     <JoinedGroupListItem
                       group={group}
-                      selected_group_id={state.selected_group.group_id}
+                      selectedGroupId={state.selected_group.group_id}
                       changeGroupFunction={chengeGroup}
                       key={group.group_id}
                     />

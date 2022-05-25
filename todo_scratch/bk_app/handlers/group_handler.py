@@ -76,14 +76,16 @@ class GroupHandler:
         if created_group_id <= 0:
             return insert_group_id
 
-        invite_users: Dict = group_info.get('invite_users', {})
+        invite_users: List = group_info.get('invite_users', {})
 
         if len(invite_users) <= 0:
             return insert_group_id
 
+        identifier_set = set([user.get("identifier") for user in invite_users])
+
         group_belongs_entities: List[GroupBelongEntity] = []
-        for invite_user in invite_users:
-            identifier = invite_user.get("identifier")
+
+        for identifier in identifier_set:
             if identifier is None:
                 continue
 
@@ -201,7 +203,9 @@ class GroupHandler:
         update_entity = group_belongs_entities[0]
         update_entity.user_status.set_value(int(user_status))
 
-        return self.group_repository.update_group_belongs(update_entity) > 0
+        self.group_repository.update_group_belongs(update_entity)
+
+        return True
 
     def get_detail_group_info(self, call_user_id: int, group_id: int) -> Dict:
         """指定したグループの詳細なグループ情報を取得します

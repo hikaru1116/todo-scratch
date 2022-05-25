@@ -43,3 +43,37 @@ export const getJoinedGroupList = () => {
       return null;
     });
 };
+
+export const getApprovalRequestGroupList = () => {
+  axios.defaults.withCredentials = true;
+  return axios
+    .get(endpoint + "/group/approval-request", { withCredentials: true })
+    .then((res) => {
+      if (res.status == 200) {
+        return res.data;
+      }
+      return null;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const postApprovalRequest = (groupId) => {
+  axios.defaults.withCredentials = true;
+  return axios
+    .post(endpoint + "/group/approval-request", {
+      group_id: groupId,
+    })
+    .then((res) => {
+      console.log(res.status);
+      if (res.status == 200) {
+        return res.data;
+      } else {
+        return null;
+      }
+    })
+    .catch(() => {
+      return null;
+    });
+};

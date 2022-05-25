@@ -12,7 +12,6 @@ const loading = {
 export const initUserInfo = (dispatch, path) => {
   getAccount().then((user) => {
     const selected_group_id = getSelectedGroupId();
-    console.log(selected_group_id);
     const action = {
       type: "get_user_info",
       data: {
@@ -63,10 +62,14 @@ export const singIn = (dispatch, identifier, password) => {
       }
       // アカウント情報の取得
       getAccount().then((user) => {
+        const selected_group_id = getSelectedGroupId();
         const action = {
           type: "sign_in",
           data: {
             user: user,
+            selected_group: {
+              group_id: selected_group_id,
+            },
           },
         };
         dispatch(action);

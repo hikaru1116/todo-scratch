@@ -21,7 +21,10 @@ export default function AuthReducer(state, action) {
       return {
         ...state,
         isLoading: false,
-        user: action.data,
+        user: action.data.user,
+        selected_group: {
+          group_id: action.data.selected_group.group_id,
+        },
         validate: {
           isValidate: false,
           message: "",
