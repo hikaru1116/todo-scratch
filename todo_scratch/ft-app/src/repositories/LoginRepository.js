@@ -20,3 +20,17 @@ export const login = (identifier, password) => {
       return null;
     });
 };
+
+export const postSingOut = () => {
+  axios.defaults.headers.post["Access-Control-Allow-Origin"] =
+    "http://localhost:3000/";
+
+  return axios
+    .post("http://localhost:8000/api/signout", {}, { withCredentials: true })
+    .then((res) => {
+      return res.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};

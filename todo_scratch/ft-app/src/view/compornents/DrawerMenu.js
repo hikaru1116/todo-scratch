@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { AuthOperateContext } from "../../contexts/AuthContext";
+import { signOutAction } from "../../actions/AuthAction";
 
 const DrawerMenu = ({ user_name }) => {
+  const { dispatch } = useContext(AuthOperateContext);
+
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    signOutAction(dispatch, navigate);
+  };
+
   return (
     <div>
       <Box borderBottom={1} borderColor="primary.main">
@@ -73,7 +83,11 @@ const DrawerMenu = ({ user_name }) => {
             </Link>
           </Grid>
           <Grid item>
-            <Button variant="outlined" startIcon={<LogoutIcon />}>
+            <Button
+              variant="outlined"
+              startIcon={<LogoutIcon />}
+              onClick={signOut}
+            >
               Log Out
             </Button>
           </Grid>

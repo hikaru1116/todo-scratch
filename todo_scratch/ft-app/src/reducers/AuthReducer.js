@@ -31,6 +31,24 @@ export default function AuthReducer(state, action) {
         },
       };
     }
+    case "sign_out": {
+      console.log("sign out reducer");
+      return {
+        user: null,
+        selected_group: {
+          group_id: null,
+        },
+        isLoading: false,
+        validate: {
+          isValidate: false,
+          message: "",
+        },
+        judgeLogin: {
+          isJudgeLogin: false,
+          toPath: "",
+        },
+      };
+    }
     case "sign_up":
       console.log(action.data);
       return {

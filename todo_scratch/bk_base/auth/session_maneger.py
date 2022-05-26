@@ -1,5 +1,3 @@
-
-
 import random
 import string
 import datetime
@@ -48,8 +46,15 @@ class SessionManeger:
 
     @staticmethod
     def generate_set_cookie_syntax(session_code: str) -> str:
-        return "session={0}; SameSite=Strict;HttpOnly".format(session_code)
+        return "session={0}; Path=/api;SameSite=Strict;HttpOnly".format(session_code)
 
     @staticmethod
+    def generate_delete_cookie_syntax() -> str:
+
+        expired_datatime = datetime.datetime.now() - datetime.timedelta(days=1)
+        expired_datatime_str = expired_datatime.strftime('%a,%d %b %Y %H:%M:%S GMT')
+        return "session={0}; Path=/api;Expires={1};SameSite=Strict;HttpOnly".format("delete", expired_datatime_str)
+
+    @ staticmethod
     def check_epired(expired: datetime.datetime) -> bool:
         return expired >= datetime.datetime.now()

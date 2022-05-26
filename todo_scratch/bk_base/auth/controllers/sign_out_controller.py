@@ -1,5 +1,6 @@
 from todo_scratch.bk_base.auth.entities.auth_user_entity import AuthUserEntity
 from todo_scratch.bk_base.auth.entities.session_entitiy import SessionEntity
+from todo_scratch.bk_base.auth.session_maneger import SessionManeger
 from todo_scratch.bk_base.controller.auth_mixin import AuthMixin
 from todo_scratch.bk_base.controller.controller import Controller
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
@@ -14,7 +15,7 @@ class SignOutController(AuthMixin, Controller):
         Controller (_type_): コントローラ基底クラス
     """
 
-    def post(self, request: Request, user: AuthUserEntity) -> Response:
+    def post(self, request: Request, user: AuthUserEntity, **kwargs) -> Response:
 
         session_db_accesor = DbAccesor(SessionEntity)
         delete_session_entities = session_db_accesor.select_by_param(param={
@@ -28,4 +29,9 @@ class SignOutController(AuthMixin, Controller):
 
         if effected_rows_count <= 0:
             return Response(status='202')
-        return Response(status="200")
+
+        response = Response(status="200", )
+
+        session_maneger = SessionManeger()
+        response.set_cookie(session_maneger.generate_delete_cookie_syntax())
+        return response

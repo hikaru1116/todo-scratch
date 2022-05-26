@@ -4,6 +4,7 @@ import {
   setSelectedGroupId,
   getSelectedGroupId,
 } from "../utils/SelectedGroupStorage";
+import { postSingOut } from "../repositories/LoginRepository";
 
 const loading = {
   type: "loading",
@@ -84,6 +85,17 @@ export const singIn = (dispatch, identifier, password) => {
       dispatch(action);
       return;
     });
+};
+
+export const signOutAction = (displatch, navigate) => {
+  postSingOut().then(() => {
+    setSelectedGroupId(null);
+    const action = {
+      type: "sign_out",
+    };
+    displatch(action);
+    navigate("/signin");
+  });
 };
 
 export const changeSelectedGroup = (dispatch, selectedGroupId) => {
