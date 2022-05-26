@@ -7,9 +7,11 @@ import { GroupJoinedOperateContext } from "../../contexts/GroupJoinedContext";
 import { Navigate } from "react-router-dom";
 import List from "@mui/material/List";
 import JoinedGroupListItem from "./JoinedGroupListItem";
-import { getJoinedGroup } from "../../actions/GroupJoinedAction";
+import {
+  getJoinedGroupAction,
+  changeGroupAction,
+} from "../../actions/GroupJoinedAction";
 import { AuthOperateContext } from "../../contexts/AuthContext";
-import { changeGroup } from "../../actions/GroupJoinedAction";
 
 const GroupJoinedListDisplay = () => {
   const { stateGroupjoined, dispatchGroupJoined } = useContext(
@@ -18,11 +20,11 @@ const GroupJoinedListDisplay = () => {
   const { state, dispatch } = useContext(AuthOperateContext);
 
   useEffect(() => {
-    getJoinedGroup(dispatchGroupJoined);
+    getJoinedGroupAction(dispatchGroupJoined);
   }, []);
 
   const chengeGroup = (groupId) => {
-    changeGroup(dispatchGroupJoined, dispatch, groupId);
+    changeGroupAction(dispatchGroupJoined, dispatch, groupId);
   };
   return stateGroupjoined.toPath != null ? (
     <Navigate to={stateGroupjoined.toPath} />

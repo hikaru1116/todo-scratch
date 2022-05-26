@@ -7,8 +7,8 @@ import { GroupApprovalRequestOperateContext } from "../../contexts/GroupApproval
 import List from "@mui/material/List";
 import ApprovalRequestGroupListItem from "./ApprovalRequestGroupListItem";
 import {
-  getRequestApprovalGroup,
-  requestApprovalGroup,
+  getApprovalRequestGroupsAction,
+  approvalGroupAction,
 } from "../../actions/GroupApprovalRequestAction";
 
 const GroupApprovalRequestDisplay = () => {
@@ -19,11 +19,11 @@ const GroupApprovalRequestDisplay = () => {
 
   useEffect(() => {
     console.log(stateGroupApprovalRequest.requestCount);
-    getRequestApprovalGroup(dispatchGroupApprovalRequest);
+    getApprovalRequestGroupsAction(dispatchGroupApprovalRequest);
   }, [stateGroupApprovalRequest.requestCount]);
 
   const requestApproval = (groupId) => {
-    requestApprovalGroup(dispatchGroupApprovalRequest, groupId);
+    approvalGroupAction(dispatchGroupApprovalRequest, groupId);
   };
 
   return (

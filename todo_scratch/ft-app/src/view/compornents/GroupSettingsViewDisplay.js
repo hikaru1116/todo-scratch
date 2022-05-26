@@ -8,14 +8,14 @@ import List from "@mui/material/List";
 import GroupUserListItem from "./GroupUserListItem";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
-import { toEditState } from "../../actions/GroupSettingsAction";
+import { toEditStateAction } from "../../actions/GroupSettingsAction";
 
 const GroupSettingsViewDisplay = () => {
   const { stateGroupSettings, dispatchGroupSettings } = useContext(
     GroupSettingsOperateContext
   );
 
-  const toEdit = () => toEditState(dispatchGroupSettings);
+  const toEdit = () => toEditStateAction(dispatchGroupSettings);
 
   return (
     <div>

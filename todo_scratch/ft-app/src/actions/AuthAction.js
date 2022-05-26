@@ -10,7 +10,7 @@ const loading = {
   type: "loading",
 };
 
-export const initUserInfo = (dispatch, path) => {
+export const initUserInfoAction = (dispatch, path) => {
   getAccount().then((user) => {
     const selected_group_id = getSelectedGroupId();
     const action = {
@@ -27,7 +27,7 @@ export const initUserInfo = (dispatch, path) => {
   });
 };
 
-export const singIn = (dispatch, identifier, password) => {
+export const singInAction = (dispatch, identifier, password) => {
   // ローディング
   dispatch(loading);
 
@@ -98,7 +98,7 @@ export const signOutAction = (displatch, navigate) => {
   });
 };
 
-export const changeSelectedGroup = (dispatch, selectedGroupId) => {
+export const changeSelectedGroupAction = (dispatch, selectedGroupId) => {
   // ローカルストレージへ選択済みグループIDを設定
   setSelectedGroupId(selectedGroupId);
   console.log("set selected group");

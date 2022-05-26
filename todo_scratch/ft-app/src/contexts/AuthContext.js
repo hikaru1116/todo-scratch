@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import AuthReducer from "../reducers/AuthReducer";
-import { initUserInfo } from "../actions/AuthAction";
+import { initUserInfoAction } from "../actions/AuthAction";
 
 export const AuthOperateContext = createContext({
   state: {},
@@ -25,7 +25,7 @@ export const initState = {
 
 export const AuthContext = ({ path, children }) => {
   useEffect(() => {
-    initUserInfo(dispatch, path);
+    initUserInfoAction(dispatch, path);
   }, []);
 
   const [state, dispatch] = useReducer(AuthReducer, initState);

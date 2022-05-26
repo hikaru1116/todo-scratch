@@ -9,13 +9,13 @@ import GroupUserListItem from "./GroupUserListItem";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SaveIcon from "@mui/icons-material/Save";
-import { toViewState } from "../../actions/GroupSettingsAction";
+import { toViewStateAction } from "../../actions/GroupSettingsAction";
 
 const GroupSettingsEditDisplay = () => {
   const { dispatchGroupSettings, stateGroupSettings } = useContext(
     GroupSettingsOperateContext
   );
-  const toView = () => toViewState(dispatchGroupSettings);
+  const toView = () => toViewStateAction(dispatchGroupSettings);
   return (
     <div>
       <Grid container direction="column" spacing={3.5} mt={2}>

@@ -1,6 +1,6 @@
 import { getGroupById } from "../repositories/GroupRepository";
 
-export const getGroupInfo = (dispatch, group_id) => {
+export const getGroupInfoAction = (dispatch, group_id) => {
   getGroupById(group_id).then((data) => {
     const action = {
       type: "get_group_info",
@@ -13,14 +13,14 @@ export const getGroupInfo = (dispatch, group_id) => {
   });
 };
 
-export const toEditState = (dispatch) => {
+export const toEditStateAction = (dispatch) => {
   const action = {
     type: "to_edit_state",
   };
   dispatch(action);
 };
 
-export const toViewState = (dispatch) => {
+export const toViewStateAction = (dispatch) => {
   const action = {
     type: "to_view_state",
   };

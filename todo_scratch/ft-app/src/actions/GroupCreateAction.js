@@ -1,5 +1,6 @@
 import { postGroup } from "../repositories/GroupRepository";
-import { changeSelectedGroup } from "../actions/AuthAction";
+import { changeSelectedGroupAction } from "../actions/AuthAction";
+
 export const createGroupAction = (
   dispatch,
   dispatchAuth,
@@ -39,7 +40,7 @@ export const createGroupAction = (
 
   postGroup(createGroupInfo).then((data) => {
     if (data != null) {
-      changeSelectedGroup(dispatchAuth, data.group_id);
+      changeSelectedGroupAction(dispatchAuth, data.group_id);
 
       const action = {
         type: "create_group_success",

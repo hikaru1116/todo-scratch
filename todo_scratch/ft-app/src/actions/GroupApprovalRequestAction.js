@@ -1,7 +1,7 @@
 import { getApprovalRequestGroupList } from "../repositories/GroupRepository";
 import { postApprovalRequest } from "../repositories/GroupRepository";
 
-export const getRequestApprovalGroup = (dispatch) => {
+export const getApprovalRequestGroupsAction = (dispatch) => {
   console.log("hakka");
   getApprovalRequestGroupList().then((groups) => {
     console.log(groups);
@@ -14,7 +14,7 @@ export const getRequestApprovalGroup = (dispatch) => {
   });
 };
 
-export const requestApprovalGroup = (dispatch, groupId) => {
+export const approvalGroupAction = (dispatch, groupId) => {
   postApprovalRequest(groupId).then((data) => {
     console.log(data);
     if (data == null) {

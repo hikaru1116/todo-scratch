@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { GroupSettingsOperateContext } from "../../contexts/GroupSettingsContext";
-import { getGroupInfo } from "../../actions/GroupSettingsAction";
+import { getGroupInfoAction } from "../../actions/GroupSettingsAction";
 import { AuthOperateContext } from "../../contexts/AuthContext";
 import GroupSettingsViewDisplay from "./GroupSettingsViewDisplay";
 import GroupSettingsEditDisplay from "./GroupSettingsEditDisplay";
@@ -15,7 +15,7 @@ const GroupSettingsDisplay = () => {
     if (state.selected_group.group_id == null) {
       return;
     }
-    getGroupInfo(dispatchGroupSettings, state.selected_group.group_id);
+    getGroupInfoAction(dispatchGroupSettings, state.selected_group.group_id);
   }, []);
 
   return (

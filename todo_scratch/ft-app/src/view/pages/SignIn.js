@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { AuthOperateContext } from "../../contexts/AuthContext";
-import { singIn } from "../../actions/AuthAction";
+import { singInAction } from "../../actions/AuthAction";
 import { Navigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -16,7 +16,11 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    singIn(dispatch, formData.get("identifier"), formData.get("password"));
+    singInAction(
+      dispatch,
+      formData.get("identifier"),
+      formData.get("password")
+    );
   };
 
   return state.user ? (
