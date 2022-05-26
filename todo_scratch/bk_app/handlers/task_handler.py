@@ -60,21 +60,21 @@ class TaskHandler:
         except Exception:
             return default_value
 
-    def get_task(self, group_id: int, param: Dict) -> List[Dict]:
+    def get_task(self, group_id: int, query_param: Dict) -> List[Dict]:
         """タスクの取得
 
         Args:
             group_id (int): グループID
-            param (Dict): 検索パラメータ
+            param (Dict): 検索クエリパラメータ
 
         Returns:
             List[Dic]: タスクエンティティ情報
         """
-        task_status_id = self._get_query_param(param, "task_status_id", str, 0)
-        title = self._get_query_param(param, "title", str, "")
-        post_user_id = self._get_query_param(param, "post_user_id", int, 0)
-        deadline_at_from = self._get_query_param(param, "deadline_at_from", str, "1900-01-01T01:01:00")
-        deadline_at_to = self._get_query_param(param, "deadline_at_to", str, "2999-12-31T12:00:00")
+        task_status_id = self._get_query_param(query_param, "task_status_id", str, 0)
+        title = self._get_query_param(query_param, "title", str, "")
+        post_user_id = self._get_query_param(query_param, "post_user_id", int, 0)
+        deadline_at_from = self._get_query_param(query_param, "deadline_at_from", str, "1900-01-01T01:01:00")
+        deadline_at_to = self._get_query_param(query_param, "deadline_at_to", str, "2999-12-31T12:00:00")
 
         task_entities = self.task_repository.get_task_list(
             group_id=group_id,

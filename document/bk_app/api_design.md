@@ -633,7 +633,7 @@ POST /group/invite
 #### メソッド、エンドポイント
 
 ```
-GET /group/{group_id}/task/detail
+GET /group/{group_id}/task
 ```
 
 #### 認証・認可
@@ -688,7 +688,7 @@ GET /group/{group_id}/task/detail
 #### メソッド、エンドポイント
 
 ```
-GET /group/{group_id}/task/{task_id}
+GET /group/{group_id}/task/{task_id}/detail
 ```
 
 #### 認証・認可

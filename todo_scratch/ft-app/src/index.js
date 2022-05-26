@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import TodoList from "./view/pages/TodoList";
 import Page404 from "./view/pages/Page404";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Navbar from "./view/compornents/Navbar";
@@ -16,6 +15,7 @@ import GroupSettings from "./view/pages/GroupSettings";
 import GroupCreate from "./view/pages/GroupCreate";
 import GroupJoinedList from "./view/pages/GroupJoinedList";
 import GroupApprovalRequest from "./view/pages/GroupApprovalRequest";
+import TaskList from "./view/pages/TaskList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -40,7 +40,7 @@ root.render(
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<ProvateRoute element={<TodoList />} />} />
+          <Route path="/" element={<ProvateRoute element={<TaskList />} />} />
           <Route
             path="/account"
             element={<ProvateRoute element={<Account />} />}

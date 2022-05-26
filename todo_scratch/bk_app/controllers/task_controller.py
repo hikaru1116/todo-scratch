@@ -25,7 +25,7 @@ class TaskController(Controller):
 
         return JSONResponse(dic=self._get_handler().get_task(
             group_id=int(url_path_param[0]),
-            param=request.path_query
+            query_param=request.path_query
         ))
 
     def post(self, request: Request, user: UserEntity, url_path_param: List, **kwargs) -> Response:

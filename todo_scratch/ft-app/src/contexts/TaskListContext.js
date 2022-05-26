@@ -3,7 +3,7 @@ import TaskListReducer from "../reducers/TaskListReducer";
 
 export const TaskListOperateContext = createContext({
   stateTaskList: {},
-  dispatch: null,
+  dispatchTaskList: null,
 });
 
 export const initState = {
@@ -11,10 +11,15 @@ export const initState = {
 };
 
 export const TaskListContext = ({ children }) => {
-  const [stateTaskList, dispatch] = useReducer(TaskListReducer, initState);
+  const [stateTaskList, dispatchTaskList] = useReducer(
+    TaskListReducer,
+    initState
+  );
 
   return (
-    <TaskListOperateContext.Provider value={{ stateTaskList, dispatch }}>
+    <TaskListOperateContext.Provider
+      value={{ stateTaskList, dispatchTaskList }}
+    >
       {children}
     </TaskListOperateContext.Provider>
   );
