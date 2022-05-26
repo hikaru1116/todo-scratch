@@ -7,7 +7,7 @@ export const AuthOperateContext = createContext({
   dispatch: null,
 });
 
-export const authInitState = {
+export const initState = {
   user: null,
   selected_group: {
     group_id: null,
@@ -28,7 +28,7 @@ export const AuthContext = ({ path, children }) => {
     initUserInfo(dispatch, path);
   }, []);
 
-  const [state, dispatch] = useReducer(AuthReducer, authInitState);
+  const [state, dispatch] = useReducer(AuthReducer, initState);
 
   return (
     <AuthOperateContext.Provider value={{ state, dispatch }}>

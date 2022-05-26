@@ -6,7 +6,7 @@ export const GroupApprovalRequestOperateContext = createContext({
   dispatchGroupApprovalRequest: null,
 });
 
-export const groupApprovalRequestInitStste = {
+export const initState = {
   approvalRequestGroups: [],
   requestCount: 0,
 };
@@ -14,7 +14,7 @@ export const groupApprovalRequestInitStste = {
 export const GroupApprovalRequestContext = ({ children }) => {
   const [stateGroupApprovalRequest, dispatchGroupApprovalRequest] = useReducer(
     GroupApprovalRequestReducer,
-    groupApprovalRequestInitStste
+    initState
   );
 
   return (

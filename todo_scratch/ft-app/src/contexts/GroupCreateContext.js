@@ -6,7 +6,7 @@ export const GroupCreateOperateContext = createContext({
   dispatchGroupCreate: null,
 });
 
-export const groupCreateInitStste = {
+export const initState = {
   validate: {
     isValidate: false,
     message: "",
@@ -17,7 +17,7 @@ export const groupCreateInitStste = {
 export const GroupCreateContext = ({ children }) => {
   const [stateGroupCreate, dispatchGroupCreate] = useReducer(
     GroupCreateReducer,
-    groupCreateInitStste
+    initState
   );
 
   return (

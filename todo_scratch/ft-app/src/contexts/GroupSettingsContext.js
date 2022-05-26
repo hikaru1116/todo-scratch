@@ -6,7 +6,7 @@ export const GroupSettingsOperateContext = createContext({
   dispatchGroupSettings: null,
 });
 
-export const groupSettingsInitStste = {
+export const initState = {
   group_id: null,
   group_name: null,
   description: null,
@@ -17,7 +17,7 @@ export const groupSettingsInitStste = {
 export const GroupSettingsContext = ({ children }) => {
   const [stateGroupSettings, dispatchGroupSettings] = useReducer(
     GroupSettingsReducer,
-    groupSettingsInitStste
+    initState
   );
 
   return (

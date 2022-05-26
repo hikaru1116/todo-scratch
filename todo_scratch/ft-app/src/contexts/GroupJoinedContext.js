@@ -6,7 +6,7 @@ export const GroupJoinedOperateContext = createContext({
   dispatchGroupJoined: null,
 });
 
-export const groupJoinedInitStste = {
+export const initState = {
   joinedGroups: [],
   toPath: null,
 };
@@ -14,7 +14,7 @@ export const groupJoinedInitStste = {
 export const GroupjoinedContext = ({ children }) => {
   const [stateGroupjoined, dispatchGroupJoined] = useReducer(
     GroupJoinedReducer,
-    groupJoinedInitStste
+    initState
   );
 
   return (
