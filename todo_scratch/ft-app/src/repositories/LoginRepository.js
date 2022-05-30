@@ -14,7 +14,10 @@ export const login = (identifier, password) => {
       { withCredentials: true }
     )
     .then((res) => {
-      return res.data;
+      if (res.status == "200") {
+        return res.data;
+      }
+      return null;
     })
     .catch(() => {
       return null;

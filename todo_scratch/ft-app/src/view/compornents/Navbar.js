@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
-import { AuthOperateContext } from "../../contexts/AuthContext";
+import { UserOperateContext } from "../../contexts/UserContext";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Grid from "@mui/material/Grid";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -14,7 +14,7 @@ import Typography1 from "../compornents/Typographies/Typography1";
 import Typography2 from "../compornents/Typographies/Typography2";
 
 const Navbar = () => {
-  const { state } = useContext(AuthOperateContext);
+  const { stateUser } = useContext(UserOperateContext);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -27,12 +27,15 @@ const Navbar = () => {
       sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
     >
       <Drawer open={isOpen} onClose={toggleDrawer} direction="right">
-        <DrawerMenu user_name={"hikaru"} />
+        <DrawerMenu
+          userName={stateUser.user ? stateUser.user.user_name : "no user"}
+          closeDraw={toggleDrawer}
+        />
       </Drawer>
       <Toolbar>
         <Typography1 color={"#FFFFFF"}>TODO APP</Typography1>
         <div style={{ flexGrow: 1 }}></div>
-        {state.user && (
+        {stateUser.user && (
           <Box>
             <Grid
               container
@@ -45,7 +48,7 @@ const Navbar = () => {
               </Grid>
               <Grid item>
                 <Typography2 color={"#FFFFFF"}>
-                  {state.user.user_name}
+                  {stateUser.user.user_name}
                 </Typography2>
               </Grid>
               <Grid item>

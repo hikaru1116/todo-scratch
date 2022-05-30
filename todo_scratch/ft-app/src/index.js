@@ -2,20 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Page404 from "./view/pages/Page404";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Navbar from "./view/compornents/Navbar";
-import SignIn from "./view/pages/SignIn";
-import { AuthContext } from "./contexts/AuthContext";
+import { UserContext } from "./contexts/UserContext";
+import { SignInJudgeContext } from "./contexts/SignInJudgeContext";
 import ProvateRoute from "./view/compornents/PrivateRoute";
-import SignUp from "./view/pages/SignUp";
-import Account from "./view/pages/Account";
+import SignInPage from "./view/pages/SignInPage";
+import TaskListPage from "./view/pages/TaskListPage";
+import Page404Page from "./view/pages/Page404Page";
 import Signing from "./view/pages/Signing";
-import GroupSettings from "./view/pages/GroupSettings";
-import GroupCreate from "./view/pages/GroupCreate";
-import GroupJoinedList from "./view/pages/GroupJoinedList";
-import GroupApprovalRequest from "./view/pages/GroupApprovalRequest";
-import TaskList from "./view/pages/TaskList";
+import GroupSettingsPage from "./view/pages/GroupSettingsPage";
+import GroupJoinedListPage from "./view/pages/GroupJoinedListPage";
+import GroupCreatePage from "./view/pages/GroupCreatePage";
+import GroupApprovalRequestPage from "./view/pages/GroupApprovalRequestPage";
+import TaskCreatePage from "./view/pages/TaskCreatePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -36,37 +36,41 @@ const theme = createTheme({
 
 root.render(
   <ThemeProvider theme={theme}>
-    <AuthContext path={location.pathname}>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<ProvateRoute element={<TaskList />} />} />
-          <Route
-            path="/account"
-            element={<ProvateRoute element={<Account />} />}
-          />
-          <Route
-            path="/group-settings"
-            element={<ProvateRoute element={<GroupSettings />} />}
-          />
-          <Route
-            path="/group/create"
-            element={<ProvateRoute element={<GroupCreate />} />}
-          />
-          <Route
-            path="/group/joined"
-            element={<ProvateRoute element={<GroupJoinedList />} />}
-          />
-          <Route
-            path="/group/approval-request"
-            element={<ProvateRoute element={<GroupApprovalRequest />} />}
-          />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/*" element={<Page404 />} />
-          <Route path="/signing" element={<Signing />} />
-        </Routes>
-      </Router>
-    </AuthContext>
+    <UserContext>
+      <SignInJudgeContext path={window.location.pathname}>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={<ProvateRoute element={<TaskListPage />} />}
+            />
+            <Route
+              path="/group-settings"
+              element={<ProvateRoute element={<GroupSettingsPage />} />}
+            />
+            <Route
+              path="/group/joined"
+              element={<ProvateRoute element={<GroupJoinedListPage />} />}
+            />
+            <Route
+              path="/group/create"
+              element={<ProvateRoute element={<GroupCreatePage />} />}
+            />
+            <Route
+              path="/group/approval-request"
+              element={<ProvateRoute element={<GroupApprovalRequestPage />} />}
+            />
+            <Route
+              path="/task/create"
+              element={<ProvateRoute element={<TaskCreatePage />} />}
+            />
+            <Route path="/signin" element={<SignInPage />} />
+            <Route path="/signing" element={<Signing />} />
+            <Route path="/*" element={<Page404Page />} />
+          </Routes>
+        </Router>
+      </SignInJudgeContext>
+    </UserContext>
   </ThemeProvider>
 );

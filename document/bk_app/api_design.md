@@ -950,7 +950,7 @@ POST /group/{group_id}/task/{task_id}/comment
 #### メソッド、エンドポイント
 
 ```
-GET /task/status-info
+GET /group/{group_id}/task/status-info
 ```
 
 ### 認証・認可

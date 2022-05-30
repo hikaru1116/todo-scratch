@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
-import { AuthOperateContext } from "../../contexts/AuthContext";
+import { SignInJudgeOperateContext } from "../../contexts/SignInJudgeContext";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ element }) => {
-  const { state } = useContext(AuthOperateContext);
-  const isSingIn = state.user != null;
-
-  if (!state.judgeLogin.isJudgeLogin) {
+  const { stateSignInJudge } = useContext(SignInJudgeOperateContext);
+  if (!stateSignInJudge.doneJudge) {
     return <Navigate to="/signing" />;
   }
 
-  if (isSingIn) {
+  if (stateSignInJudge.isJudgeSingIn) {
     return element;
   } else {
     return <Navigate to="/signin" />;

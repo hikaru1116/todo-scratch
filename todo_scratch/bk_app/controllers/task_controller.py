@@ -34,7 +34,6 @@ class TaskController(Controller):
 
         group_id = int(url_path_param[0])
         body = request.json
-
         validator = TaskDataValidator(body)
         if not validator.validate():
             return Response404()

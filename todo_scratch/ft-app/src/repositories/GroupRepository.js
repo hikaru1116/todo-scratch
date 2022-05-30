@@ -66,12 +66,28 @@ export const postApprovalRequest = (groupId) => {
       group_id: groupId,
     })
     .then((res) => {
-      console.log(res.status);
       if (res.status == 200) {
         return res.data;
       } else {
         return null;
       }
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const getTaskStatusInfoByGroupId = (groupId) => {
+  axios.defaults.withCredentials = true;
+  return axios
+    .get(endpoint + `/group/${String(groupId)}/task/status-info`, {
+      withCredentials: true,
+    })
+    .then((res) => {
+      if (res.status == 200) {
+        return res.data;
+      }
+      return null;
     })
     .catch(() => {
       return null;

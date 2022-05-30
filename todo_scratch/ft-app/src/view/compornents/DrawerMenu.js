@@ -6,16 +6,18 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { AuthOperateContext } from "../../contexts/AuthContext";
-import { signOutAction } from "../../actions/AuthAction";
+import { UserOperateContext } from "../../contexts/UserContext";
+import { clearUserDataAction } from "../../actions/UserAction";
 
-const DrawerMenu = ({ user_name }) => {
-  const { dispatch } = useContext(AuthOperateContext);
+const DrawerMenu = ({ userName, closeDraw }) => {
+  const { dispatchUser } = useContext(UserOperateContext);
 
   const navigate = useNavigate();
 
   const signOut = () => {
-    signOutAction(dispatch, navigate);
+    clearUserDataAction(dispatchUser);
+    closeDraw();
+    navigate("/signin");
   };
 
   return (
@@ -52,7 +54,7 @@ const DrawerMenu = ({ user_name }) => {
                 rowSpacing={1}
               >
                 <AccountCircleIcon />
-                <Typography ml={0.5}>{user_name}</Typography>
+                <Typography ml={0.5}>{userName}</Typography>
               </Grid>
             </Box>
           </Grid>

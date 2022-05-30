@@ -1,9 +1,8 @@
-import { changeSelectedGroupAction } from "../actions/AuthAction";
+import { setSelectedGroup } from "../actions/UserAction";
 import { getJoinedGroupList } from "../repositories/GroupRepository";
 
 export const getJoinedGroupAction = (dispatch) => {
   getJoinedGroupList().then((groups) => {
-    console.log(groups);
     const action = {
       type: "get_joined_group",
       data: groups,
@@ -13,12 +12,10 @@ export const getJoinedGroupAction = (dispatch) => {
   });
 };
 
-export const changeGroupAction = (dispatch, dispatchAuth, groupId) => {
-  console.log("change group!!");
-  console.log(groupId);
+export const changeGroupAction = (dispatch, dispatchUser, groupId) => {
   const action = {
     type: "change_group",
   };
+  setSelectedGroup(dispatchUser, groupId);
   dispatch(action);
-  changeSelectedGroupAction(dispatchAuth, groupId);
 };
