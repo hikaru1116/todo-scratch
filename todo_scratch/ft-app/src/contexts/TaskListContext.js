@@ -7,7 +7,7 @@ export const TaskListOperateContext = createContext({
 });
 
 export const initState = {
-  taskList: null,
+  taskList: [],
 };
 
 export const TaskListContext = ({ children }) => {

@@ -1,10 +1,10 @@
 import axios from "axios";
 import { endpoint } from "../utils/endpoint";
 
-export const getGroupById = (group_id) => {
+export const getTaskListDivideByStatus = (group_id) => {
   axios.defaults.withCredentials = true;
   return axios
-    .get(endpoint + "/group/{0}/".format(String(group_id)), {
+    .get(endpoint + `/group/${String(group_id)}/task/divide-by-status`, {
       withCredentials: true,
     })
     .then((res) => {

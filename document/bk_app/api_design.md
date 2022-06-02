@@ -669,9 +669,69 @@ GET /group/{group_id}/task
 | □├task_id        | int      | タスク ID             |
 | □├group_id       | int      | グループ ID           |
 | □├user_id        | int      | 投稿ユーザ ID         |
+| □├user_name      | int      | 投稿ユーザ 名         |
 | □├title          | string   | タスクタイトル        |
 | □├context        | int      | タスク内容テキスト    |
 | □├deadline_at    | datetime | 期限日時              |
+| □├is_expired     | bool     | 期限超過有無          |
+| □├task_status_id | int      | タスクのステータス ID |
+| □├created_at     | datetime | 追加日時              |
+| □├updated_at     | datetime | 更新日時              |
+
+#### 処理内容
+
+指定した条件のタスク取得
+不正なクエリパラメータの場合、リクエストエラーを返す
+
+---
+
+## タスク一覧取得(タスクステータスごと)
+
+#### メソッド、エンドポイント
+
+```
+GET /group/{group_id}/task/divide-by-status
+```
+
+#### 認証・認可
+
+| 認証 | 管理者 |
+| ---- | ------ |
+| ◯    | ×      |
+
+#### クエリパラメータ
+
+| 項目           | 型       | 概要                     |
+| -------------- | -------- | ------------------------ |
+| task_status_id | int      | タスクステータス ID      |
+| title          | string   | タスクタイトル           |
+| user_id        | int      | 投稿ユーザ ID            |
+| deadline_from  | datetime | 期限の検索範囲の開始日時 |
+| deadline_to    | datetime | 期限の検索範囲の終了日時 |
+
+#### レスポンスステータス
+
+| ステータス | 概要             |
+| ---------- | ---------------- |
+| 200        | 処理成功         |
+| 401        | 認証エラー       |
+| 404        | リクエストエラー |
+| 500        | サーバーエラー   |
+
+#### レスポンスボディ
+
+| 項目             | 型       | 概要                  |
+| ---------------- | -------- | --------------------- |
+| task_status_id   | int      | タスクステータス ID   |
+| task_list        | list     | list                  |
+| □├task_id        | int      | タスク ID             |
+| □├group_id       | int      | グループ ID           |
+| □├user_id        | int      | 投稿ユーザ ID         |
+| □├user_name      | int      | 投稿ユーザ 名         |
+| □├title          | string   | タスクタイトル        |
+| □├context        | int      | タスク内容テキスト    |
+| □├deadline_at    | datetime | 期限日時              |
+| □├is_expired     | bool     | 期限超過有無          |
 | □├task_status_id | int      | タスクのステータス ID |
 | □├created_at     | datetime | 追加日時              |
 | □├updated_at     | datetime | 更新日時              |

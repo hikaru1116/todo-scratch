@@ -1,3 +1,4 @@
+from copy import deepcopy
 import datetime
 from typing import Any, Dict, List
 from todo_scratch.bk_app.entities.comment_entity import CommentEntity
@@ -99,6 +100,46 @@ class TaskHandler:
             list.append(row)
 
         return list
+
+    def get_task_divide_by_task(self, group_id: int):
+        task_entities = self.task_repository.get_task_list(
+            group_id=group_id,
+            order_by_text="task_status_id, updated_at DESC"
+        )
+
+        before_task_statu_id = -1
+        result: List = []
+        list_data: Dict = {}
+        now = datetime.datetime.now()
+        for entity in task_entities:
+            if before_task_statu_id < 0 or before_task_statu_id != entity.task_status_id.value:
+                if len(list_data) > 0:
+                    list_data_copy = deepcopy(list_data)
+                    result.append(list_data_copy)
+                    list_data = {}
+
+                list_data["task_status_id"] = entity.task_status_id.value
+                list_data["task_list"] = []
+                before_task_statu_id = entity.task_status_id.value
+
+            task: Dict = {}
+            task["task_id"] = entity.task_id.value
+            task["user_id"] = entity.user_id.value
+            task["user_name"] = entity.user_name.value
+            task["title"] = entity.title.value
+            task["context"] = entity.context.value
+            task["deadline_at"] = entity.deadline_at.to_dict_value
+            task["is_expired"] = now > entity.deadline_at.value
+            task["task_status_id"] = entity.task_status_id.value
+            task["created_at"] = entity.created_at.to_dict_value
+            task["updated_at"] = entity.updated_at.to_dict_value
+
+            list_data["task_list"].append(task)
+
+        list_data_copy = deepcopy(list_data)
+        result.append(list_data_copy)
+
+        return result
 
     def get_task_detail(self, task_id: int, group_id: int) -> Dict:
         """タスク詳細情報の取得

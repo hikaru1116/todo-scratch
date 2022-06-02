@@ -10,6 +10,7 @@ from todo_scratch.bk_app.controllers.task_change_status_controller import TaskCh
 from todo_scratch.bk_app.controllers.task_comment_controller import TaskCommentController
 from todo_scratch.bk_app.controllers.task_controller import TaskController
 from todo_scratch.bk_app.controllers.task_detail_conttroller import TaskDetailController
+from todo_scratch.bk_app.controllers.task_divide_by_status_controller import TaskDivideByStatusController
 from todo_scratch.bk_app.controllers.task_status_info_controller import TaskStatusInfoController
 from todo_scratch.bk_base.core.url_pattern import UrlPattern
 
@@ -25,8 +26,10 @@ urlpatterns: t.List[UrlPattern] = [
     UrlPattern(path='/account$', controller=AccountController()),
     UrlPattern(path='/group/<int>/task$', controller=TaskController()),
     UrlPattern(path='/group/<int>/task/<int>$', controller=TaskController()),
+    UrlPattern(path='/group/<int>/task/divide-by-status', controller=TaskDivideByStatusController()),
     UrlPattern(path='/group/<int>/task/<int>/detail$', controller=TaskDetailController()),
     UrlPattern(path='/group/<int>/task/<int>/change-status$', controller=TaskChangeStatusController()),
     UrlPattern(path='/group/<int>/task/<int>/comment$', controller=TaskCommentController()),
     UrlPattern(path='/group/<int>/task/status-info$', controller=TaskStatusInfoController()),
 ]
+

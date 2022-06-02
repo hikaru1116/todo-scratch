@@ -44,7 +44,9 @@ const Navbar = () => {
               alignItems="center"
             >
               <Grid item>
-                <AccountCircleIcon sx={{ color: "#FFFFFF" }} />
+                <Box mt={0.5}>
+                  <AccountCircleIcon sx={{ color: "#FFFFFF" }} />
+                </Box>
               </Grid>
               <Grid item>
                 <Typography2 color={"#FFFFFF"}>

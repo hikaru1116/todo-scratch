@@ -6,6 +6,7 @@ from todo_scratch.bk_app.entities.history_entity import HistoryEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
 from todo_scratch.bk_app.entities.task_history_entity import TaskHistoryEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
+from todo_scratch.bk_app.entities.task_with_postuser_entity import TaskWithPostUserEntity
 from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
 from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAccesor
 
@@ -16,20 +17,16 @@ class TaskRepository:
 
     get_task_list_query = """
     SELECT
-        *
-    FROM todo_scratch.task
-    WHERE group_id = %(group_id)s
-    """
-
-    get_task_list_query = """
-    SELECT
-        *
-    FROM todo_scratch.task
+        ts_task.*,
+        ts_user.user_name
+    FROM todo_scratch.task as ts_task
+    LEFT JOIN todo_scratch.`user` as ts_user
+    ON ts_task.user_id = ts_user.user_id
     WHERE group_id = %(group_id)s
     {0}
     AND deadline_at >= %(deadline_at_from)s
     AND deadline_at <= %(deadline_at_to)s
-    ORDER BY %(order_by_text)s
+    ORDER BY {1}
     """
 
     get_task_hisotry_query = """
@@ -62,7 +59,8 @@ class TaskRepository:
                       title='',
                       post_user_id=0,
                       deadline_at_from=datetime.datetime(1900, 1, 1),
-                      deadline_at_to=datetime.datetime(2999, 12, 31)) -> List[TaskEntity]:
+                      deadline_at_to=datetime.datetime(2999, 12, 31),
+                      order_by_text="deadline_at desc") -> List[TaskWithPostUserEntity]:
         """タスクの取得
 
         Args:
@@ -74,10 +72,10 @@ class TaskRepository:
             deadline_at_to (str, optional): 期限終了日時. Defaults to "".
 
         Returns:
-            List[TaskEntity]: タスクエンティティリスト
+            List[TaskWithPostUserEntity]: タスクエンティティリスト
         """
 
-        select_db_accesor = SelectDbAccesor(TaskEntity)
+        select_db_accesor = SelectDbAccesor(TaskWithPostUserEntity)
 
         query_param: Dict = {}
         query_param["group_id"] = group_id
@@ -94,9 +92,8 @@ class TaskRepository:
 
         query_param["deadline_at_from"] = deadline_at_from
         query_param["deadline_at_to"] = deadline_at_to
-        query_param["order_by_text"] = "task_id"
 
-        query = self.get_task_list_query.format(add_where_query)
+        query = self.get_task_list_query.format(add_where_query, order_by_text)
         return select_db_accesor.select(
             query=query,
             param=query_param
