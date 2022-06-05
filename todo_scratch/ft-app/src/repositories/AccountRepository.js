@@ -34,3 +34,24 @@ export const createUser = (userName, email, password) => {
       return false;
     });
 };
+
+export const putAccount = (userName, email) => {
+  axios.defaults.headers.post["Access-Control-Allow-Origin"] =
+    "http://localhost:3000/";
+
+  return axios
+    .put(
+      endpoint + "/account",
+      {
+        user_name: userName,
+        email: email,
+      },
+      { withCredentials: true }
+    )
+    .then((res) => {
+      return res.status == "200";
+    })
+    .catch(() => {
+      return false;
+    });
+};

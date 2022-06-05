@@ -18,6 +18,7 @@ import GroupApprovalRequestPage from "./view/pages/GroupApprovalRequestPage";
 import TaskCreatePage from "./view/pages/TaskCreatePage";
 import TaskDetailPage from "./view/pages/TaskDetailPage";
 import SignUpPage from "./view/pages/SignUpPage";
+import AccountPage from "./view/pages/AccountPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -55,6 +56,10 @@ root.render(
             <Route
               path="/"
               element={<ProvateRoute element={<TaskListPage />} />}
+            />
+            <Route
+              path="/account"
+              element={<ProvateRoute element={<AccountPage />} />}
             />
             <Route
               path="/group-settings"

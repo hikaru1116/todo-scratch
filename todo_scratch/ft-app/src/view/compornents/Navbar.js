@@ -12,6 +12,7 @@ import "react-modern-drawer/dist/index.css";
 import DrawerMenu from "./DrawerMenu";
 import Typography1 from "../compornents/Typographies/Typography1";
 import Typography2 from "../compornents/Typographies/Typography2";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { stateUser } = useContext(UserOperateContext);
@@ -33,7 +34,9 @@ const Navbar = () => {
         />
       </Drawer>
       <Toolbar>
-        <Typography1 color={"#FFFFFF"}>TODO APP</Typography1>
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Typography1 color={"#FFFFFF"}>TODO APP</Typography1>
+        </Link>
         <div style={{ flexGrow: 1 }}></div>
         {stateUser.user && (
           <Box>

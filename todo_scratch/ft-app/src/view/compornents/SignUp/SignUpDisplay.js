@@ -9,16 +9,14 @@ import BackButton from "../BackButton";
 import { signUpAction } from "../../../actions/SignUpAction";
 import { SignUpOperateContext } from "../../../contexts/SignUpContext";
 import Typography3 from "../Typographies/Typography3";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SignUpDisplay = () => {
   const { stateSignUp, dispatchSignUp } = useContext(SignUpOperateContext);
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    console.log(`formData.get("userName") ${formData.get("userName")}`);
-    console.log(`formData.get("email") ${formData.get("email")}`);
-    console.log(`formData.get("password") ${formData.get("password")}`);
     signUpAction(
       dispatchSignUp,
       formData.get("userName"),
@@ -33,7 +31,7 @@ const SignUpDisplay = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box mt={3}>
-        <BackButton />
+        <BackButton onClick={() => navigate("/signin")} />
       </Box>
       <Box
         sx={{
