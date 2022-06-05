@@ -11,6 +11,6 @@ class TaskDataValidator(JsonValidator):
 
     def init_validator_items(self):
         self.title = VcharValidatorItem(is_required=True)
-        self.context = TextValidatorItem(is_required=True)
+        self.context = TextValidatorItem()
         self.deadline_at = DatetimeValidatorItem(is_required=True)
         self.task_status_id = IntValidatorItem(is_required=True)

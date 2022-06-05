@@ -164,6 +164,7 @@ class TaskHandler:
         result["group_id"] = select_task_entity.group_id.to_dict_value
         result["user_id"] = select_task_entity.user_id.to_dict_value
         result["title"] = select_task_entity.title.to_dict_value
+        result["context"] = select_task_entity.context.to_dict_value
         result["deadline_at"] = select_task_entity.deadline_at.to_dict_value
         result["task_status_id"] = select_task_entity.task_status_id.to_dict_value
         task_history_list: List = []

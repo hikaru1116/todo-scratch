@@ -769,10 +769,11 @@ GET /group/{group_id}/task/{task_id}/detail
 #### レスポンスボディ
 
 | 項目              | 型       | 概要                  |
-| ----------------- | -------- | --------------------- |
+| ----------------- | -------- | --------------------- | --- |
 | task_id           | int      | タスク ID             |
 | group_id          | int      | グループ ID           |
 | user_id           | int      | 投稿ユーザ ID         |
+| user_name         | 名前     | 投稿ユーザ 名         | g   |
 | title             | string   | タスクタイトル        |
 | context           | int      | タスク内容テキスト    |
 | deadline_at       | datetime | 期限日時              |
@@ -846,11 +847,12 @@ PUT /group/{group_id}/task/{task_id}
 
 #### リクエストボディ
 
-| 項目        | 型       | 概要               |
-| ----------- | -------- | ------------------ |
-| title       | string   | タスクタイトル     |
-| context     | int      | タスク内容テキスト |
-| deadline_at | datetime | 期限日時           |
+| 項目           | 型       | 概要                |
+| -------------- | -------- | ------------------- |
+| title          | string   | タスクタイトル      |
+| context        | int      | タスク内容テキスト  |
+| deadline_at    | datetime | 期限日時            |
+| task_status_id | int      | タスクステータス ID |
 
 #### レスポンスステータス
 

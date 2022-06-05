@@ -32,13 +32,13 @@ export const createTaskAction = (
     return;
   }
 
-  console.log(taskStatusId);
-  postTask(groupId, {
+  const task = {
     title: title,
     context: context,
     deadline_at: formatDate(expired, "yyyy-MM-dd HH:mm:ss"),
     task_status_id: taskStatusId,
-  }).then(() => {
+  };
+  postTask(groupId, task).then(() => {
     const action = {
       type: "create_task",
     };

@@ -16,6 +16,7 @@ import GroupJoinedListPage from "./view/pages/GroupJoinedListPage";
 import GroupCreatePage from "./view/pages/GroupCreatePage";
 import GroupApprovalRequestPage from "./view/pages/GroupApprovalRequestPage";
 import TaskCreatePage from "./view/pages/TaskCreatePage";
+import TaskDetailPage from "./view/pages/TaskDetailPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -73,6 +74,11 @@ root.render(
             <Route
               path="/task/create"
               element={<ProvateRoute element={<TaskCreatePage />} />}
+            />
+            <Route
+              exact
+              path="/:groupId/task/detail/:taskId"
+              element={<ProvateRoute element={<TaskDetailPage />} />}
             />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/signing" element={<Signing />} />

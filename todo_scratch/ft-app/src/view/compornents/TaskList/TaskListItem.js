@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import ListItem from "@mui/material/ListItem";
 import Typography3 from "./../Typographies/Typography3";
 import Typography4 from "./../Typographies/Typography4";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import UpdateIcon from "@mui/icons-material/Update";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { useNavigate } from "react-router-dom";
+import { UserOperateContext } from "../../../contexts/UserContext";
 
 const TaskListItem = ({ key, task, statusColor }) => {
+  const navigate = useNavigate();
+  const { stateUser } = useContext(UserOperateContext);
   return (
-    <ListItem key={key} onClick={() => console.log(task.title)}>
+    <ListItem
+      key={key}
+      onClick={() =>
+        navigate(
+          `/${stateUser.selectedGroup.groupId}/task/detail/${task.task_id}`
+        )
+      }
+    >
       <Box border={0.5} borderColor={"#C4C4C4"} sx={{ width: "100%" }}>
         <Grid container direction="row">
           <Grid item xs={1}>
