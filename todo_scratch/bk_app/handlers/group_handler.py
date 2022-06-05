@@ -81,6 +81,19 @@ class GroupHandler:
         if len(invite_users) <= 0:
             return insert_group_id
 
+        is_insert = self._insert_invite_users(invite_users, post_user_id, insert_group_id)
+
+        if not is_insert:
+            return insert_group_id
+
+        # グループのデフォルトのタスクステータス情報の保存
+        task_status_entites = self._create_default_task_status_entities(insert_group_id)
+        self.group_repository.save_task_status(task_status_entites)
+
+        return insert_group_id
+
+    def _insert_invite_users(self, invite_users, post_user_id, insert_group_id):
+
         identifier_set = set([user.get("identifier") for user in invite_users])
 
         group_belongs_entities: List[GroupBelongEntity] = []
@@ -105,16 +118,12 @@ class GroupHandler:
             )
 
         if len(group_belongs_entities) <= 0:
-            return insert_group_id
+            return False
 
         # 招待ユーザのユーザ所属情報の保存
         self.group_repository.save_group_belongs_list(group_belongs_entities)
 
-        # グループのデフォルトのタスクステータス情報の保存
-        task_status_entites = self._create_default_task_status_entities(insert_group_id)
-        self.group_repository.save_task_status(task_status_entites)
-
-        return insert_group_id
+        return True
 
     def update_group_by_id(self, user_id: int, group_id: int, group_name: str, description: str):
         """グループ情報の更新
@@ -141,13 +150,12 @@ class GroupHandler:
 
         return update_group_entity.group_id.value
 
-    def update_or_save_group_belongs_by_user_dic(self, group_id: int, group_belongs_list: List[Dict]):
-        """グループの所属情報の更新・追加
-        既にあるユーザは更新、新規ユーザは追加する
+    def update_group_belongs(self, group_id: int, users: List[Dict]):
+        """グループの所属情報の更新
 
         Args:
             group_id (int): 更新するグループのID
-            group_belongs_list (List[Dict]): 更新後のグループ所属情報リスト
+            users (List[Dict]): 更新後のグループ所属情報リスト
         """
 
         group_belongs_entities: List[GroupBelongEntity] = self.group_repository.get_group_belongs_by_group_id(group_id=group_id)
@@ -161,7 +169,7 @@ class GroupHandler:
             is_update = False
             user_id_list.add(group_belongs_entity.user_id.value)
 
-            for group_belongs in group_belongs_list:
+            for group_belongs in users:
                 if group_belongs.get("user_id") == group_belongs_entity.user_id.value:
                     # 既存ユーザのグループ所属情報の更新
                     group_belongs_entity.auth_type.set_value(
@@ -172,22 +180,15 @@ class GroupHandler:
             if is_update:
                 db_accesor.update(group_belongs_entity)
 
-        insert_group_belongs_entities: List[GroupBelongsUserEntity] = []
-        for group_belongs in group_belongs_list:
-            user_id = group_belongs.get("user_id")
-            if user_id in user_id_list:
-                continue
+    def save_group_belong(self, users, post_user_id, group_id):
+        """グループ所属情報の追加
 
-            # 新規ユーザのグループ情報の追加
-            insert_group_belongs_entities.append(GroupBelongEntity.create_instance(
-                group_id,
-                user_id,
-                int(GroupAuthTypeEnum.NOMAL),  # 一般ユーザ
-                int(GroupUserStateEnum.UNAPPROVED),  # 未承認
-            ))
-
-        if len(insert_group_belongs_entities) > 0:
-            self.group_repository.save_group_belongs_list(insert_group_belongs_entities)
+        Args:
+            users (_type_): 追加するグループ所属情報リスト
+            post_user_id (_type_): 投稿ユーザ
+            group_id (_type_): グループID
+        """
+        self._insert_invite_users(users, post_user_id, group_id)
 
     def update_group_belongs_by_user_status(self, user_id: int, group_id: int, user_status: GroupUserStateEnum) -> Boolean:
         """グループ所属情報の新規作成

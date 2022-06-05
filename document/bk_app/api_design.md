@@ -375,14 +375,16 @@ PUT /group
 
 #### リクエストボディ
 
-| 項目        | 型     | 概要               |
-| ----------- | ------ | ------------------ |
-| group_name  | string | グループ名         |
-| description | string | グループの説明文   |
-| icon        | string | グループアイコン   |
-| users       | list   | 参加中のユーザ情報 |
-| □├user_id   | int    | ユーザ ID          |
-| □└auth_type | string | ユーザ権限         |
+| 項目         | 型     | 概要                 |
+| ------------ | ------ | -------------------- |
+| group_name   | string | グループ名           |
+| description  | string | グループの説明文     |
+| icon         | string | グループアイコン     |
+| update_users | list   | 更新するユーザリスト |
+| □├user_id    | int    | ユーザ ID            |
+| □└auth_type  | string | ユーザ権限           |
+| add_users    | list   | 追加するユーザリスト |
+| □└identifier | string | ユーザ識別情報       |
 
 #### レスポンスステータス
 

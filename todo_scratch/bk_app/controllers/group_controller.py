@@ -71,12 +71,15 @@ class GroupController(Controller):
             description=request_body.get("description")
         )
 
-        if request_body.get("users") is not None and len(request_body.get("users")) > 0:
+        if request_body.get("update_users") is not None and len(request_body.get("update_users")) > 0:
             # グループのユーザ権限の更新
-            group_handler.update_or_save_group_belongs_by_user_dic(
+            group_handler.update_group_belongs(
                 group_id=update_group_id,
-                group_belongs_list=request_body.get("users")
+                users=request_body.get("update_users")
             )
+
+        if request_body.get("add_users") is not None and len(request_body.get("add_users")) > 0:
+            group_handler.save_group_belong(users=request_body.get("add_users"), post_user_id=user.user_id.value, group_id=group_id)
 
         return JSONResponse(
             dic=group_handler.get_detail_group_info(call_user_id=user.user_id.value, group_id=update_group_id)

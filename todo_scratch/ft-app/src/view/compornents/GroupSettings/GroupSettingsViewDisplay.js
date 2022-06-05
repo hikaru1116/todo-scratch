@@ -9,17 +9,31 @@ import GroupUserListItem from "./GroupUserListItem";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import { toEditStateAction } from "../../../actions/GroupSettingsAction";
+import { UserOperateContext } from "../../../contexts/UserContext";
 
 const GroupSettingsViewDisplay = () => {
   const { stateGroupSettings, dispatchGroupSettings } = useContext(
     GroupSettingsOperateContext
   );
 
+  const { stateUser } = useContext(UserOperateContext);
+
   const toEdit = () => toEditStateAction(dispatchGroupSettings);
+
+  const isHostUser = () => {
+    const userList = stateGroupSettings.users.filter(
+      (user) => user.user_id == stateUser.user.user_id
+    );
+
+    if (userList.length <= 0) {
+      return false;
+    }
+    return userList[0].auth_type == 0;
+  };
 
   return (
     <div>
-      <Grid container direction="column" spacing={3.5} mt={2}>
+      <Grid container direction="column" spacing={3.5} mt={1} mb={5}>
         <Grid item>
           <Typography2>参加グループ設定</Typography2>
         </Grid>
@@ -31,7 +45,7 @@ const GroupSettingsViewDisplay = () => {
               sx={{ borderRadius: "16px", color: "#c4c4c4" }}
               p={2}
             >
-              <Typography3>{stateGroupSettings.group_name}</Typography3>
+              <Typography3>{stateGroupSettings.groupName}</Typography3>
             </Box>
           </Box>
         </Grid>
@@ -64,18 +78,20 @@ const GroupSettingsViewDisplay = () => {
             </Box>
           </Box>
         </Grid>
-        <Grid item>
-          <Box textAlign="center">
-            <Button
-              variant="outlined"
-              onClick={toEdit}
-              startIcon={<EditIcon />}
-              sx={{ width: "50%" }}
-            >
-              Edit
-            </Button>
-          </Box>
-        </Grid>
+        {stateGroupSettings.users.length > 0 && isHostUser() && (
+          <Grid item>
+            <Box textAlign="center">
+              <Button
+                variant="outlined"
+                onClick={toEdit}
+                startIcon={<EditIcon />}
+                sx={{ width: "50%" }}
+              >
+                Edit
+              </Button>
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </div>
   );

@@ -93,3 +93,15 @@ export const getTaskStatusInfoByGroupId = (groupId) => {
       return null;
     });
 };
+
+export const putGroup = (groupId, group) => {
+  axios.defaults.withCredentials = true;
+  return axios
+    .put(endpoint + `/group/${groupId}`, group)
+    .then((res) => {
+      return res.status == 200;
+    })
+    .catch(() => {
+      return false;
+    });
+};

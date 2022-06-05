@@ -3,10 +3,16 @@ export default function GroupSettingsReducer(state, action) {
     case "get_group_info":
       return {
         ...state,
-        group_id: action.group_id,
-        group_name: action.group_name,
+        groupId: action.groupId,
+        groupName: action.groupName,
         description: action.description,
         users: action.users,
+      };
+    case "put_group":
+      return {
+        ...state,
+        updateCount: state.updateCount + 1,
+        isEdit: false,
       };
     case "to_view_state":
       return {

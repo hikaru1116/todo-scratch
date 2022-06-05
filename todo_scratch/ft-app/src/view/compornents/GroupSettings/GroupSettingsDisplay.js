@@ -16,8 +16,7 @@ const GroupSettingsDisplay = () => {
       return;
     }
     getGroupInfoAction(dispatchGroupSettings, stateUser.selectedGroup.groupId);
-  }, [stateUser.selectedGroup.groupId]);
-
+  }, [stateUser.selectedGroup.groupId, stateGroupSettings.updateCount]);
   return (
     <>
       {!stateGroupSettings.isEdit ? (

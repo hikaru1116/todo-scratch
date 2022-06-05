@@ -7,11 +7,16 @@ export const GroupSettingsOperateContext = createContext({
 });
 
 export const initState = {
-  group_id: null,
-  group_name: null,
+  groupId: null,
+  groupName: null,
   description: null,
   users: [],
   isEdit: false,
+  updateCount: 0,
+  validate: {
+    isValidate: false,
+    message: "",
+  },
 };
 
 export const GroupSettingsContext = ({ children }) => {

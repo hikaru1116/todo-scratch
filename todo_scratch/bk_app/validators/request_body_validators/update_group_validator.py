@@ -12,10 +12,16 @@ class UpdateGroupValidator(JsonValidator):
     def init_validator_items(self):
         self.group_name = VcharValidatorItem(is_required=True)
         self.description = VcharValidatorItem(is_required=True)
-        self.users = ListValidatorItem(UpDateAuthTypeUsers)
+        self.update_users = ListValidatorItem(UpDateAuthTypeUsers)
+        self.add_users = ListValidatorItem(AddUsers)
 
 
 class UpDateAuthTypeUsers(JsonValidator):
     def init_validator_items(self) -> None:
         self.user_id = IntValidatorItem(is_required=True)
         self.auth_type = IntValidatorItem(is_required=True)
+
+
+class AddUsers(JsonValidator):
+    def init_validator_items(self) -> None:
+        self.identifier = VcharValidatorItem(is_required=True)
