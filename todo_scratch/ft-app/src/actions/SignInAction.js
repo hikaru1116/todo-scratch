@@ -59,7 +59,7 @@ export const signInAction = (
           };
           dispatch(action);
           successlJudge(dispatchSignInJudge, "/");
-          navigate("/");
+          navigate("/group/joined");
         });
       });
     })

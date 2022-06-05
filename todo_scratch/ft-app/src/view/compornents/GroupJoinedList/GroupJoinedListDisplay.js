@@ -44,7 +44,7 @@ const GroupJoinedListDisplay = () => {
                   {stateGroupjoined.joinedGroups.map((group) => (
                     <JoinedGroupListItem
                       group={group}
-                      selectedGroupId={stateUser.selectedGroup.groupid}
+                      selectedGroupId={stateUser.selectedGroup.groupId}
                       changeGroupFunction={chengeGroup}
                       key={group.group_id}
                     />

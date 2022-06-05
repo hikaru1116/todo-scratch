@@ -96,7 +96,14 @@ const TaskListDisplay = () => {
         </Box>
       )}
       {stateTaskList.taskList.length <= 0 ? (
-        <Box></Box>
+        <Box
+          sx={{ width: "80%", maxWidth: 600 }}
+          ml={"auto"}
+          mr={"auto"}
+          mt={1}
+        >
+          <Typography2>タスクがありません</Typography2>
+        </Box>
       ) : (
         <Box
           sx={{ width: "80%", maxWidth: 600 }}

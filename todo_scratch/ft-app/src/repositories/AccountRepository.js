@@ -1,13 +1,36 @@
 import axios from "axios";
+import { endpoint } from "../utils/endpoint";
 
 export const getAccount = () => {
   axios.defaults.withCredentials = true;
   return axios
-    .get("http://localhost:8000/api/account", { withCredentials: true })
+    .get(endpoint + "/account", { withCredentials: true })
     .then((res) => {
       return res.data;
     })
     .catch(() => {
       return null;
+    });
+};
+
+export const createUser = (userName, email, password) => {
+  axios.defaults.headers.post["Access-Control-Allow-Origin"] =
+    "http://localhost:3000/";
+
+  return axios
+    .post(
+      endpoint + "/signup",
+      {
+        user_name: userName,
+        email: email,
+        password: password,
+      },
+      { withCredentials: true }
+    )
+    .then((res) => {
+      return res.status == "200";
+    })
+    .catch(() => {
+      return false;
     });
 };
