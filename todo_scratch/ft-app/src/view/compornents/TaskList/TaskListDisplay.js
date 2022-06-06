@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserOperateContext } from "../../../contexts/UserContext";
 import Typography2 from "../../compornents/Typographies/Typography2";
-import Grid from "@mui/material/Grid";
 import { TaskListOperateContext } from "../../../contexts/TaskListContext";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
@@ -101,9 +100,7 @@ const TaskListDisplay = () => {
           ml={"auto"}
           mr={"auto"}
           mt={1}
-        >
-          <Typography2>タスクがありません</Typography2>
-        </Box>
+        ></Box>
       ) : (
         <Box
           sx={{ width: "80%", maxWidth: 600 }}

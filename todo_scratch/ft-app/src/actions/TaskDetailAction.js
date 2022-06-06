@@ -1,4 +1,8 @@
-import { getTaskDetail, putTask } from "../repositories/TaskRepository";
+import {
+  changeTaskStatus,
+  getTaskDetail,
+  putTask,
+} from "../repositories/TaskRepository";
 import { formatDate } from "../utils/DatetimeUtil";
 
 export const getTaskDetailAction = (dispatch, groupId, taskId) => {
@@ -59,6 +63,26 @@ export const changeDisplayModeToView = (dispatch) => {
     type: "to_view",
   };
   dispatch(action);
+};
+
+export const changeTaskStatusAction = (
+  dispatch,
+  groupId,
+  taskId,
+  taskStatusId
+) => {
+  console.log(`changeTaskStatusAction ${taskId}`);
+  changeTaskStatus(groupId, taskId, taskStatusId).then((isSuccess) => {
+    if (!isSuccess) {
+      return;
+    }
+    const action = {
+      type: "change_task_status",
+      data: taskStatusId,
+    };
+
+    dispatch(action);
+  });
 };
 
 const deleteTaskACtion = (dispatch) => {

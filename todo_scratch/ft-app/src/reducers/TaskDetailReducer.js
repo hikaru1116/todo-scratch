@@ -28,6 +28,13 @@ export default function TaskDetailReducer(state, action) {
         },
         isEdit: false,
       };
+    case "change_task_status":
+      return {
+        ...state,
+        task: {
+          taskStatusId: action.data,
+        },
+      };
     case "to_edit":
       return {
         ...state,

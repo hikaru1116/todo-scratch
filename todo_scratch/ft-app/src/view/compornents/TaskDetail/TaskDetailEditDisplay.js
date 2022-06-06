@@ -12,9 +12,13 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ja from "date-fns/locale/ja";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { UserOperateContext } from "../../../contexts/UserContext";
-import { putTaskAction } from "../../../actions/TaskDetailAction";
+import {
+  putTaskAction,
+  changeDisplayModeToView,
+} from "../../../actions/TaskDetailAction";
+import BackButton from "../BackButton";
 
 const TaskDetailEditDisplay = () => {
   const params = useParams();
@@ -66,7 +70,12 @@ const TaskDetailEditDisplay = () => {
         spacing={2.5}
       >
         <Grid item>
-          <Typography2>タスク作成</Typography2>
+          <BackButton
+            onClick={() => changeDisplayModeToView(dispatchTaskDetail)}
+          />
+        </Grid>
+        <Grid item>
+          <Typography2>タスク編集</Typography2>
         </Grid>
         {stateTaskDetail.validate.isValidate && (
           <Grid item>

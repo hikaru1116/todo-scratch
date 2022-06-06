@@ -3,6 +3,7 @@ import datetime
 from typing import Dict, List
 from todo_scratch.bk_app.entities.comment_entity import CommentEntity
 from todo_scratch.bk_app.entities.history_entity import HistoryEntity
+from todo_scratch.bk_app.entities.task_detail_entity import TaskDetailEntity
 from todo_scratch.bk_app.entities.task_entity import TaskEntity
 from todo_scratch.bk_app.entities.task_history_entity import TaskHistoryEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
@@ -53,6 +54,17 @@ class TaskRepository:
     ORDER BY task_history.created_at
     """
 
+    get_task_detail_query = """
+    SELECT
+        ts_task.*,
+        ts_user.user_name
+    FROM todo_scratch.task as ts_task
+    LEFT JOIN todo_scratch.`user` as ts_user
+    ON ts_task.user_id = ts_user.user_id
+    WHERE ts_task.group_id = %(group_id)s
+    AND ts_task.task_id = %(task_id)s
+    """
+
     def get_task_list(self,
                       group_id: int,
                       task_status_id=0,
@@ -99,13 +111,12 @@ class TaskRepository:
             param=query_param
         )
 
-    def get_task_by_id(self, task_id: int, group_id: int, user_id: int) -> List[TaskEntity]:
+    def get_task_by_id(self, task_id: int, group_id: int,) -> List[TaskEntity]:
         """指定したIDのタスクの取得
 
         Args:
             task_id (int): タスクID
             group_id (int): グループID
-            user_id (int): ユーザID
 
         Returns:
             _type_: タスクエンティティリスト
@@ -114,12 +125,11 @@ class TaskRepository:
         return db_accesor.select_by_param(
             param={
                 "task_id": task_id,
-                "group_id": group_id,
-                "user_id": user_id
+                "group_id": group_id
             }
         )
 
-    def get_task_by_task_id(self, task_id: int, group_id: int,) -> List[TaskEntity]:
+    def get_task_detail_by_task_id(self, task_id: int, group_id: int,) -> List[TaskDetailEntity]:
         """指定したタスクIDのタスクの取得
 
         Args:
@@ -129,8 +139,9 @@ class TaskRepository:
         Returns:
             _type_: タスクエンティティリスト
         """
-        db_accesor = DbAccesor(TaskEntity)
-        return db_accesor.select_by_param(
+        select_db_accesor = SelectDbAccesor(TaskDetailEntity)
+        return select_db_accesor.select(
+            query=self.get_task_detail_query,
             param={
                 "task_id": task_id,
                 "group_id": group_id

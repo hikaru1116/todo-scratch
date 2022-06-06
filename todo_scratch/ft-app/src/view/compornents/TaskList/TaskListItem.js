@@ -12,6 +12,7 @@ import { UserOperateContext } from "../../../contexts/UserContext";
 const TaskListItem = ({ key, task, statusColor }) => {
   const navigate = useNavigate();
   const { stateUser } = useContext(UserOperateContext);
+
   return (
     <ListItem
       key={key}
@@ -64,10 +65,10 @@ const TaskListItem = ({ key, task, statusColor }) => {
                       justifyContent="center"
                     >
                       <Grid item>
-                        <AccessTimeIcon />
+                        <AccessTimeIcon sx={{ color: "#ffffff" }} />
                       </Grid>
                       <Grid item>
-                        <Typography4 align={"right"}>
+                        <Typography4 align={"right"} color={"#ffffff"}>
                           {task.deadline_at}
                         </Typography4>
                       </Grid>

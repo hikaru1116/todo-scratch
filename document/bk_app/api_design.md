@@ -905,7 +905,7 @@ DELETE /group/{group_id}/task/{task_id}
 #### メソッド、エンドポイント
 
 ```
-POST /group/{group_id}/task/{task_id}/change-status
+PUT /group/{group_id}/task/{task_id}/change-status
 ```
 
 #### 認証・認可

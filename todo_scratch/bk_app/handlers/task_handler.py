@@ -152,7 +152,7 @@ class TaskHandler:
             Dict: タスク詳細情報
         """
 
-        task_entities = self.task_repository.get_task_by_task_id(task_id, group_id)
+        task_entities = self.task_repository.get_task_detail_by_task_id(task_id, group_id)
         if len(task_entities) <= 0:
             return {}
 
@@ -163,6 +163,7 @@ class TaskHandler:
         result["task_id"] = select_task_entity.task_id.to_dict_value
         result["group_id"] = select_task_entity.group_id.to_dict_value
         result["user_id"] = select_task_entity.user_id.to_dict_value
+        result["user_name"] = select_task_entity.user_name.to_dict_value
         result["title"] = select_task_entity.title.to_dict_value
         result["context"] = select_task_entity.context.to_dict_value
         result["deadline_at"] = select_task_entity.deadline_at.to_dict_value
@@ -360,7 +361,6 @@ class TaskHandler:
         task_entities = self.task_repository.get_task_by_id(
             task_id=task_id,
             group_id=group_id,
-            user_id=user.user_id.value
         )
 
         if len(task_entities) <= 0:

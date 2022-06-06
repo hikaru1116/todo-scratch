@@ -52,3 +52,21 @@ export const putTask = (groupId, taskId, task) => {
       return false;
     });
 };
+
+export const changeTaskStatus = (groupId, taskId, taskStatusId) => {
+  axios.defaults.withCredentials = true;
+  return axios
+    .put(
+      endpoint +
+        `/group/${String(groupId)}/task/${String(taskId)}/change-status`,
+      {
+        task_status_id: taskStatusId,
+      }
+    )
+    .then((res) => {
+      return res.status == 200;
+    })
+    .catch(() => {
+      return false;
+    });
+};

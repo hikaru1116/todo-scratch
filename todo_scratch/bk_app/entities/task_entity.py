@@ -10,7 +10,7 @@ class TaskEntity(Entity):
         self.group_id = items.IntItem()
         self.user_id = items.IntItem()
         self.task_status_id = items.IntItem()
-        self.title = items.CharItem(length=50)
+        self.title = items.CharItem(length=100)
         self.context = items.TextItem()
         self.deadline_at = items.DatetimeItem()
         self.created_at = items.DatetimeItem(is_insert_require=False)
