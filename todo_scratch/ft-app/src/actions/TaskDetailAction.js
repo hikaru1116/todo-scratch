@@ -7,7 +7,6 @@ import { formatDate } from "../utils/DatetimeUtil";
 
 export const getTaskDetailAction = (dispatch, groupId, taskId) => {
   getTaskDetail(groupId, taskId).then((task) => {
-    console.log(task);
     if (task == null) {
       const action = {
         type: "fail_get_task_detail",
@@ -33,8 +32,6 @@ export const putTaskAction = (
   taskStatusId
 ) => {
   // バリデーション処理
-
-  console.log(typeof expired);
   const task = {
     title: title,
     context: context,
@@ -71,7 +68,6 @@ export const changeTaskStatusAction = (
   taskId,
   taskStatusId
 ) => {
-  console.log(`changeTaskStatusAction ${taskId}`);
   changeTaskStatus(groupId, taskId, taskStatusId).then((isSuccess) => {
     if (!isSuccess) {
       return;

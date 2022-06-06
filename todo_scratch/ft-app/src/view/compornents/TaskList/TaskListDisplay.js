@@ -78,22 +78,6 @@ const TaskListDisplay = () => {
 
   return (
     <Box>
-      {stateUser.selectedGroup.groupId !== null && (
-        <Box
-          sx={{
-            margin: 0,
-            top: "auto",
-            right: 20,
-            bottom: 20,
-            left: "auto",
-            position: "fixed",
-          }}
-        >
-          <Fab color="primary" aria-label="add" onClick={toTaskCreate}>
-            <AddIcon />
-          </Fab>
-        </Box>
-      )}
       {stateTaskList.taskList.length <= 0 ? (
         <Box
           sx={{ width: "80%", maxWidth: 600 }}
@@ -121,31 +105,50 @@ const TaskListDisplay = () => {
                 )}
             </Tabs>
           </Box>
-          <Swiper
-            spaceBetween={50}
-            slidesPerView={1}
-            onSlideChange={(index) => slideChange(index.activeIndex)}
-            onSwiper={(swiper) => {
-              const swiperInstance = swiper;
-              setSwiper(swiperInstance);
-            }}
-          >
-            {stateUser.selectedGroup.taskStatusList.map((taskStatus) => {
-              for (let i = 0; i < stateTaskList.taskList.length; i++) {
-                if (
-                  taskStatus.task_status_id ===
-                  stateTaskList.taskList[i].task_status_id
-                ) {
-                  return createTaskList(stateTaskList.taskList[i]);
+          <Box>
+            <Swiper
+              spaceBetween={50}
+              slidesPerView={1}
+              onSlideChange={(index) => slideChange(index.activeIndex)}
+              onSwiper={(swiper) => {
+                const swiperInstance = swiper;
+                setSwiper(swiperInstance);
+              }}
+            >
+              {stateUser.selectedGroup.taskStatusList.map((taskStatus) => {
+                for (let i = 0; i < stateTaskList.taskList.length; i++) {
+                  if (
+                    taskStatus.task_status_id ===
+                    stateTaskList.taskList[i].task_status_id
+                  ) {
+                    return createTaskList(stateTaskList.taskList[i]);
+                  }
                 }
-              }
-              return (
-                <SwiperSlide>
-                  <Typography2>タスクなし</Typography2>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
+                return (
+                  <SwiperSlide>
+                    <Typography2>タスクなし</Typography2>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </Box>
+          {stateUser.selectedGroup.groupId !== null && (
+            <Box
+              sx={{
+                margin: 0,
+                top: "auto",
+                right: 30,
+                bottom: 20,
+                left: "auto",
+                position: "fixed",
+                zIndex: 999,
+              }}
+            >
+              <Fab color="primary" aria-label="add" onClick={toTaskCreate}>
+                <AddIcon />
+              </Fab>
+            </Box>
+          )}
         </Box>
       )}
     </Box>
