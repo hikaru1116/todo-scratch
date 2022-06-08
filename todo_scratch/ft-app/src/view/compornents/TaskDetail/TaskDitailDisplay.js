@@ -13,7 +13,7 @@ const TaskDitailDisplay = () => {
 
   useEffect(() => {
     getTaskDetailAction(dispatchTaskDetail, params.groupId, params.taskId);
-  }, []);
+  }, [stateTaskDetail.taskStateChangeCount]);
 
   return stateTaskDetail.isEdit ? (
     <TaskDetailEditDisplay />

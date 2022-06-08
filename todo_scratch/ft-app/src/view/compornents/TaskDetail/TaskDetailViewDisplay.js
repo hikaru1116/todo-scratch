@@ -67,7 +67,7 @@ const TaskDetailViewDisplay = () => {
           <Grid justifyContent="space-between" alignItems="center">
             {stateUser.selectedGroup.taskStatusList.map((taskStatus) => {
               return (
-                <Grid item>
+                <Grid item key={taskStatus.task_status_id}>
                   <Box
                     onClick={() => changeTaskStatus(taskStatus.task_status_id)}
                     mt={2}

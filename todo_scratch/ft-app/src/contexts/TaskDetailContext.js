@@ -24,6 +24,7 @@ export const initState = {
     isValidate: false,
     message: "",
   },
+  taskStateChangeCount: 0,
 };
 
 export const TaskDetailContext = ({ children }) => {

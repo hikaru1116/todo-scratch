@@ -34,6 +34,7 @@ export default function TaskDetailReducer(state, action) {
         task: {
           taskStatusId: action.data,
         },
+        taskStateChangeCount: state.taskStateChangeCount + 1,
       };
     case "to_edit":
       return {
