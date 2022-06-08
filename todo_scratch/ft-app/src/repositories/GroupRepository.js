@@ -18,7 +18,7 @@ export const postGroup = (group) => {
   return axios
     .post(endpoint + "/group", group)
     .then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         return res.data;
       } else {
         return null;
@@ -34,7 +34,7 @@ export const getJoinedGroupList = () => {
   return axios
     .get(endpoint + "/group/joined", { withCredentials: true })
     .then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         return res.data;
       }
       return null;
@@ -49,7 +49,7 @@ export const getApprovalRequestGroupList = () => {
   return axios
     .get(endpoint + "/group/approval-request", { withCredentials: true })
     .then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         return res.data;
       }
       return null;
@@ -66,7 +66,7 @@ export const postApprovalRequest = (groupId) => {
       group_id: groupId,
     })
     .then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         return res.data;
       } else {
         return null;
@@ -84,7 +84,7 @@ export const getTaskStatusInfoByGroupId = (groupId) => {
       withCredentials: true,
     })
     .then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         return res.data;
       }
       return null;
@@ -99,7 +99,7 @@ export const putGroup = (groupId, group) => {
   return axios
     .put(endpoint + `/group/${groupId}`, group)
     .then((res) => {
-      return res.status == 200;
+      return res.status === 200;
     })
     .catch(() => {
       return false;

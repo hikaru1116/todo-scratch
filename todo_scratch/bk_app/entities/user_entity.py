@@ -1,7 +1,13 @@
-from todo_scratch.bk_base.auth.entities.auth_user_entity import AuthUserEntity
+from atom_bk_frame.auth.entities.auth_user_entity import AuthUserEntity
 
 
 class UserEntity(AuthUserEntity):
+    """ユーザエンティティ
+
+    Args:
+        AuthUserEntity (_type_): エンティティ基底クラス
+
+    """
     table_name = "user"
 
     def __init__(self) -> None:

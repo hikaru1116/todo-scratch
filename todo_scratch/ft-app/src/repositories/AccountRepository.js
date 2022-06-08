@@ -28,7 +28,7 @@ export const createUser = (userName, email, password) => {
       { withCredentials: true }
     )
     .then((res) => {
-      return res.status == "200";
+      return res.status === "200";
     })
     .catch(() => {
       return false;
@@ -49,7 +49,7 @@ export const putAccount = (userName, email) => {
       { withCredentials: true }
     )
     .then((res) => {
-      return res.status == "200";
+      return res.status === "200";
     })
     .catch(() => {
       return false;

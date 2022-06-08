@@ -20,7 +20,7 @@ const GroupSettingsUpdateListItem = ({
   const handleChange = (event) => {
     console.log(updateUserList);
     updateUserList.map((updateUser) => {
-      if (updateUser.user_id == user.user_id) {
+      if (updateUser.user_id === user.user_id) {
         updateUser.auth_type = event.target.value;
       }
     });
@@ -35,7 +35,7 @@ const GroupSettingsUpdateListItem = ({
         </ListItemIcon>
 
         <ListItemText
-          secondary={user.user_status == 0 && "未承認"}
+          secondary={user.user_status === 0 && "未承認"}
           primary={
             <Box>
               <Grid
@@ -46,7 +46,7 @@ const GroupSettingsUpdateListItem = ({
               >
                 <Grid item>
                   <Typography3
-                    color={user.user_status == 0 ? "#c4c4c4" : "#111111"}
+                    color={user.user_status === 0 ? "#c4c4c4" : "#111111"}
                   >
                     {user.user_name}
                   </Typography3>

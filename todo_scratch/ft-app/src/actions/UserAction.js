@@ -9,7 +9,7 @@ import { postSingOut } from "../repositories/LoginRepository";
 export const setUserDataAction = async (dispatch, user) => {
   const selectedGroupId = getSelectedGroupId();
 
-  if (selectedGroupId === null || selectedGroupId == "null") {
+  if (selectedGroupId === null || selectedGroupId === "null") {
     const action = {
       type: "set_user_data",
       data: {

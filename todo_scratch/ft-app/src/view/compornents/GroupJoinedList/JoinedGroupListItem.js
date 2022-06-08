@@ -18,7 +18,7 @@ const JoinedGroupListItem = ({
     <React.Fragment key={group.group_id}>
       <ListItem>
         <ListItemText
-          secondary={group.group_id == selectedGroupId ? "selected" : ""}
+          secondary={group.group_id === selectedGroupId ? "selected" : ""}
           primary={
             <Box>
               <Grid
@@ -31,7 +31,7 @@ const JoinedGroupListItem = ({
                   <Typography3>{group.group_name}</Typography3>
                 </Grid>
                 <Grid item>
-                  {group.group_id == selectedGroupId ? (
+                  {group.group_id === selectedGroupId ? (
                     <Box />
                   ) : (
                     <Button variant="outlined" onClick={change}>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import GroupSettingsMenu from "./GroupSettingsMenu";
 import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
 import { useMediaQuery } from "@mui/material";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";

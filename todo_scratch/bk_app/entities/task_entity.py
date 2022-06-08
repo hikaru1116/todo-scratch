@@ -1,8 +1,14 @@
-from todo_scratch.bk_base.db.entities.entity import Entity
-from todo_scratch.bk_base.db.entities.items import items
+from atom_bk_frame.db.entities.entity import Entity
+from atom_bk_frame.db.entities.items import items
 
 
 class TaskEntity(Entity):
+    """タスクエンティティ
+
+    Args:
+        Entity (_type_): エンティティ基底クラス
+
+    """
     table_name = "todo_scratch.task"
 
     def __init__(self) -> None:

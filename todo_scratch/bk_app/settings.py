@@ -17,11 +17,12 @@ DB_CONFIG = {
 
 ACCESS_ALLOW_ORIGIN = ["http://localhost:3000"]
 
+DB_NAME = 'todo_scratch'
 
 MIDDLEWARES = [
-    "todo_scratch.bk_base.middleware.http_log_middleware.HttpLogMiddleware",
-    "todo_scratch.bk_base.middleware.cors_middleware.CorsMiddleware",
-    "todo_scratch.bk_base.middleware.session_middleware.SessionMiddleware"
+    "atom_bk_frame.middleware.http_log_middleware.HttpLogMiddleware",
+    "atom_bk_frame.middleware.cors_middleware.CorsMiddleware",
+    "atom_bk_frame.middleware.session_middleware.SessionMiddleware"
 ]
 
 AUTH_USER_ENTITY = "todo_scratch.bk_app.entities.user_entity.UserEntity"

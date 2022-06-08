@@ -1,4 +1,3 @@
-
 import datetime
 from typing import Dict, List
 from todo_scratch.bk_app.entities.comment_entity import CommentEntity
@@ -8,8 +7,8 @@ from todo_scratch.bk_app.entities.task_entity import TaskEntity
 from todo_scratch.bk_app.entities.task_history_entity import TaskHistoryEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_app.entities.task_with_postuser_entity import TaskWithPostUserEntity
-from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
-from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAccesor
+from atom_bk_frame.db.db_accesors.db_accesor import DbAccesor
+from atom_bk_frame.db.db_accesors.select_db_accesor import SelectDbAccesor
 
 
 class TaskRepository:

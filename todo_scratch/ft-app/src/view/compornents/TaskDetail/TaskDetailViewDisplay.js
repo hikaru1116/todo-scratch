@@ -205,7 +205,7 @@ const TaskDetailViewDisplay = () => {
         </Grid>
         {stateUser.user != null &&
           stateTaskDetail.task.userId != null &&
-          stateTaskDetail.task.userId == stateUser.user.user_id && (
+          stateTaskDetail.task.userId === stateUser.user.user_id && (
             <Grid item>
               <Box textAlign="center" mt={2}>
                 <Button

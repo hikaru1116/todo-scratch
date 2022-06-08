@@ -34,7 +34,7 @@ export const postTask = (groupId, task) => {
   return axios
     .post(endpoint + "/group/" + String(groupId) + "/task", task)
     .then((res) => {
-      return res.status == 200;
+      return res.status === 200;
     })
     .catch(() => {
       return false;
@@ -46,7 +46,7 @@ export const putTask = (groupId, taskId, task) => {
   return axios
     .put(endpoint + `/group/${String(groupId)}/task/${taskId}`, task)
     .then((res) => {
-      return res.status == 200;
+      return res.status === 200;
     })
     .catch(() => {
       return false;
@@ -64,7 +64,7 @@ export const changeTaskStatus = (groupId, taskId, taskStatusId) => {
       }
     )
     .then((res) => {
-      return res.status == 200;
+      return res.status === 200;
     })
     .catch(() => {
       return false;

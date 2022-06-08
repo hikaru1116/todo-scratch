@@ -1,4 +1,3 @@
-
 from typing import List
 from todo_scratch.bk_app.entities.group_detail_entity import GroupDetailEntity
 from todo_scratch.bk_app.enums.group_user_state_enum import GroupUserStateEnum

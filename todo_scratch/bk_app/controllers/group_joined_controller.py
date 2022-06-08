@@ -3,10 +3,10 @@ from todo_scratch.bk_app.entities.group_detail_entity import GroupDetailEntity
 from todo_scratch.bk_app.entities.user_entity import UserEntity
 from todo_scratch.bk_app.enums.group_user_state_enum import GroupUserStateEnum
 from todo_scratch.bk_app.repositories.group_repository import GroupRepository
-from todo_scratch.bk_base.controller.controller import Controller
-from todo_scratch.bk_base.http.request import Request
-from todo_scratch.bk_base.http.response.json_response import JSONResponse
-from todo_scratch.bk_base.http.response.response import Response
+from atom_bk_frame.controller.controller import Controller
+from atom_bk_frame.http.request import Request
+from atom_bk_frame.http.response.json_response import JSONResponse
+from atom_bk_frame.http.response.response import Response
 
 
 class GroupJoinedController(Controller):

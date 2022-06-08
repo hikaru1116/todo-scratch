@@ -16,7 +16,7 @@ const GroupUserListItem = ({ user }) => {
           <AccountCircleIcon />
         </ListItemIcon>
         <ListItemText
-          secondary={user.user_status == 0 && "未承認"}
+          secondary={user.user_status === 0 && "未承認"}
           primary={
             <Box>
               <Grid
@@ -27,14 +27,14 @@ const GroupUserListItem = ({ user }) => {
               >
                 <Grid item>
                   <Typography3
-                    color={user.user_status == 0 ? "#c4c4c4" : "#111111"}
+                    color={user.user_status === 0 ? "#c4c4c4" : "#111111"}
                   >
                     {user.user_name}
                   </Typography3>
                 </Grid>
                 <Grid item>
                   <Typography3
-                    color={user.user_status == 0 ? "#c4c4c4" : "#111111"}
+                    color={user.user_status === 0 ? "#c4c4c4" : "#111111"}
                   >
                     {toAuthTypeStr(user.auth_type)}
                   </Typography3>

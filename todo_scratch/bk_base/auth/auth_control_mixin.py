@@ -1,4 +1,0 @@
-
-
-class AuthControlMixin:
-    pass

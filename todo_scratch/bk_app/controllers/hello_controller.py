@@ -1,7 +1,7 @@
-from todo_scratch.bk_base.controller.controller import Controller
-from todo_scratch.bk_base.http.request import Request
-from todo_scratch.bk_base.http.response.response import Response
-from todo_scratch.bk_base.util.log.log_util import get_logger
+from atom_bk_frame.controller.controller import Controller
+from atom_bk_frame.http.request import Request
+from atom_bk_frame.http.response.response import Response
+from atom_bk_frame.util.log.log_util import get_logger
 
 
 class HelloController(Controller):

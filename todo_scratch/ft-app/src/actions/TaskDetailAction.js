@@ -80,10 +80,3 @@ export const changeTaskStatusAction = (
     dispatch(action);
   });
 };
-
-const deleteTaskACtion = (dispatch) => {
-  const action = {
-    type: "delete_task",
-  };
-  dispatch(action);
-};

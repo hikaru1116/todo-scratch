@@ -10,7 +10,7 @@ export const createTaskAction = (
   context
 ) => {
   // 入力値のバリデーション
-  if (taskStatusId == 0) {
+  if (taskStatusId === 0) {
     const action = {
       type: "validate",
       data: {

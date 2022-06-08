@@ -1,5 +1,5 @@
-from todo_scratch.bk_base.validator.json_validator import JsonValidator
-from todo_scratch.bk_base.validator.validator_item import IntValidatorItem, ListValidatorItem, VcharValidatorItem
+from atom_bk_frame.validator.json_validator import JsonValidator
+from atom_bk_frame.validator.validator_item import IntValidatorItem, ListValidatorItem, VcharValidatorItem
 
 
 class UpdateGroupValidator(JsonValidator):

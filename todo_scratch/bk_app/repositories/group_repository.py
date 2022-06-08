@@ -6,8 +6,8 @@ from todo_scratch.bk_app.entities.group_entity import GroupEntity
 from todo_scratch.bk_app.entities.task_status_entity import TaskStatusEntity
 from todo_scratch.bk_app.entities.user_entity import UserEntity
 from todo_scratch.bk_app.enums.group_user_state_enum import GroupUserStateEnum
-from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
-from todo_scratch.bk_base.db.db_accesors.select_db_accesor import SelectDbAccesor
+from atom_bk_frame.db.db_accesors.db_accesor import DbAccesor
+from atom_bk_frame.db.db_accesors.select_db_accesor import SelectDbAccesor
 
 
 class GroupRepository:

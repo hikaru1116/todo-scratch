@@ -1,10 +1,13 @@
-
 from todo_scratch.bk_app.enums.group_auth_type_enum import GroupAuthTypeEnum
 from todo_scratch.bk_app.enums.group_user_state_enum import GroupUserStateEnum
 from todo_scratch.bk_app.repositories.group_repository import GroupRepository
 
 
 class GroupAuthService:
+    """グループ認証サービス
+    グループの所属情報を取得するためのサービスクラスです
+
+    """
 
     @staticmethod
     def exist_group(group_id: int) -> bool:

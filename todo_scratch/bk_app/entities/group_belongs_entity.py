@@ -1,8 +1,14 @@
-from todo_scratch.bk_base.db.entities.entity import Entity
-from todo_scratch.bk_base.db.entities.items import items
+from atom_bk_frame.db.entities.entity import Entity
+from atom_bk_frame.db.entities.items import items
 
 
 class GroupBelongEntity(Entity):
+    """グループ所属情報エンティティ
+
+    Args:
+        Entity (_type_): エンティティ基底クラス
+
+    """
     table_name = "group_belongs"
 
     def __init__(self) -> None:

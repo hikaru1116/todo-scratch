@@ -22,13 +22,13 @@ const GroupSettingsViewDisplay = () => {
 
   const isHostUser = () => {
     const userList = stateGroupSettings.users.filter(
-      (user) => user.user_id == stateUser.user.user_id
+      (user) => user.user_id === stateUser.user.user_id
     );
 
     if (userList.length <= 0) {
       return false;
     }
-    return userList[0].auth_type == 0;
+    return userList[0].auth_type === 0;
   };
 
   return (

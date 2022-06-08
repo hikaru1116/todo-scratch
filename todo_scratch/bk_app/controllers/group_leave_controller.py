@@ -1,10 +1,10 @@
 from typing import Dict
 from todo_scratch.bk_app.entities.user_entity import UserEntity
 from todo_scratch.bk_app.handlers.group_leave_handler import GroupLeaveHandler
-from todo_scratch.bk_base.controller.controller import Controller
-from todo_scratch.bk_base.http.request import Request
-from todo_scratch.bk_base.http.response.http_error_response import Response404
-from todo_scratch.bk_base.http.response.response import Response
+from atom_bk_frame.controller.controller import Controller
+from atom_bk_frame.http.request import Request
+from atom_bk_frame.http.response.http_error_response import Response404
+from atom_bk_frame.http.response.response import Response
 
 
 class GroupLeaveController(Controller):

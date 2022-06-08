@@ -1,9 +1,7 @@
-
-
 from urllib.request import Request
-from todo_scratch.bk_base.controller.auth_mixin import AuthMixin
-from todo_scratch.bk_base.controller.controller import Controller
-from todo_scratch.bk_base.http.response.response import Response
+from atom_bk_frame.controller.auth_mixin import AuthMixin
+from atom_bk_frame.controller.controller import Controller
+from atom_bk_frame.http.response.response import Response
 
 
 class AuthorizedController(AuthMixin, Controller):

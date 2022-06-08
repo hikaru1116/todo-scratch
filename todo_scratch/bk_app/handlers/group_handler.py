@@ -8,7 +8,7 @@ from todo_scratch.bk_app.enums.group_auth_type_enum import GroupAuthTypeEnum
 from todo_scratch.bk_app.enums.group_user_state_enum import GroupUserStateEnum
 from todo_scratch.bk_app.repositories.group_repository import GroupRepository
 from todo_scratch.bk_app.services.group_auth_service import GroupAuthService
-from todo_scratch.bk_base.db.db_accesors.db_accesor import DbAccesor
+from atom_bk_frame.db.db_accesors.db_accesor import DbAccesor
 
 
 class GroupHandler:

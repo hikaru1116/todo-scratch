@@ -12,24 +12,23 @@ from todo_scratch.bk_app.controllers.task_controller import TaskController
 from todo_scratch.bk_app.controllers.task_detail_conttroller import TaskDetailController
 from todo_scratch.bk_app.controllers.task_divide_by_status_controller import TaskDivideByStatusController
 from todo_scratch.bk_app.controllers.task_status_info_controller import TaskStatusInfoController
-from todo_scratch.bk_base.core.url_pattern import UrlPattern
+from atom_bk_frame.core.url_pattern import UrlPattern
 
 urlpatterns: t.List[UrlPattern] = [
-    UrlPattern(path='/$', controller=HelloController()),
-    UrlPattern(path='/authorized', controller=AuthorizedController()),
-    UrlPattern(path='/forbidden', controller=ForbddenController()),
-    UrlPattern(path='/group$', controller=GroupController()),
-    UrlPattern(path='/group/<int>$', controller=GroupController()),
-    UrlPattern(path='/group/joined$', controller=GroupJoinedController()),
-    UrlPattern(path='/group/approval-request$', controller=GroupApprovalRequestController()),
-    UrlPattern(path='/group/leave$', controller=GroupLeaveController()),
-    UrlPattern(path='/account$', controller=AccountController()),
-    UrlPattern(path='/group/<int>/task$', controller=TaskController()),
-    UrlPattern(path='/group/<int>/task/<int>$', controller=TaskController()),
-    UrlPattern(path='/group/<int>/task/divide-by-status', controller=TaskDivideByStatusController()),
-    UrlPattern(path='/group/<int>/task/<int>/detail$', controller=TaskDetailController()),
-    UrlPattern(path='/group/<int>/task/<int>/change-status$', controller=TaskChangeStatusController()),
-    UrlPattern(path='/group/<int>/task/<int>/comment$', controller=TaskCommentController()),
-    UrlPattern(path='/group/<int>/task/status-info$', controller=TaskStatusInfoController()),
+    UrlPattern(path='/api/$', controller=HelloController()),
+    UrlPattern(path='/api/authorized', controller=AuthorizedController()),
+    UrlPattern(path='/api/forbidden', controller=ForbddenController()),
+    UrlPattern(path='/api/group$', controller=GroupController()),
+    UrlPattern(path='/api/group/<int>$', controller=GroupController()),
+    UrlPattern(path='/api/group/joined$', controller=GroupJoinedController()),
+    UrlPattern(path='/api/group/approval-request$', controller=GroupApprovalRequestController()),
+    UrlPattern(path='/api/group/leave$', controller=GroupLeaveController()),
+    UrlPattern(path='/api/account$', controller=AccountController()),
+    UrlPattern(path='/api/group/<int>/task$', controller=TaskController()),
+    UrlPattern(path='/api/group/<int>/task/<int>$', controller=TaskController()),
+    UrlPattern(path='/api/group/<int>/task/divide-by-status', controller=TaskDivideByStatusController()),
+    UrlPattern(path='/api/group/<int>/task/<int>/detail$', controller=TaskDetailController()),
+    UrlPattern(path='/api/group/<int>/task/<int>/change-status$', controller=TaskChangeStatusController()),
+    UrlPattern(path='/api/group/<int>/task/<int>/comment$', controller=TaskCommentController()),
+    UrlPattern(path='/api/group/<int>/task/status-info$', controller=TaskStatusInfoController()),
 ]
-
