@@ -1,34 +1,31 @@
-# [bk_app] Todo-Scratchバックエンドアプリケーション 仕様書
+# [bk_app] Todo-Scratch バックエンドアプリケーション 仕様書
 
-Todo-Scratchアプリのバックエンドアプリケーション。  
-バックエンドアプリの機能仕様については、[WebAPI仕様書](./api_design.md)を参照。  
-またTodo-Scratchのアプリとしての仕様は、[こちら][.]を参照。
+Todo-Scratch アプリのバックエンドアプリケーション。  
+バックエンドアプリの機能仕様については、[WebAPI 仕様書](./api_design.md)を参照。  
+Todo-Scratch のアプリの仕様は、[こちら][.]を参照。
 
-## pythonバージョン
-- python: v3.9.0 ~ 
+## python バージョン
 
-## 主な利用ライブラリ
-- mysql-connector-python:8.0.22
+- python: v3.9.0 ~
 
-## アプリケーション構成
-[bk_base](.)を利用して実装したアプリケーションである。
+## WebAPI 仕様
 
+https://github.com/Atom1116/todo-scratch/blob/develop/document/bk_app/api_design.md
 
 ## フォルダ構成
 
-|  フォルダ  |  内容  |
-| ---- | ---- |
-|  controllers  |  |
-|  handlers  | Contorollerのロジック処理を扱うファイルを格納 |
-|  validators  | Controllerのリクエストパラメータ等のチェック処理を扱うファイルを格納 |
-|  entities  |  アプリケーションのモデルオブジェクトを表現するEntityファイルを格納。  |
-|  repositoreis  |  永続化処理を扱うファイルを格納  |
-|  services  |  アプリケーションのモデルを操作する処理を扱うファイルを格納  |
-
+| フォルダ     | 内容                                                                   |
+| ------------ | ---------------------------------------------------------------------- |
+| controllers  |                                                                        |
+| handlers     | Contoroller のロジック処理を扱うファイルを格納                         |
+| validators   | Controller のリクエストパラメータ等のチェック処理を扱うファイルを格納  |
+| entities     | アプリケーションのモデルオブジェクトを表現する Entity ファイルを格納。 |
+| repositoreis | 永続化処理を扱うファイルを格納                                         |
+| services     | アプリケーションのモデルを操作する処理を扱うファイルを格納             |
 
 ## 依存関係
 
-````mermaid
+```mermaid
 flowchart RL
     handlers --> controllers
     validators --> controllers
@@ -36,7 +33,4 @@ flowchart RL
     repositoreis --> handlers
     repositoreis --> services
     entities
-````
-## WebAPI仕様
-
-[こちら](./api_design.md)を参照
+```
