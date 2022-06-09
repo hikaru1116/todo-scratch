@@ -1,5 +1,4 @@
 export default function SingInReducer(state, action) {
-  console.log(action.type);
   switch (action.type) {
     case "success_sign_in":
       return {
