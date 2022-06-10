@@ -1,6 +1,6 @@
 # Todo-Scratch
 
-<img src="./document/fk_app/../top.png" width="600">
+<img src="./document/fk_app/../top.png" width="800">
 
 招待したユーザでグループを作成し、タスクを簡単に管理できるグループタスク管理アプリケーション
 
