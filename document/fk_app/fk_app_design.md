@@ -27,6 +27,7 @@ React を利用したアプリケーション。
 | [共通機能]()                                                  | Todo-Scratch アプリの画面共通機能                    |
 | [サインイン ](./screens/signin_design.md)                     | ユーザがログインする画面                             |
 | [ユーザ登録 ](./screens/signup_design.md)                     | ユーザがアカウントを新規登録する画面                 |
+| [タスク作成](./screens/task_create_design.md)                 | タスクを新規作成する画面                             |
 | [タスク一覧](./screens/task_list_desgin.md)                   | タスクの一覧を表示をする画面                         |
 | [タスク詳細・編集 ](./screens/task_detail_desgin.md)          | 指定したタスクの詳細情報の表示・内容の編集をする画面 |
 | [アカウント編集 ](./screens/account_desgin.md)                | ユーザのアカウント情報の編集をする画面               |
