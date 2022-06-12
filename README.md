@@ -54,3 +54,44 @@
 | Document                                         | 内容                             |
 | ------------------------------------------------ | -------------------------------- |
 | [アプリ設計](./document/fk_app/fk_app_design.md) | フロントエンドアプリの概要設計書 |
+
+## ローカルでの動作手順
+
+### bk_app
+
+Web サーバ、[Gunicorn](https://gunicorn.org/)を利用した場合のローカルでの動作手順
+
+1. ローカルの Python 環境に[atom_bk_frame]をインストール
+
+```
+$ pip install git+https://github.com/Atom1116/atom-bk-frame
+```
+
+2. 当プロジェクトの wsgi.py のある階層に遷移
+
+3. 下記のコマンドを発火
+
+```
+$ gunicorn 'wsgi:app'
+```
+
+### fk_app
+
+node 環境に react をインストールし、ローカルサーバを立ち上げる
+
+1. fk_app プロジェクトディレクトリ（{git ルート/todo_scrach/fk_app}）へ遷移
+
+2. npm 環境を作成、依存パッケージをインストール
+
+```
+# 作成
+$ npm init
+# インストール
+$ npm install
+```
+
+3. ローカルサーバを立ち上げる
+
+```
+$ npm start
+```
